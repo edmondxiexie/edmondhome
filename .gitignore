@@ -1,1 +1,19 @@
-node_modules
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+
+# Ignore node modules
+node_modules/
+
+# Ignore bundle
+bundle.js
+bundle.js.map
+
+# Ignore store
+.DS_Store
+
+# Ignore npm debug
+npm-debug.log
