@@ -4,6 +4,7 @@ import map from "lodash/map";
 import classnames from "classnames";
 // import validateInput from "../../../backend/common/validations/signup";
 import TextFieldGroup from "../common/TextFieldGroup";
+
 class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
