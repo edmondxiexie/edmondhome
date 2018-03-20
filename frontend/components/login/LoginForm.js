@@ -26,8 +26,16 @@ class LoginForm extends React.Component {
   }
 
   onSubmit(e) {
-    debugger;
     e.preventDefault();
+    // debugger;
+    this.props.login(this.state).then(
+      res => this.context.router.push("/"),
+      err =>
+        this.setState({
+          errors: err.response.data.errors,
+          isLoading: false
+        })
+    );
   }
 
   render() {
@@ -65,4 +73,11 @@ class LoginForm extends React.Component {
   }
 }
 
+LoginForm.propTypes = {
+  login: React.PropTypes.func.isRequired
+};
+
+LoginForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 export default LoginForm;

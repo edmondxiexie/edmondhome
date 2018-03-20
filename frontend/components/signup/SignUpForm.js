@@ -39,6 +39,26 @@ class SignUpForm extends React.Component {
     });
   }
 
+  checkUserExists(e) {
+    e.preventDefault();
+    const field = e.target.name;
+    const val = e.target.value;
+    if (val !== "") {
+      this.props.isUserExists(val).then(res => {
+        let errors = this.state.errors;
+        let invalid;
+        if (res.data.user) {
+          errors[field] = `There is user with such ${field}`;
+          invalid = true;
+        } else {
+          errors[field] = "";
+          invalid = false;
+        }
+        this.setState({ errors, invalid });
+      });
+    }
+  }
+
   onChange(e) {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
@@ -49,8 +69,9 @@ class SignUpForm extends React.Component {
     e.preventDefault();
     // if (this.isValid()) {
     this.setState({ errors: {}, isLoading: true });
-    this.props.userSignupRequest(this.state).then(() => {
-      debugger;
+    this.props.signup(this.state).then(() => {
+      // debugger;
+      this.context.router.push("/");
     });
     // }
   }
@@ -67,23 +88,23 @@ class SignUpForm extends React.Component {
       <form>
         <h1>Please Sign Up!</h1>
         <TextFieldGroup
-          error=""
+          error={errors.username}
           label="Username"
           onChange={e => this.onChange(e)}
-          checkUserExists=""
+          checkUserExists={e => this.checkUserExists(e)}
           value={this.state.username}
           field="username"
         />
         <TextFieldGroup
-          error=""
+          error={errors.email}
           label="Email"
           onChange={e => this.onChange(e)}
-          checkUserExists=""
+          checkUserExists={e => this.checkUserExists(e)}
           value={this.state.email}
           field="email"
         />
         <TextFieldGroup
-          error=""
+          error={errors.password}
           label="Password"
           onChange={e => this.onChange(e)}
           checkUserExists=""
@@ -92,7 +113,7 @@ class SignUpForm extends React.Component {
           type="password"
         />
         <TextFieldGroup
-          error=""
+          error={errors.passwordConfirm}
           label="Password Confirm"
           onChange={e => this.onChange(e)}
           checkUserExists=""
@@ -120,7 +141,11 @@ class SignUpForm extends React.Component {
           )}
         </div>
         <div className="form-group">
-          <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>
+          <button
+            className="btn btn-primary"
+            onClick={e => this.onSubmit(e)}
+            disabled={this.state.invalid}
+          >
             Sign Up
           </button>
           <button
@@ -135,12 +160,13 @@ class SignUpForm extends React.Component {
   }
 }
 
-// SignUpForm.propTypes = {
-//   userSignupRequest: React.PropTypes.func.isRequired
-// };
+SignUpForm.propTypes = {
+  signup: React.PropTypes.func.isRequired,
+  isUserExists: React.PropTypes.func.isRequired
+};
 
-// SignUpForm.contextTypes = {
-//   router: React.PropTypes.object.isRequired
-// };
+SignUpForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default SignUpForm;

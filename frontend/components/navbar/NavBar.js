@@ -5,20 +5,54 @@ import "./NavBar.css";
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      username: this.props.auth.user.username
+    };
     // debugger
+  }
+  componentWillReceiveProps(nextProps) {
+    // debugger;
+    if (nextProps.auth) {
+      this.setState({ username: nextProps.auth.user.username });
+    } else {
+      this.setState({ username: "" });
+    }
+  }
+
+  logoutAction(e) {
+    e.preventDefault();
+    this.props.logout();
   }
 
   render() {
-    const userLink = (
+    const { username } = this.state;
+    const { isAuthenticated } = this.props.auth;
+    const guestLink = (
       <ul className="nav navbar-nav navbar-right">
         <li>
-          <Link to="/new-home">Host your place</Link>
+          <Link to="#">Host your place</Link>
         </li>
         <li>
           <Link to="/signup">Sign Up</Link>
         </li>
         <li>
           <Link to="/login">Login</Link>
+        </li>
+      </ul>
+    );
+
+    const userLink = (
+      <ul className="nav navbar-nav navbar-right">
+        <li>
+          <Link to="#">Host your place</Link>
+        </li>
+        <li>
+          <Link to="#">{username}</Link>
+        </li>
+        <li>
+          <a href="#" onClick={e => this.logoutAction(e)}>
+            Logout
+          </a>
         </li>
       </ul>
     );
@@ -45,12 +79,16 @@ class NavBar extends React.Component {
           </div>
 
           <div className="collapse navbar-collapse" id="navbar-collapse">
-            {userLink}
+            {isAuthenticated ? userLink : guestLink}
           </div>
         </div>
       </nav>
     );
   }
 }
+
+NavBar.propTypes = {
+  logout: React.PropTypes.func.isRequired
+};
 
 export default NavBar;

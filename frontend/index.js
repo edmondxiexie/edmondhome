@@ -1,22 +1,20 @@
 import React from "react";
-
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { Router, browserHistory } from "react-router";
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "./reducers/rootReducer";
-import routes from "./routes";
 
-const store = createStore(
-  rootReducer,
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-);
+import jwtDecode from "jwt-decode";
+import * as authUtil from "./utils/authUtil";
+import { setCurrentUser } from "./actions/authActions";
 
-// debugger;
+import routes from "./routes/routes";
+import store from "./store/store";
+
+console.log("token: ", localStorage.jwtToken);
+if (localStorage.jwtToken) {
+  authUtil.setAuthorizationToken(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
+}
 
 render(
   <Provider store={store}>

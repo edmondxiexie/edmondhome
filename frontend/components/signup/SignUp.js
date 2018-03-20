@@ -9,7 +9,10 @@ class SignUp extends React.Component {
     return (
       <div className="row">
         <div className="col-md-6 col-md-offset-3">
-          <SignUpForm userSignupRequest={this.props.userSignupRequest} />
+          <SignUpForm
+            signup={this.props.signup}
+            isUserExists={this.props.isUserExists}
+          />
         </div>
       </div>
     );

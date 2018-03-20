@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from "../actions/authActions";
+import { SET_CURRENT_USER } from "../utils/authUtil";
 
 import isEmpty from "lodash/isEmpty";
 

@@ -1,13 +1,14 @@
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import HomePage from "./HomePage";
 
 const mapStateToProps = state => {
-	return {};
-}
-
+  return {
+    auth: state.auth
+  };
+};
 
 const mapDispatchToProps = dispatch => {
-	return {};
-}
+  return {};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

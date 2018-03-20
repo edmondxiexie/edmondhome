@@ -1,13 +1,18 @@
 import { connect } from "react-redux";
 import SignUp from "./SignUp";
-import { userSignupRequest } from "../../actions/signupActions";
+import { signup, isUserExists } from "../../actions/authActions";
 const mapStateToProps = state => {
   return {};
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    userSignupRequest: userData => dispatch(userSignupRequest(userData))
+    signup: userData => {
+      return dispatch(signup(userData));
+    },
+    isUserExists: identifier => {
+      return dispatch(isUserExists(identifier));
+    }
   };
 };
 

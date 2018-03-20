@@ -31,7 +31,6 @@ export default function validateInput(data) {
   if (Validator.isNull(data.timezone)) {
     errors.timezone = "This field is required";
   }
-  console.log(errors);
   return {
     errors,
     isVavlid: isEmpty(errors)
