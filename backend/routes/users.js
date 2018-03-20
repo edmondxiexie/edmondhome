@@ -36,8 +36,8 @@ const validateInput = (data, otherValidations) => {
 
 router.post("/", (req, res) => {
   validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
-    console.log("******enter user :post******");
     if (isValid) {
+      console.log("Pass input validation in server");
       const { username, password, timezone, email } = req.body;
       const password_digest = bcrypt.hashSync(password, 10);
       // 插入数据库
@@ -54,6 +54,7 @@ router.post("/", (req, res) => {
         .then(user => res.json({ success: true }))
         .catch(err => res.status(500).json({ error: err }));
     } else {
+      console.log("Does not pass input validation in server");
       res.status(500).json({ error: "we find existed users" });
     }
   });

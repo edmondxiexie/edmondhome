@@ -10,7 +10,7 @@ const defaultState = {
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
     case SET_CURRENT_USER:
-      debugger;
+      console.log("pass SET_CURRENT_USER reducer");
       return {
         isAuthenticated: !isEmpty(action.user),
         user: action.user

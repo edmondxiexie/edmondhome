@@ -62,6 +62,7 @@ class SignUpForm extends React.Component {
         {key}
       </option>
     ));
+
     return (
       <form>
         <h1>Please Sign Up!</h1>
