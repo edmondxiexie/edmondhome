@@ -9,6 +9,7 @@ import webpackConfig from "../webpack.config.dev";
 
 import auth from "./routes/auth";
 import users from "./routes/users";
+import homes from "./routes/homes";
 
 let app = express();
 app.use(bodyParser.json());
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, "src")));
 // 后端的router
 app.use("/api/auth", auth);
 app.use("/api/users", users);
+app.use("/api/homes", homes);
 
 // 这里连接了前后端
 const compiler = webpack(webpackConfig);

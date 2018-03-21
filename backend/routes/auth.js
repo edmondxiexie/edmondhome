@@ -54,8 +54,12 @@ router.post("/signup", (req, res) => {
         { hasTimestamps: true }
       )
         .save()
-        .then(user => res.json({ success: true }))
-        .catch(err => res.status(500).json({ error: err }));
+        .then(user => {
+          return res.json({ success: true });
+        })
+        .catch(err => {
+          return res.status(500).json({ error: err });
+        });
     } else {
       console.log("Does not pass input validation in server");
       res.status(500).json({ error: "we find existed users" });

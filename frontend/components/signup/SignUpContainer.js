@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import SignUp from "./SignUp";
-import { signup, isUserExists } from "../../actions/authActions";
+import * as authActions from "../../actions/authActions";
 const mapStateToProps = state => {
   return {};
 };
@@ -8,10 +8,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     signup: userData => {
-      return dispatch(signup(userData));
+      return dispatch(authActions.signup(userData));
+    },
+    login: userData => {
+      return dispatch(authActions.login(userData));
     },
     isUserExists: identifier => {
-      return dispatch(isUserExists(identifier));
+      return dispatch(authActions.isUserExists(identifier));
     }
   };
 };

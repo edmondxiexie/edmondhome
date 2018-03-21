@@ -27,10 +27,14 @@ class NavBar extends React.Component {
   render() {
     const { username } = this.state;
     const { isAuthenticated } = this.props.auth;
+
     const guestLink = (
       <ul className="nav navbar-nav navbar-right">
         <li>
-          <Link to="#">Host your place</Link>
+          <Link to="/homes">Homes</Link>
+        </li>
+        <li>
+          <Link to="/homes/new">Host your place</Link>
         </li>
         <li>
           <Link to="/signup">Sign Up</Link>
@@ -44,7 +48,10 @@ class NavBar extends React.Component {
     const userLink = (
       <ul className="nav navbar-nav navbar-right">
         <li>
-          <Link to="#">Host your place</Link>
+          <Link to="/homes">Homes</Link>
+        </li>
+        <li>
+          <Link to="/homes/new">Host your place</Link>
         </li>
         <li>
           <Link to="#">{username}</Link>

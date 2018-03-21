@@ -69,9 +69,20 @@ class SignUpForm extends React.Component {
     e.preventDefault();
     // if (this.isValid()) {
     this.setState({ errors: {}, isLoading: true });
-    this.props.signup(this.state).then(() => {
-      // debugger;
-      this.context.router.push("/");
+    this.props.signup(this.state).then(res => {
+      setTimeout(() => {
+        const { username, password } = this.state;
+        this.props
+          .login({
+            identifier: username,
+            password: password,
+            errors: {},
+            isLoading: false
+          })
+          .then(res => {
+            return this.context.router.push("/");
+          });
+      }, 100);
     });
     // }
   }
@@ -162,6 +173,7 @@ class SignUpForm extends React.Component {
 
 SignUpForm.propTypes = {
   signup: React.PropTypes.func.isRequired,
+  login: React.PropTypes.func.isRequired,
   isUserExists: React.PropTypes.func.isRequired
 };
 

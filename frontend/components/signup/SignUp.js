@@ -12,6 +12,7 @@ class SignUp extends React.Component {
           <SignUpForm
             signup={this.props.signup}
             isUserExists={this.props.isUserExists}
+            login={this.props.login}
           />
         </div>
       </div>
