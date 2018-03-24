@@ -25,6 +25,10 @@ export default {
           path.join(__dirname, "backend/common")
         ],
         loaders: ["react-hot", "babel"]
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
       }
     ]
   },

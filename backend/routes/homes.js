@@ -28,7 +28,6 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   console.log("******POST api/homes PASS!!******");
   const { title, description } = req.body;
-  console.log("body is: ", req.body);
   Home.forge(
     {
       title,
@@ -48,4 +47,23 @@ router.post("/", (req, res) => {
         .json({ error: true, message: "POST /api/homes fail!" });
     });
 });
+
+router.get("/:id", (req, res) => {
+  console.log("******GET api/homes/:id PASS!!******");
+  const id = req.params.id;
+  Home.query({
+    select: ["*"],
+    where: { id: id }
+  })
+    .fetch()
+    .then(home => {
+      console.log("******Fetch home SUCCESS!!******");
+      return res.json(home);
+    })
+    .catch(error => {
+      console.log("******Fetch home FAIL!!******");
+      return res.status(500).json({ error: error });
+    });
+});
+
 export default router;

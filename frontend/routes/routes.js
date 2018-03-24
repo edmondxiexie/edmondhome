@@ -7,6 +7,7 @@ import SignUpContainer from "../components/signup/SignUpContainer";
 import LoginContainer from "../components/login/LoginContainer";
 import IndexHomePageContainer from "../components/homes/index/IndexHomePageContainer";
 import NewHomePageContainer from "../components/homes/new/NewHomePageContainer";
+import DetailHomePageContainer from "../components/homes/detail/DetailHomePageContainer";
 
 export default (
   <Route path="/" component={Root}>
@@ -15,5 +16,6 @@ export default (
     <Route path="/login" component={LoginContainer} />
     <Route path="/homes" component={IndexHomePageContainer} />
     <Route path="/homes/new" component={NewHomePageContainer} />
+    <Route path="/homes/:id" component={DetailHomePageContainer} />
   </Route>
 );

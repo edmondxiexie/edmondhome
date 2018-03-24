@@ -8,7 +8,26 @@ export const getHomes = homes => {
   };
 };
 
-// for home actions
+export const getHome = home => {
+  return {
+    type: homeUtil.GET_HOME,
+    home
+  };
+};
+
+//**** for home actions *****
+
+export const fetchHome = id => {
+  console.log("******/homes/:id ACTION******");
+  return dispatch => {
+    return homeUtil.getHomeUtil(id).then(res => {
+      const home = res.data;
+      localStorage.setItem("home", home);
+      dispatch(getHome(home));
+    });
+  };
+};
+
 export const fetchHomes = () => {
   return dispatch => {
     return homeUtil.getHomesUtil().then(res => {

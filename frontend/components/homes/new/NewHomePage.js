@@ -16,7 +16,7 @@ class NewHomePage extends React.Component {
     e.preventDefault();
     this.props.createHome(this.state).then(res => {
       //   debugger;
-      this.context.router.push("/");
+      this.context.router.push("/homes");
     });
   }
 

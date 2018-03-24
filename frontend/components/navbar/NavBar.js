@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router";
-import "./NavBar.css";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -81,7 +80,10 @@ class NavBar extends React.Component {
               <span className="icon-bar" />
             </button>
             <Link to="/" className="navbar-brand">
-              Edmond Home
+              <span>
+                <img src="/img/brand_logo.png" alt="brand_logo" />
+              </span>
+              <span>Edmond Home</span>
             </Link>
           </div>
 

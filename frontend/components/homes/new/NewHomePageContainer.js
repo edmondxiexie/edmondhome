@@ -3,7 +3,7 @@ import * as homeActions from "../../../actions/homeActions";
 import NewHomePage from "./NewHomePage";
 
 const mapStateToProps = state => {
-  debugger;
+  // debugger;
   return {};
 };
 

@@ -1,0 +1,14 @@
+.gallery-card {
+  /* height: 380px; */
+}
+
+.gallery-card:hover {
+  cursor: pointer;
+  box-shadow: 0 0 2px #ccc;
+}
+
+.gallery-card img.card-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 2px;
+}
