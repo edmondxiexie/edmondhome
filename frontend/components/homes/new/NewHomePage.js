@@ -16,7 +16,7 @@ class NewHomePage extends React.Component {
     e.preventDefault();
     this.props.createHome(this.state).then(res => {
       //   debugger;
-      this.context.router.push("/homes");
+      this.context.router.push(`/homes/${res.data.home.id}`);
     });
   }
 
@@ -57,7 +57,7 @@ class NewHomePage extends React.Component {
           className="btn btn-warning pull-right"
           onClick={e => this.autoFill(e)}
         >
-          Autn Fill
+          Auto Fill
         </button>
       </form>
     );
