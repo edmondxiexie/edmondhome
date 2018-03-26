@@ -52,8 +52,32 @@ class NavBar extends React.Component {
         <li>
           <Link to="/homes/new">Host your place</Link>
         </li>
-        <li>
-          <Link to="#">{username}</Link>
+        <li className="dropdown">
+          <a
+            href="#"
+            className="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {username} <span className="caret" />
+          </a>
+          <ul className="dropdown-menu">
+            <li>
+              <a href="#">Manage Hosts</a>
+            </li>
+            <li>
+              <a href="#">My Trips</a>
+            </li>
+            <li>
+              <a href="#">Wishlist</a>
+            </li>
+            <li role="separator" className="divider" />
+            <li>
+              <Link to="#">Profile</Link>
+            </li>
+          </ul>
         </li>
         <li>
           <a href="#" onClick={e => this.logoutAction(e)}>

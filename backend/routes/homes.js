@@ -11,11 +11,38 @@ const valideteHomeFrom = data => {
 // POST api/homes
 router.post("/", (req, res) => {
   console.log("******POST api/homes PASS!!******");
-  const { title, description } = req.body;
+  const {
+    title,
+    description,
+    img,
+    host_id,
+    price,
+    district,
+    property_type,
+    room_type,
+    setup_for_guest,
+    guest_availability,
+    rooms_availability,
+    beds_availability,
+    bath_availability,
+    target
+  } = req.body;
   Home.forge(
     {
       title,
-      description
+      description,
+      img,
+      host_id,
+      price,
+      district,
+      property_type,
+      room_type,
+      setup_for_guest,
+      guest_availability,
+      rooms_availability,
+      beds_availability,
+      bath_availability,
+      target
     },
     { hasTimestamps: true }
   )

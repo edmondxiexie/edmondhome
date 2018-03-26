@@ -26,7 +26,7 @@ class IndexHomePage extends React.Component {
   buildGallery(homes) {
     let gallery = [];
     for (let home of homes) {
-      let { id, title, description } = home;
+      let { id, title, description, img } = home;
       if (title.length > 15) {
         title = title.substr(0, 15) + "...";
       }
@@ -36,10 +36,7 @@ class IndexHomePage extends React.Component {
           className="col-md-4 col-sm-6 gallery-card"
           onClick={e => this.onRedirecct(e, id)}
         >
-          <img
-            src="https://res.cloudinary.com/dqace5qmb/image/upload/v1521918931/people-3120717_640.jpg"
-            className="card-img"
-          />
+          <img src={img} className="card-img" />
           <div className="caption">
             <p>
               <span>
