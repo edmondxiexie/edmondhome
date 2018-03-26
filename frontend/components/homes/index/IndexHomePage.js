@@ -3,19 +3,10 @@ import React from "react";
 class IndexHomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      homes: []
-    };
   }
 
   componentWillMount() {
     this.props.fetchHomes();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.homes.length !== this.props.homes.homes) {
-      this.setState({ homes: nextProps.homes.homes });
-    }
   }
 
   onRedirecct(e, id) {
@@ -53,7 +44,7 @@ class IndexHomePage extends React.Component {
   }
 
   render() {
-    const homes = this.state.homes;
+    let homes = this.props.homes || [];
     return (
       <div className="container row">
         <h1 className="text-center">Index page</h1>

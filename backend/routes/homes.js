@@ -27,6 +27,7 @@ router.post("/", (req, res) => {
     bath_availability,
     target
   } = req.body;
+  console.log(req.body);
   Home.forge(
     {
       title,

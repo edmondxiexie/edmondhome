@@ -1,5 +1,18 @@
 import React from "react";
 import TextFieldGroup from "../../common/TextFieldGroup";
+import Faker from "faker";
+
+import OptionFieldGroup from "../../common/OptionFieldGroup";
+import ImageFieldGroup from "../../common/ImageFieldGroup";
+
+import districtOptions from "../asset/district/district";
+import roomTypeOptions from "../asset/roomtype/roomtype";
+import propertyTypeOptions from "../asset/propertytype/propertytype";
+import guestSetupOptions from "../asset/guestsetup/guestsetup";
+import guestAvailAbilityOptions from "../asset/guestavailability/guestavailability";
+import bedAvailAbilityOptions from "../asset/bedavailability/bedavailability";
+import roomAvailAbilityOptions from "../asset/roomavailability/roomavailability";
+import bathAvailAbilityOptions from "../asset/bathavailability/bathavailability";
 
 class NewHomePage extends React.Component {
   constructor(props) {
@@ -27,18 +40,52 @@ class NewHomePage extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     this.props.createHome(this.state).then(res => {
-      //   debugger;
       this.context.router.push(`/homes/${res.data.home.id}`);
     });
+  }
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  onOpenImageWidget(e) {
+    e.preventDefault();
+    cloudinary.openUploadWidget(
+      {
+        cloud_name: "dqace5qmb",
+        upload_preset: "edmondhome",
+        theme: "minimal"
+      },
+      (errors, response) => {
+        if (!errors) {
+          console.log("******Upload Image Successful!!******");
+          this.setState({ img: response[0].secure_url });
+        }
+      }
+    );
+  }
+
+  onUpdatePrice(e) {
+    e.preventDefault();
+    let price = e.target.value;
+    if (!isNaN(price)) {
+      if (price.includes(".")) {
+        let arr = price.split(".");
+        arr[1] = arr[1].substr(0, 2);
+        price = arr.join(".");
+      }
+      this.setState({ price: price });
+    }
   }
 
   autoFill(e) {
     e.preventDefault();
     this.setState({
-      title: `Title created at: ${new Date().toString()}`,
-      description: `Description created at: ${new Date().toString()}`,
+      title: Faker.name.jobTitle(),
+      description: Faker.lorem.sentence(),
       img:
-        "http://res.cloudinary.com/dqace5qmb/image/upload/v1522018208/14823475947_bf9035e9dc_o.jpg",
+        "https://res.cloudinary.com/dqace5qmb/image/upload/v1522018201/4976907567_99bd3fd7a4_o.jpg",
       host_id: "1",
       price: "100",
       district: "Sunnyvale",
@@ -73,7 +120,16 @@ class NewHomePage extends React.Component {
       isLoading
     } = this.state;
     return (
-      <form>
+      <div>
+        <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>
+          Create
+        </button>
+        <button
+          className="btn btn-warning pull-right"
+          onClick={e => this.autoFill(e)}
+        >
+          Auto Fill
+        </button>
         <h1>Host your place</h1>
         <TextFieldGroup
           field="title"
@@ -91,12 +147,10 @@ class NewHomePage extends React.Component {
           onChange={e => this.onChange(e)}
           error={errors.description}
         />
-        <TextFieldGroup
-          field="img"
-          label="Home Image"
-          name="img"
+        <ImageFieldGroup
+          label="Image"
           value={img}
-          onChange={e => this.onChange(e)}
+          onClick={e => this.onOpenImageWidget(e)}
           error={errors.img}
         />
         <TextFieldGroup
@@ -104,69 +158,69 @@ class NewHomePage extends React.Component {
           label="Home Price"
           name="price"
           value={price}
-          onChange={e => this.onChange(e)}
+          onChange={e => this.onUpdatePrice(e)}
           error={errors.price}
         />
-        <TextFieldGroup
-          field="district"
+        <OptionFieldGroup
           label="District"
           name="district"
           value={district}
+          options={districtOptions}
           onChange={e => this.onChange(e)}
           error={errors.district}
         />
-        <TextFieldGroup
-          field="property_type"
+        <OptionFieldGroup
           label="Property Type"
           name="property_type"
+          options={propertyTypeOptions}
           value={property_type}
           onChange={e => this.onChange(e)}
           error={errors.property_type}
         />
-        <TextFieldGroup
-          field="room_type"
+        <OptionFieldGroup
           label="Room Type"
           name="room_type"
+          options={roomTypeOptions}
           value={room_type}
           onChange={e => this.onChange(e)}
           error={errors.room_type}
         />
-        <TextFieldGroup
-          field="setup_for_guest"
+        <OptionFieldGroup
           label="Setup For Guest"
           name="setup_for_guest"
+          options={guestSetupOptions}
           value={setup_for_guest}
           onChange={e => this.onChange(e)}
           error={errors.setup_for_guest}
         />
-        <TextFieldGroup
-          field="guest_availability"
+        <OptionFieldGroup
           label="Guest Availability"
           name="guest_availability"
+          options={guestAvailAbilityOptions}
           value={guest_availability}
           onChange={e => this.onChange(e)}
           error={errors.guest_availability}
         />
-        <TextFieldGroup
-          field="rooms_availability"
+        <OptionFieldGroup
           label="Rooms Availability"
           name="rooms_availability"
+          options={roomAvailAbilityOptions}
           value={rooms_availability}
           onChange={e => this.onChange(e)}
           error={errors.rooms_availability}
         />
-        <TextFieldGroup
-          field="beds_availability"
+        <OptionFieldGroup
           label="Beds Availability"
           name="beds_availability"
+          options={bedAvailAbilityOptions}
           value={beds_availability}
           onChange={e => this.onChange(e)}
           error={errors.beds_availability}
         />
-        <TextFieldGroup
-          field="bath_availability"
+        <OptionFieldGroup
           label="Bath Availability"
           name="bath_availability"
+          options={bathAvailAbilityOptions}
           value={bath_availability}
           onChange={e => this.onChange(e)}
           error={errors.bath_availability}
@@ -189,7 +243,7 @@ class NewHomePage extends React.Component {
         >
           Auto Fill
         </button>
-      </form>
+      </div>
     );
   }
 }

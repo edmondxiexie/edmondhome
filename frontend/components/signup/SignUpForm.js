@@ -4,6 +4,7 @@ import map from "lodash/map";
 import classnames from "classnames";
 // import validateInput from "../../../backend/common/validations/signup";
 import TextFieldGroup from "../common/TextFieldGroup";
+import OptionFieldGroup from "../common/OptionFieldGroup";
 
 class SignUpForm extends React.Component {
   constructor(props) {
@@ -89,11 +90,6 @@ class SignUpForm extends React.Component {
 
   render() {
     const { errors } = this.state;
-    const options = map(timezones, (val, key) => (
-      <option key={val} value={val}>
-        {key}
-      </option>
-    ));
 
     return (
       <form>
@@ -132,25 +128,15 @@ class SignUpForm extends React.Component {
           field="passwordConfirm"
           type="password"
         />
-        <div
-          className={classnames("form-group", { "has-error": errors.timezone })}
-        >
-          <label className="control-label">Timezone</label>
-          <select
-            name="timezone"
-            className="form-control"
-            onChange={e => this.onChange(e)}
-            value={this.state.timezone}
-          >
-            <option value="" disabled>
-              Choose Your Timezone
-            </option>
-            {options}
-          </select>
-          {errors.timezone && (
-            <span className="helper-block">{errors.timezone}</span>
-          )}
-        </div>
+        <OptionFieldGroup
+          label="Timezone"
+          name="timezone"
+          value={this.state.timezone}
+          options={timezones}
+          onChange={e => this.onChange(e)}
+          error={errors.timezone}
+        />
+
         <div className="form-group">
           <button
             className="btn btn-primary"

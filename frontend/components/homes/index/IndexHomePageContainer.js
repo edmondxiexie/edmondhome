@@ -3,9 +3,8 @@ import IndexHomePage from "./IndexHomePage";
 import * as homeActions from "../../../actions/homeActions";
 
 const mapStateToProps = state => {
-  // debugger;
   return {
-    homes: state.homes
+    homes: state.homes.homes
   };
 };
 

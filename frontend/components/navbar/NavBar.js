@@ -88,7 +88,7 @@ class NavBar extends React.Component {
     );
     // debugger
     return (
-      <nav className="navbar navbar-default">
+      <nav className="navbar navbar-inverse">
         <div className="container-fluid">
           <div className="navbar-header">
             <button
