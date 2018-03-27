@@ -1,5 +1,7 @@
 import React from "react";
 import SignUpForm from "./SignUpForm";
+import PropTypes from "prop-types";
+
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -19,5 +21,11 @@ class SignUp extends React.Component {
     );
   }
 }
+
+SignUp.propTypes = {
+  signup: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  isUserExists: PropTypes.func.isRequired
+};
 
 export default SignUp;

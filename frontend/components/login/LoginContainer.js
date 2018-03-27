@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Login from "./Login";
-import { login } from "../../actions/authActions";
+import * as authActions from "../../actions/authActions";
 const mapStateToProps = state => {
   return {};
 };
@@ -8,7 +8,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     login: userData => {
-      return dispatch(login(userData));
+      return dispatch(authActions.login(userData));
+    },
+    isUserExists: identifier => {
+      return dispatch(authActions.isUserExists(identifier));
     }
   };
 };

@@ -105,7 +105,7 @@ class SignUpForm extends React.Component {
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors, valid } = this.state;
 
     return (
       <form>
@@ -158,7 +158,7 @@ class SignUpForm extends React.Component {
           <button
             className="btn btn-primary"
             onClick={e => this.onSubmit(e)}
-            disabled={!this.state.valid}
+            disabled={!valid}
           >
             Sign Up
           </button>

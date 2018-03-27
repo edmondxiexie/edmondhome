@@ -87,10 +87,10 @@ router.post("/login", (req, res) => {
           );
           res.json({ token });
         } else {
-          res.status(401).json({ errors: { form: "Invalid password" } });
+          res.status(401).json({ errors: { password: "Password Incorrect" } });
         }
       } else {
-        res.status(401).json({ errors: { form: "User not found" } });
+        res.status(401).json({ errors: { identifier: "User not found" } });
       }
     });
 });
