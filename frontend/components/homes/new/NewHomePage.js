@@ -13,6 +13,8 @@ import guestAvailAbilityOptions from "../asset/guestavailability/guestavailabili
 import bedAvailAbilityOptions from "../asset/bedavailability/bedavailability";
 import roomAvailAbilityOptions from "../asset/roomavailability/roomavailability";
 import bathAvailAbilityOptions from "../asset/bathavailability/bathavailability";
+import isEmpty from "lodash/isEmpty";
+import validateInput from "../../../../backend/common/validations/home";
 
 class NewHomePage extends React.Component {
   constructor(props) {
@@ -32,17 +34,43 @@ class NewHomePage extends React.Component {
       beds_availability: "",
       bath_availability: "",
       target: "",
-      errors: [],
-      isLoading: false
+      errors: {},
+      isLoading: false,
+      valid: true
     };
+  }
+
+  checkRequired(e) {
+    e.preventDefault();
+    const field = e.target.name;
+    const val = e.target.value;
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    if (val === "") {
+      errors[field] = "This field is required";
+      valid = false;
+    } else {
+      delete errors[field];
+      valid = isEmpty(errors);
+    }
+    this.setState({ errors, valid });
   }
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.createHome(this.state).then(res => {
-      this.context.router.push(`/homes/${res.data.home.id}`);
-    });
+
+    const { errors, valid } = validateInput(this.state);
+
+    if (valid) {
+      this.props.createHome(this.state).then(res => {
+        this.context.router.push(`/homes/${res.data.home.id}`);
+      });
+    } else {
+      this.setState({ errors, valid });
+    }
   }
+
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -96,7 +124,10 @@ class NewHomePage extends React.Component {
       rooms_availability: "2",
       beds_availability: "3",
       bath_availability: "1",
-      target: "Travel"
+      target: "Travel",
+      errors: {},
+      isLoading: false,
+      valid: true
     });
   }
 
@@ -117,8 +148,10 @@ class NewHomePage extends React.Component {
       bath_availability,
       target,
       errors,
-      isLoading
+      isLoading,
+      valid
     } = this.state;
+    console.log("-------errors------", errors);
     return (
       <div>
         <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>
@@ -137,6 +170,7 @@ class NewHomePage extends React.Component {
           name="title"
           value={title}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.title}
         />
         <TextFieldGroup
@@ -145,10 +179,12 @@ class NewHomePage extends React.Component {
           name="description"
           value={description}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.description}
         />
         <ImageFieldGroup
           label="Image"
+          field="img"
           value={img}
           onClick={e => this.onOpenImageWidget(e)}
           error={errors.img}
@@ -159,6 +195,7 @@ class NewHomePage extends React.Component {
           name="price"
           value={price}
           onChange={e => this.onUpdatePrice(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.price}
         />
         <OptionFieldGroup
@@ -167,6 +204,7 @@ class NewHomePage extends React.Component {
           value={district}
           options={districtOptions}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.district}
         />
         <OptionFieldGroup
@@ -175,6 +213,7 @@ class NewHomePage extends React.Component {
           options={propertyTypeOptions}
           value={property_type}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.property_type}
         />
         <OptionFieldGroup
@@ -183,6 +222,7 @@ class NewHomePage extends React.Component {
           options={roomTypeOptions}
           value={room_type}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.room_type}
         />
         <OptionFieldGroup
@@ -191,6 +231,7 @@ class NewHomePage extends React.Component {
           options={guestSetupOptions}
           value={setup_for_guest}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.setup_for_guest}
         />
         <OptionFieldGroup
@@ -199,6 +240,7 @@ class NewHomePage extends React.Component {
           options={guestAvailAbilityOptions}
           value={guest_availability}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.guest_availability}
         />
         <OptionFieldGroup
@@ -208,6 +250,7 @@ class NewHomePage extends React.Component {
           value={rooms_availability}
           onChange={e => this.onChange(e)}
           error={errors.rooms_availability}
+          validator={e => this.checkRequired(e)}
         />
         <OptionFieldGroup
           label="Beds Availability"
@@ -215,6 +258,7 @@ class NewHomePage extends React.Component {
           options={bedAvailAbilityOptions}
           value={beds_availability}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.beds_availability}
         />
         <OptionFieldGroup
@@ -223,6 +267,7 @@ class NewHomePage extends React.Component {
           options={bathAvailAbilityOptions}
           value={bath_availability}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.bath_availability}
         />
         <TextFieldGroup
@@ -231,10 +276,15 @@ class NewHomePage extends React.Component {
           name="target"
           value={target}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.target}
         />
 
-        <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>
+        <button
+          className="btn btn-primary"
+          onClick={e => this.onSubmit(e)}
+          disabled={!valid}
+        >
           Create
         </button>
         <button

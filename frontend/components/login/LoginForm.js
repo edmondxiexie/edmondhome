@@ -19,7 +19,10 @@ class LoginForm extends React.Component {
     e.preventDefault();
     this.setState({
       identifier: "edmond",
-      password: "password"
+      password: "password",
+      errors: {},
+      isLoading: false,
+      valid: true
     });
   }
 

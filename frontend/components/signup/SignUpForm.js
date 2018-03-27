@@ -29,7 +29,10 @@ class SignUpForm extends React.Component {
       email: "edmondxie@gmail.com",
       password: "password",
       passwordConfirm: "password",
-      timezone: "Pacific/Honolulu"
+      timezone: "Pacific/Honolulu",
+      errors: {},
+      valid: true,
+      isLoading: false
     });
   }
 
@@ -38,7 +41,7 @@ class SignUpForm extends React.Component {
     const field = e.target.name;
     const val = e.target.value;
     let errors = this.state.errors;
-    let valid = this.state.invalid;
+    let valid = this.state.valid;
 
     if (val === "") {
       errors[field] = "This field is required";
