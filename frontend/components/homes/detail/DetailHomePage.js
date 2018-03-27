@@ -4,8 +4,7 @@ class DetailHomnePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      description: ""
+      home: {}
     };
   }
 
@@ -37,9 +36,28 @@ class DetailHomnePage extends React.Component {
   }
 
   render() {
-    const { id, title, description } = this.props.home;
+    const {
+      id,
+      title,
+      description,
+      img,
+      host_id,
+      price,
+      district,
+      property_type,
+      room_type,
+      setup_for_guest,
+      guest_availability,
+      rooms_availability,
+      beds_availability,
+      bath_availability,
+      target
+    } = this.props.home;
+
     return (
       <div>
+        <img src={img} className="img-cover" />
+
         <h1 className="text-center">Detail page</h1>
         <div>
           <label>{`ID: ${id}`}</label>
