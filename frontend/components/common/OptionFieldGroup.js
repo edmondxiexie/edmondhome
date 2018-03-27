@@ -3,7 +3,15 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import map from "lodash/map";
 
-const OptionFieldGroup = ({ name, value, label, error, onChange, options }) => {
+const OptionFieldGroup = ({
+  name,
+  value,
+  label,
+  error,
+  onChange,
+  options,
+  validator
+}) => {
   const opts = map(options, (val, key) => (
     <option key={val} value={val}>
       {key}
@@ -22,6 +30,7 @@ const OptionFieldGroup = ({ name, value, label, error, onChange, options }) => {
         onChange={onChange}
         value={value}
         className="form-control"
+        onBlur={validator}
       >
         <option value="" disabled>
           Choose Your {label}
@@ -37,7 +46,8 @@ OptionFieldGroup.propTypes = {
   name: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   error: React.PropTypes.string,
-  onChange: React.PropTypes.func.isRequired
+  onChange: React.PropTypes.func.isRequired,
+  validator: React.PropTypes.func
 };
 
 export default OptionFieldGroup;

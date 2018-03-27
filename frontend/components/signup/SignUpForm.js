@@ -2,9 +2,10 @@ import React from "react";
 import timezones from "./timezone/timezone";
 import map from "lodash/map";
 import classnames from "classnames";
-// import validateInput from "../../../backend/common/validations/signup";
+import validateInput from "../../../backend/common/validations/signup";
 import TextFieldGroup from "../common/TextFieldGroup";
 import OptionFieldGroup from "../common/OptionFieldGroup";
+import isEmpty from "lodash/isEmpty";
 
 class SignUpForm extends React.Component {
   constructor(props) {
@@ -17,16 +18,8 @@ class SignUpForm extends React.Component {
       timezone: "",
       errors: {},
       isLoading: false,
-      invalid: false
+      valid: true
     };
-  }
-
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-    if (!isValid) {
-      this.setState({ errors });
-    }
-    return isValid;
   }
 
   autoFill(e) {
@@ -40,22 +33,41 @@ class SignUpForm extends React.Component {
     });
   }
 
-  checkUserExists(e) {
+  checkRequired(e) {
     e.preventDefault();
     const field = e.target.name;
     const val = e.target.value;
-    if (val !== "") {
+    let errors = this.state.errors;
+    let valid = this.state.invalid;
+
+    if (val === "") {
+      errors[field] = "This field is required";
+      valid = false;
+    } else {
+      delete errors[field];
+      valid = isEmpty(errors);
+    }
+    this.setState({ errors, valid });
+  }
+
+  checkUserExists(e) {
+    e.preventDefault();
+    this.checkRequired(e);
+    const field = e.target.name;
+    const val = e.target.value;
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    if (!(field in errors)) {
       this.props.isUserExists(val).then(res => {
-        let errors = this.state.errors;
-        let invalid;
         if (res.data.user) {
           errors[field] = `There is user with such ${field}`;
-          invalid = true;
+          valid = false;
         } else {
-          errors[field] = "";
-          invalid = false;
+          delete errors[field];
+          valid = isEmpty(errors);
         }
-        this.setState({ errors, invalid });
+        this.setState({ errors, valid });
       });
     }
   }
@@ -68,24 +80,28 @@ class SignUpForm extends React.Component {
   onSubmit(e) {
     // debugger;
     e.preventDefault();
-    // if (this.isValid()) {
-    this.setState({ errors: {}, isLoading: true });
-    this.props.signup(this.state).then(res => {
-      setTimeout(() => {
-        const { username, password } = this.state;
-        this.props
-          .login({
-            identifier: username,
-            password: password,
-            errors: {},
-            isLoading: false
-          })
-          .then(res => {
-            return this.context.router.push("/");
-          });
-      }, 100);
-    });
-    // }
+    const { errors, valid } = validateInput(this.state);
+
+    if (valid) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.signup(this.state).then(res => {
+        setTimeout(() => {
+          const { username, password } = this.state;
+          this.props
+            .login({
+              identifier: username,
+              password: password,
+              errors: {},
+              isLoading: false
+            })
+            .then(res => {
+              return this.context.router.push("/");
+            });
+        }, 100);
+      });
+    } else {
+      this.setState({ errors, valid });
+    }
   }
 
   render() {
@@ -98,7 +114,7 @@ class SignUpForm extends React.Component {
           error={errors.username}
           label="Username"
           onChange={e => this.onChange(e)}
-          checkUserExists={e => this.checkUserExists(e)}
+          validator={e => this.checkUserExists(e)}
           value={this.state.username}
           field="username"
         />
@@ -106,7 +122,7 @@ class SignUpForm extends React.Component {
           error={errors.email}
           label="Email"
           onChange={e => this.onChange(e)}
-          checkUserExists={e => this.checkUserExists(e)}
+          validator={e => this.checkUserExists(e)}
           value={this.state.email}
           field="email"
         />
@@ -114,7 +130,7 @@ class SignUpForm extends React.Component {
           error={errors.password}
           label="Password"
           onChange={e => this.onChange(e)}
-          checkUserExists=""
+          validator={e => this.checkRequired(e)}
           value={this.state.password}
           field="password"
           type="password"
@@ -123,7 +139,7 @@ class SignUpForm extends React.Component {
           error={errors.passwordConfirm}
           label="Password Confirm"
           onChange={e => this.onChange(e)}
-          checkUserExists=""
+          validator={e => this.checkRequired(e)}
           value={this.state.passwordConfirm}
           field="passwordConfirm"
           type="password"
@@ -134,6 +150,7 @@ class SignUpForm extends React.Component {
           value={this.state.timezone}
           options={timezones}
           onChange={e => this.onChange(e)}
+          validator={e => this.checkRequired(e)}
           error={errors.timezone}
         />
 
@@ -141,7 +158,7 @@ class SignUpForm extends React.Component {
           <button
             className="btn btn-primary"
             onClick={e => this.onSubmit(e)}
-            disabled={this.state.invalid}
+            disabled={!this.state.valid}
           >
             Sign Up
           </button>

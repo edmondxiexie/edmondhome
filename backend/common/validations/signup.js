@@ -5,15 +5,15 @@ export default function validateInput(data) {
   let errors = {};
 
   if (Validator.isNull(data.username)) {
-    errors.useranme = "This field is required";
+    errors.username = "This field is required";
   }
 
   if (Validator.isNull(data.email)) {
     errors.email = "This field is required";
-  }
-
-  if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
+  } else {
+    if (!Validator.isEmail(data.email)) {
+      errors.email = "Email is invalid";
+    }
   }
 
   if (Validator.isNull(data.password)) {
@@ -33,6 +33,6 @@ export default function validateInput(data) {
   }
   return {
     errors,
-    isVavlid: isEmpty(errors)
+    valid: isEmpty(errors)
   };
 }
