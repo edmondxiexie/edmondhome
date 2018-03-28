@@ -31,9 +31,13 @@ TextFieldGroup.propTypes = {
   field: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   error: React.PropTypes.string,
-  type: React.PropTypes.string,
+  type: React.PropTypes.string.isRequired,
   onChange: React.PropTypes.func.isRequired,
   validator: React.PropTypes.func
+};
+
+TextFieldGroup.defaultProps = {
+  type: "text"
 };
 
 export default TextFieldGroup;

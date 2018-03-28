@@ -3,22 +3,29 @@ import { isEmpty, merge, assign } from "lodash";
 
 const defaultHome = Object.freeze({
   homes: null,
+  home: null,
   error: []
 });
 
 const HomeReducer = (state = defaultHome, action) => {
   Object.freeze(state);
+  let homes, home;
   switch (action.type) {
     case homeUtil.GET_HOMES:
-      console.log("******/homes REDUCER******");
-      const homes = action.homes;
-      let newState = Object.assign({}, state, { homes: homes });
-      return newState;
+      console.log("******/homes REDUCER GET******");
+      homes = action.homes;
+      const newHomesState = Object.assign({}, state, { homes: homes });
+      return newHomesState;
     case homeUtil.GET_HOME:
-      console.log("******/home REDUCER******");
-      let home = action.home;
-      newState = merge({}, { home: null, errors: [] }, { home: home });
-      return newState;
+      console.log("******/home REDUCER GET******");
+      home = action.home;
+      const newHomeState = Object.assign({}, state, { home: home });
+      return newHomeState;
+    case homeUtil.PUT_HOME:
+      console.log("******/home REDUCER PUT******");
+      home = action.home;
+      const newPutHomeState = Object.assign({}, state, { home: home });
+      return newPutHomeState;
     default:
       return state;
   }

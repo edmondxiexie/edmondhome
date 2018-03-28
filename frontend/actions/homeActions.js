@@ -15,6 +15,13 @@ export const getHome = home => {
   };
 };
 
+export const putHome = home => {
+  return {
+    type: homeUtil.PUT_HOME,
+    home
+  };
+};
+
 //**** for home actions *****
 
 export const fetchHome = id => {
@@ -41,5 +48,16 @@ export const fetchHomes = () => {
 export const createHome = homeData => {
   return dispatch => {
     return homeUtil.postHomeUtil(homeData);
+  };
+};
+
+export const patchHome = (id, homeData) => {
+  console.log("******/home/:id/edit ACTION PUT******");
+  return dispatch => {
+    return homeUtil.putHomeUtil(id, homeData).then(res => {
+      const home = res.data;
+      localStorage.setItem("home", home);
+      dispatch(putHome(home));
+    });
   };
 };

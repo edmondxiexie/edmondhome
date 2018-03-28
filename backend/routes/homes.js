@@ -90,7 +90,11 @@ router.get("/:id", (req, res) => {
 // GET api/homes
 router.get("/", (req, res) => {
   console.log("******GET api/homes PASS!!******");
-  Home.fetchAll()
+  Home.query({
+    select: ["*"]
+  })
+    .orderBy("id", "ASC")
+    .fetchAll()
     .then(homes => {
       console.log("******Fetch homes SUCCESS!!******");
       return res.json(homes);
@@ -100,6 +104,56 @@ router.get("/", (req, res) => {
       return res
         .status(500)
         .json({ errors: true, message: "errors in GET api/homes" });
+    });
+});
+
+// PUT api/homes/:id/edit
+router.put("/:id/edit", (req, res) => {
+  console.log("******GET api/:id/edit PASS!!******");
+  const id = req.params.id;
+  const {
+    title,
+    description,
+    img,
+    host_id,
+    price,
+    district,
+    property_type,
+    room_type,
+    setup_for_guest,
+    guest_availability,
+    rooms_availability,
+    beds_availability,
+    bath_availability,
+    target
+  } = req.body;
+  Home.where({ id: id })
+    .save(
+      {
+        title,
+        description,
+        img,
+        host_id,
+        price,
+        district,
+        property_type,
+        room_type,
+        setup_for_guest,
+        guest_availability,
+        rooms_availability,
+        beds_availability,
+        bath_availability,
+        target
+      },
+      { patch: true }
+    )
+    .then(home => {
+      console.log("******GET api/:id/edit SUCCESS!!******");
+      return res.json({ success: true, home: home, id: id });
+    })
+    .catch(err => {
+      console.log("******GET api/:id/edit FAIL!!******");
+      return res.status(401).json({ error: err });
     });
 });
 

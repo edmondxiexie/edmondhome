@@ -17,8 +17,9 @@ class LoginForm extends React.Component {
 
   autoFill(e) {
     e.preventDefault();
+    const username = `user_${Math.floor(Math.random() * 50, 1)}`;
     this.setState({
-      identifier: "edmond",
+      identifier: username,
       password: "password",
       errors: {},
       isLoading: false,

@@ -19,6 +19,15 @@ class DetailHomnePage extends React.Component {
     });
   }
 
+  onRedirectDelete(e) {
+    e.preventDefault();
+  }
+
+  onRedirectEdit(e) {
+    e.preventDefault();
+    this.context.router.push(`/homes/${this.props.params.id}/edit`);
+  }
+
   buildDetailComponent() {
     // debugger;
     if (!_.isEmpty(this.state.home)) {
@@ -63,10 +72,26 @@ class DetailHomnePage extends React.Component {
           <label>{`ID: ${id}`}</label>
           <h1>{title}</h1>
           <p>{description}</p>
+          <button
+            className="btn btn-warning"
+            onClick={e => this.onRedirectEdit(e)}
+          >
+            Edit
+          </button>
+          <button
+            className="btn btn-danger"
+            onClick={e => this.onRedirectDelete(e)}
+          >
+            Delete
+          </button>
         </div>
       </div>
     );
   }
 }
+
+DetailHomnePage.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default DetailHomnePage;

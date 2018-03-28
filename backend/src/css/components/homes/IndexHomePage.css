@@ -1,5 +1,6 @@
 .gallery-card {
-  /* height: 380px; */
+  height: 335px;
+  margin: 3px 0;
 }
 
 .gallery-card:hover {

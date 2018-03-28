@@ -49,7 +49,6 @@ const ImageFieldGroup = ({ value, label, error, onClick }) => {
 };
 
 ImageFieldGroup.propTypes = {
-  value: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   error: React.PropTypes.string,
   onClick: React.PropTypes.func.isRequired
