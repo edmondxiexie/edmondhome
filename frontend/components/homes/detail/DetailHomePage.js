@@ -3,20 +3,10 @@ import React from "react";
 class DetailHomnePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      home: {}
-    };
   }
 
   componentWillMount() {
     this.props.fetchHome(this.props.params.id);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // debugger;
-    this.setState({
-      home: nextProps.home
-    });
   }
 
   onRedirectDelete(e) {

@@ -20,7 +20,9 @@ class NavBar extends React.Component {
 
   logoutAction(e) {
     e.preventDefault();
-    this.props.logout();
+    this.props.logout().then(() => {
+      this.context.router.push("/");
+    });
   }
 
   render() {
@@ -122,6 +124,10 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   logout: React.PropTypes.func.isRequired
+};
+
+NavBar.contextTypes = {
+  router: React.PropTypes.object.isRequired
 };
 
 export default NavBar;

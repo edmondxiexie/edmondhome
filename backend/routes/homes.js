@@ -157,4 +157,29 @@ router.put("/:id/edit", (req, res) => {
     });
 });
 
+// DELETE api/homes/:id/
+router.delete("/:id", (req, res) => {
+  console.log("******DELETE api/:id PASS!!******");
+  const id = req.params.id;
+  Home.query({ select: ["*"], where: { id: id } })
+    .fetch()
+    .then(home => {
+      if (!home) {
+        console.log("******DELETE api/:id FAIL!!******");
+        return res.status(404).json({ message: "home not found" });
+      }
+      home.destroy().then(() => {
+        console.log("******DELETE api/:id SUCCESS!!******");
+        return res.json({
+          success: true,
+          message: "home successfully deleted!"
+        });
+      });
+    })
+    .catch(err => {
+      console.log("******DELETE api/:id FAIL!!******");
+      return res.status(500).json({ message: "fetch home fail", error: err });
+    });
+});
+
 export default router;
