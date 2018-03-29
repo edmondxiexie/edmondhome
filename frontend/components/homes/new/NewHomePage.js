@@ -110,8 +110,8 @@ class NewHomePage extends React.Component {
   autoFill(e) {
     e.preventDefault();
     this.setState({
-      title: Faker.name.jobTitle(),
-      description: Faker.lorem.sentence(),
+      title: "Silicon Valley Condo for Relaxation or Business",
+      description: "Faker.lorem.sentence()",
       img:
         "https://res.cloudinary.com/dqace5qmb/image/upload/v1522018201/4976907567_99bd3fd7a4_o.jpg",
       host_id: "1",
@@ -151,7 +151,6 @@ class NewHomePage extends React.Component {
       isLoading,
       valid
     } = this.state;
-    console.log("-------errors------", errors);
     return (
       <div>
         <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>

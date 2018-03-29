@@ -1,8 +1,95 @@
 .img-cover {
   object-fit: cover;
   width: 100vw;
-  height: 600px;
+  height: 800px;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   margin-top: -25px;
 }
+
+.detail-base {
+  margin-top: 24px;
+  margin-bottom: 200px;
+}
+
+/********************************************************/
+/* DETAIL INFO */
+/********************************************************/
+
+.detail-base .detail-info {
+  padding-right: 50px;
+}
+
+.detail-base .detail-info .basic-info .availability span {
+  margin-right: 20px;
+}
+
+.detail-base .detail-info .host-info .avatar {
+  width: 100px;
+  height: 100px;
+}
+
+.detail-base .detail-info .host-info .avatar img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.detail-base .detail-info .host-info .contact {
+  margin-left: 100px;
+  padding-left: 40px;
+  height: 100px;
+}
+
+.detail-base .detail-info .host-info .contact h3 {
+  line-height: 100px;
+}
+
+.detail-base .detail-info .host-info .description {
+  margin-top: 30px;
+}
+
+.detail-info button {
+  margin-right: 10px;
+}
+
+/********************************************************/
+/* END - DETAIL INFO */
+/********************************************************/
+
+/********************************************************/
+/* BOOK PANEL */
+/********************************************************/
+
+.detail-base .book-panel {
+  background-color: #ffffff;
+  padding: 24px 24px 50px 24px;
+  border: 1px solid #e4e4e4;
+}
+
+.detail-base .book-panel .price-base .price-label {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.detail-base .book-panel .price-base .price-label .price-per {
+  font-size: 60%;
+  font-weight: 400;
+  color: #808080;
+}
+
+.detail-base .book-panel .price-base .rating {
+  margin: 10px 0;
+  color: #008489;
+  font-size: 9px;
+}
+
+.detail-base .book-panel .price-base .rating span {
+  color: black;
+  font-size: 12px;
+}
+
+/********************************************************/
+/* END - BOOK PANEL */
+/********************************************************/

@@ -103,7 +103,6 @@ class EditHomePage extends React.Component {
     const { errors, valid } = validateInput(this.state);
     if (valid) {
       this.props.patchHome(this.props.params.id, this.state).then(res => {
-        debugger;
         this.context.router.push(`/homes/${this.props.params.id}`);
       });
     } else {
@@ -191,6 +190,7 @@ class EditHomePage extends React.Component {
       isLoading,
       valid
     } = this.state;
+
     return (
       <div>
         <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>
@@ -207,7 +207,7 @@ class EditHomePage extends React.Component {
           field="title"
           label="Home Title"
           name="title"
-          value={title || "title"}
+          value={title}
           onChange={e => this.onChange(e)}
           validator={e => this.checkRequired(e)}
           error={errors.title}
@@ -216,7 +216,7 @@ class EditHomePage extends React.Component {
           field="description"
           label="Home Description"
           name="description"
-          value={description || "description"}
+          value={description}
           onChange={e => this.onChange(e)}
           validator={e => this.checkRequired(e)}
           error={errors.description}

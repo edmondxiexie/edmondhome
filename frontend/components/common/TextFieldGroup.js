@@ -11,6 +11,7 @@ const TextFieldGroup = ({
   onChange,
   validator
 }) => {
+  value = value || "";
   return (
     <div className={classnames("form-group", { "has-error": error })}>
       <label className="control-label">{label}</label>
