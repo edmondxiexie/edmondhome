@@ -132,7 +132,7 @@ router.put("/:id/edit", (req, res) => {
       {
         title,
         description,
-        img,
+        image,
         host_id,
         price,
         district,

@@ -66,6 +66,9 @@ function buildUserSeed(knex) {
         username: `user_${i}`,
         timezone: "pacific",
         password_digest: bcrypt.hashSync("password", 10),
+        fullname: Faker.name.findName(),
+        education: Faker.name.title(),
+        company: Faker.company.companyName(),
         updated_at: new Date(),
         created_at: new Date()
       })

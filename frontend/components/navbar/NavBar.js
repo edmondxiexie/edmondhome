@@ -109,7 +109,7 @@ class NavBar extends React.Component {
               <span>
                 <img src="/img/brand_logo.png" alt="brand_logo" />
               </span>
-              <span>Edmond Home</span>
+              <span>Share Roof</span>
             </Link>
           </div>
 
