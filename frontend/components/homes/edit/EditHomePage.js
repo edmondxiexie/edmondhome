@@ -22,7 +22,7 @@ class EditHomePage extends React.Component {
     this.state = {
       title: "",
       description: "",
-      img: "",
+      image: "",
       host_id: "",
       price: "",
       district: "",
@@ -49,7 +49,7 @@ class EditHomePage extends React.Component {
       const {
         title,
         description,
-        img,
+        image,
         host_id,
         price,
         district,
@@ -65,7 +65,7 @@ class EditHomePage extends React.Component {
       this.setState({
         title,
         description,
-        img,
+        image,
         host_id,
         price,
         district,
@@ -127,7 +127,7 @@ class EditHomePage extends React.Component {
       (errors, response) => {
         if (!errors) {
           console.log("******Upload Image Successful!!******");
-          this.setState({ img: response[0].secure_url });
+          this.setState({ image: response[0].secure_url });
         }
       }
     );
@@ -151,7 +151,7 @@ class EditHomePage extends React.Component {
     this.setState({
       title: Faker.name.jobTitle(),
       description: Faker.lorem.sentence(),
-      img:
+      image:
         "https://res.cloudinary.com/dqace5qmb/image/upload/v1522018201/4976907567_99bd3fd7a4_o.jpg",
       host_id: "1",
       price: "235",
@@ -174,7 +174,7 @@ class EditHomePage extends React.Component {
     const {
       title,
       description,
-      img,
+      image,
       host_id,
       price,
       district,
@@ -223,10 +223,10 @@ class EditHomePage extends React.Component {
         />
         <ImageFieldGroup
           label="Image"
-          field="img"
-          value={img}
+          field="image"
+          value={image}
           onClick={e => this.onOpenImageWidget(e)}
-          error={errors.img}
+          error={errors.image}
         />
         <TextFieldGroup
           field="price"

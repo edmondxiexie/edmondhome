@@ -2,8 +2,8 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable("homes", table => {
     table.increments();
     table.string("title").notNullable();
-    table.string("description").notNullable();
-    table.string("img").notNullable();
+    table.text("description").notNullable();
+    table.string("image").notNullable();
     table.string("host_id").notNullable();
     table.string("price").notNullable();
     table.string("district").notNullable();

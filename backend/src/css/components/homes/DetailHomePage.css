@@ -54,6 +54,13 @@
   margin-right: 10px;
 }
 
+@media only screen and (max-width: 991px) {
+  .detail-base .detail-info {
+    padding-right: 15px;
+    margin-bottom: 30px;
+  }
+}
+
 /********************************************************/
 /* END - DETAIL INFO */
 /********************************************************/
@@ -88,6 +95,13 @@
 .detail-base .book-panel .price-base .rating span {
   color: black;
   font-size: 12px;
+}
+
+@media only screen and (max-width: 991px) {
+  .detail-base .book-panel {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
 }
 
 /********************************************************/

@@ -18,7 +18,7 @@ router.post("/", (req, res) => {
     const {
       title,
       description,
-      img,
+      image,
       host_id,
       price,
       district,
@@ -36,7 +36,7 @@ router.post("/", (req, res) => {
       {
         title,
         description,
-        img,
+        image,
         host_id,
         price,
         district,
@@ -114,7 +114,7 @@ router.put("/:id/edit", (req, res) => {
   const {
     title,
     description,
-    img,
+    image,
     host_id,
     price,
     district,

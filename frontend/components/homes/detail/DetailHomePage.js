@@ -74,7 +74,7 @@ class DetailHomnePage extends React.Component {
       id,
       title,
       description,
-      img,
+      image,
       host_id,
       price,
       district,
@@ -102,7 +102,7 @@ class DetailHomnePage extends React.Component {
 
     return (
       <div>
-        <img src={img} className="img-cover" />
+        <img src={image} className="img-cover" />
 
         <div className="detail-base row">
           <div className="detail-info col-md-8 col-sm-12">

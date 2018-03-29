@@ -22,8 +22,8 @@ function buildHomeSeed(knex) {
     res.push(
       knex("homes").insert({
         title: Faker.name.jobTitle(),
-        description: Faker.lorem.sentence(),
-        img: Faker.random.arrayElement(imageUrls),
+        description: Faker.lorem.paragraph(),
+        image: Faker.random.arrayElement(imageUrls),
         host_id: "1",
         price: Faker.random.number({ min: 50, max: 500 }),
         district: Faker.random.arrayElement([
