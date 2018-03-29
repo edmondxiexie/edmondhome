@@ -87,6 +87,7 @@ router.get("/:id", (req, res) => {
       return res.status(500).json({ error: error });
     });
 });
+
 // GET api/homes
 router.get("/", (req, res) => {
   console.log("******GET api/homes PASS!!******");

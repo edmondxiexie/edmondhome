@@ -77,7 +77,7 @@ class NavBar extends React.Component {
             </li>
             <li role="separator" className="divider" />
             <li>
-              <Link to="#">Profile</Link>
+              <Link to="/profile">Profile</Link>
             </li>
           </ul>
         </li>
@@ -109,7 +109,7 @@ class NavBar extends React.Component {
               <span>
                 <img src="/img/brand_logo.png" alt="brand_logo" />
               </span>
-              <span>Share Roof</span>
+              <span>ShareRoof</span>
             </Link>
           </div>
 

@@ -113,7 +113,7 @@ class NewHomePage extends React.Component {
       title: "Silicon Valley Condo for Relaxation or Business",
       description: Faker.lorem.paragraph(),
       image:
-        "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112935/8965577171_719591ff4d_z.jpg",
+        "http://res.cloudinary.com/dqace5qmb/image/upload/v1522018205/5129896990_526a74d91f_o.jpg",
       host_id: "1",
       price: "235",
       district: "NEW YORK",

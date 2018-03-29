@@ -69,6 +69,11 @@ class DetailHomnePage extends React.Component {
     console.log("-----date-----", date);
   }
 
+  autoFill(e) {
+    e.preventDefault();
+    this.setState({});
+  }
+
   render() {
     const {
       id,
@@ -155,62 +160,66 @@ class DetailHomnePage extends React.Component {
               </button>
             </div>
           </div>
-          <div className="book-panel col-md-4 col-sm-12">
-            <div className="price-base">
-              <div className="price-label">
-                <i className="fas fa-dollar-sign" />
-                {price}&nbsp;
-                <span className="price-per">per night</span>
+          <div className="book-panel-base col-md-4 col-sm-12">
+            <div className="book-panel">
+              <div className="price-base">
+                <div className="price-label">
+                  <i className="fas fa-dollar-sign" />
+                  {price}&nbsp;
+                  <span className="price-per">per night</span>
+                </div>
+                <div className="rating">
+                  <i className="fas fa-star" />
+                  <i className="fas fa-star" />
+                  <i className="fas fa-star" />
+                  <i className="fas fa-star" />
+                  <i className="fas fa-star-half" />
+                  <span>4.5</span>
+                </div>
               </div>
-              <div className="rating">
-                <i className="fas fa-star" />
-                <i className="fas fa-star" />
-                <i className="fas fa-star" />
-                <i className="fas fa-star" />
-                <i className="fas fa-star-half" />
-                <span>4.5</span>
-              </div>
-            </div>
-            <hr />
-            <TextFieldGroup
-              field="check_in_date"
-              label="Check In"
-              name="check_in_date"
-              value={check_in_date}
-              error={errors.check_in_date}
-              onChange={e => {
-                this.onChange(e);
-              }}
-            />
-            <TextFieldGroup
-              field="check_out_date"
-              label="Check Out"
-              name="check_out_date"
-              value={check_out_date}
-              error={errors.check_out_date}
-              onChange={e => {
-                this.onChange(e);
-              }}
-            />
+              <hr />
+              <TextFieldGroup
+                field="check_in_date"
+                label="Check In"
+                name="check_in_date"
+                value={check_in_date}
+                error={errors.check_in_date}
+                onChange={e => {
+                  this.onChange(e);
+                }}
+              />
+              <TextFieldGroup
+                field="check_out_date"
+                label="Check Out"
+                name="check_out_date"
+                value={check_out_date}
+                error={errors.check_out_date}
+                onChange={e => {
+                  this.onChange(e);
+                }}
+              />
 
-            <OptionFieldGroup
-              label="Guests"
-              name="guests"
-              options={guestsOptions}
-              value={guests}
-              onChange={e => {
-                this.onChange(e);
-              }}
-              validator={e => {}}
-              error={errors.guests}
-            />
-            <hr />
-            <button className="btn btn-success btn-block" onClick={e => {}}>
-              Request to Book
-            </button>
+              <OptionFieldGroup
+                label="Guests"
+                name="guests"
+                options={guestsOptions}
+                value={guests}
+                onChange={e => {
+                  this.onChange(e);
+                }}
+                validator={e => {}}
+                error={errors.guests}
+              />
+              <hr />
+              <button className="btn btn-success btn-block" onClick={e => {}}>
+                Request to Book
+              </button>
+              <button className="btn btn-warning btn-block" onClick={e => {}}>
+                Auto Fill
+              </button>
+            </div>
           </div>
         </div>
-        {/* <h1 className="text-center">Detail page</h1> */}
       </div>
     );
   }

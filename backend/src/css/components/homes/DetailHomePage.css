@@ -71,7 +71,7 @@
 
 .detail-base .book-panel {
   background-color: #ffffff;
-  padding: 24px 24px 50px 24px;
+  padding: 24px 24px 40px 24px;
   border: 1px solid #e4e4e4;
 }
 
@@ -95,13 +95,6 @@
 .detail-base .book-panel .price-base .rating span {
   color: black;
   font-size: 12px;
-}
-
-@media only screen and (max-width: 991px) {
-  .detail-base .book-panel {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
 }
 
 /********************************************************/

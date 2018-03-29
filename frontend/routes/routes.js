@@ -9,6 +9,7 @@ import IndexHomePageContainer from "../components/homes/index/IndexHomePageConta
 import NewHomePageContainer from "../components/homes/new/NewHomePageContainer";
 import DetailHomePageContainer from "../components/homes/detail/DetailHomePageContainer";
 import EditHomePageContainer from "../components/homes/edit/EditHomePageContainer";
+import ProfileContainer from "../components/profile/ProfileContainer";
 
 export default (
   <Route path="/" component={Root}>
@@ -19,5 +20,6 @@ export default (
     <Route path="/homes/new" component={NewHomePageContainer} />
     <Route path="/homes/:id" component={DetailHomePageContainer} />
     <Route path="/homes/:id/edit" component={EditHomePageContainer} />
+    <Route path="/profile" component={ProfileContainer} />
   </Route>
 );
