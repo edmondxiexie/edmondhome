@@ -4,7 +4,9 @@ import NewHomePage from "./NewHomePage";
 
 const mapStateToProps = state => {
   // debugger;
-  return {};
+  return {
+    user: state.auth.user
+  };
 };
 
 const mapDispatchToProps = dispatch => {

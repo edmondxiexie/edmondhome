@@ -114,7 +114,7 @@ class NewHomePage extends React.Component {
       description: Faker.lorem.paragraph(),
       image:
         "http://res.cloudinary.com/dqace5qmb/image/upload/v1522018205/5129896990_526a74d91f_o.jpg",
-      host_id: "1",
+      host_id: this.props.user.id,
       price: "235",
       district: "NEW YORK",
       property_type: "APARTMENT",

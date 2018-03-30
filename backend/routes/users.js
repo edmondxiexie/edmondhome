@@ -6,7 +6,7 @@ import User from "../models/user";
 
 const router = express.Router();
 
-// GET api/homes/:id
+// GET api/users/:id
 router.get("/:id", (req, res) => {
   console.log("******GET api/users/:id PASS!!******");
   const id = req.params.id;

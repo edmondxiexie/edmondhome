@@ -67,7 +67,7 @@ class NavBar extends React.Component {
           </a>
           <ul className="dropdown-menu">
             <li>
-              <a href="#">Manage Hosts</a>
+              <Link to="/manage">Manage Hosts</Link>
             </li>
             <li>
               <a href="#">My Trips</a>
