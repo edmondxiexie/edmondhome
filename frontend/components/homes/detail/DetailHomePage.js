@@ -1,17 +1,17 @@
 import React from "react";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import OptionFieldGroup from "../../common/OptionFieldGroup";
-
-import DatePicker from "react-datepicker";
-import moment from "moment";
-import "../../../../node_modules/react-datepicker/dist/react-datepicker.css";
+import DateFieldGroup from "../../common/DateFieldGroup";
+import Faker from "faker";
+// import DatePicker from "react-datepicker";
+// import "../../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 class DetailHomnePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      check_in_date: moment(),
-      check_out_date: moment(),
+      check_in_date: moment(new Date()).format("MMM DD YYYY h:mm A"),
+      check_out_date: moment(new Date()).format("MMM DD YYYY h:mm A"),
       guests: "",
       errors: {},
       host_avatar:
@@ -38,6 +38,13 @@ class DetailHomnePage extends React.Component {
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
+    });
+  }
+
+  onDateChange(e, name) {
+    console.log("******", [name]);
+    this.setState({
+      [name]: e
     });
   }
 
@@ -71,7 +78,22 @@ class DetailHomnePage extends React.Component {
 
   autoFill(e) {
     e.preventDefault();
-    this.setState({});
+    const checkInTime = new Date();
+    checkInTime.setDate(
+      checkInTime.getDate() - Math.floor(Math.random() * 3 + 1)
+    );
+    const checkOutTime = new Date();
+    checkOutTime.setDate(
+      checkOutTime.getDate() + Math.floor(Math.random() * 3 + 1)
+    );
+    const guestAvailabilityArr = new Array(~~this.props.home.guest_availability)
+      .fill()
+      .map((v, k) => String(k + 1));
+    this.setState({
+      check_in_date: moment(checkInTime).format("MMM DD YYYY h:mm A"),
+      check_out_date: moment(checkOutTime).format("MMM DD YYYY h:mm A"),
+      guests: Faker.random.arrayElement(guestAvailabilityArr)
+    });
   }
 
   render() {
@@ -117,30 +139,32 @@ class DetailHomnePage extends React.Component {
               <p>{district}</p>
               <div className="availability">
                 <span className="guests-availability">
-                  <i className="fas fa-users" />
+                  <i className="fa fa-users" />
                   &nbsp;{`${guest_availability} guests`}
                 </span>
                 <span className="rooms-availability">
-                  <i className="fas fa-cube" />
+                  <i className="fa fa-cube" />
                   &nbsp;{`${rooms_availability} bedrooms`}
                 </span>
                 <span className="beds-availability">
-                  <i className="fas fa-bed" />
+                  <i className="fa fa-bed" />
                   &nbsp;{`${beds_availability} beds`}
                 </span>
                 <span className="bath-availability">
-                  <i className="fas fa-bath" />
+                  <i className="fa fa-bath" />
                   &nbsp;{`${bath_availability} bath`}
                 </span>
               </div>
             </div>
             <hr />
             <div className="host-info">
-              <div className="avatar pull-left">
-                <img src={host_avatar} />
-              </div>
-              <div className="contact">
-                <h3>{`Hosted by ${host_name}`}</h3>
+              <div>
+                <div className="avatar">
+                  <img src={host_avatar} />
+                </div>
+                <div>
+                  <h3>{`Hosted by ${host_name}`}</h3>
+                </div>
               </div>
               <div className="jumbotron description">{description}</div>
             </div>
@@ -164,38 +188,36 @@ class DetailHomnePage extends React.Component {
             <div className="book-panel">
               <div className="price-base">
                 <div className="price-label">
-                  <i className="fas fa-dollar-sign" />
+                  <i className="fa fa-dollar" />
                   {price}&nbsp;
                   <span className="price-per">per night</span>
                 </div>
                 <div className="rating">
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star-half" />
+                  <i className="fa fa-star" />
+                  <i className="fa fa-star" />
+                  <i className="fa fa-star" />
+                  <i className="fa fa-star" />
+                  <i className="fa fa-star-half" />
                   <span>4.5</span>
                 </div>
               </div>
               <hr />
-              <TextFieldGroup
-                field="check_in_date"
+              <DateFieldGroup
                 label="Check In"
                 name="check_in_date"
                 value={check_in_date}
                 error={errors.check_in_date}
                 onChange={e => {
-                  this.onChange(e);
+                  this.onDateChange(e, "check_in_date");
                 }}
               />
-              <TextFieldGroup
-                field="check_out_date"
+              <DateFieldGroup
                 label="Check Out"
                 name="check_out_date"
                 value={check_out_date}
                 error={errors.check_out_date}
                 onChange={e => {
-                  this.onChange(e);
+                  this.onDateChange(e, "check_out_date");
                 }}
               />
 
@@ -214,7 +236,12 @@ class DetailHomnePage extends React.Component {
               <button className="btn btn-success btn-block" onClick={e => {}}>
                 Request to Book
               </button>
-              <button className="btn btn-warning btn-block" onClick={e => {}}>
+              <button
+                className="btn btn-warning btn-block"
+                onClick={e => {
+                  this.autoFill(e);
+                }}
+              >
                 Auto Fill
               </button>
             </div>

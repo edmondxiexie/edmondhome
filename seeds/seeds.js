@@ -24,7 +24,7 @@ function buildHomeSeed(knex) {
         title: Faker.name.jobTitle(),
         description: Faker.lorem.paragraph(),
         image: Faker.random.arrayElement(imageUrls),
-        host_id: "1",
+        host_id: Faker.random.number({ min: 1, max: 50 }),
         price: Faker.random.number({ min: 50, max: 500 }),
         district: Faker.random.arrayElement([
           "LOS ANGELES",

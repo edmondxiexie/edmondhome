@@ -1,0 +1,7 @@
+.input-group-addon:hover {
+  cursor: pointer;
+}
+
+.timepicker-picker .table-condensed tbody tr:nth-child(2) td {
+  text-align: center;
+}

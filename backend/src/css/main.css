@@ -1,3 +1,5 @@
 @import url("components/navbar/NavBar.css");
 @import url("components/homes/IndexHomePage.css");
 @import url("components/homes/DetailHomePage.css");
+@import url("components/datetimepicker/datepicker.css");
+@import url("components/datetimepicker/datepicker-addon.css");
