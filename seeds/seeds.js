@@ -64,7 +64,7 @@ function buildUserSeed(knex) {
       knex("users").insert({
         email: `user_${i}@gmail.com`,
         username: `user_${i}`,
-        timezone: "pacific",
+        timezone: "Pacific/Honolulu",
         password_digest: bcrypt.hashSync("password", 10),
         fullname: Faker.name.findName(),
         education: Faker.name.title(),

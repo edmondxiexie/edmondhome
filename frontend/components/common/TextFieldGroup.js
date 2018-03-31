@@ -9,7 +9,8 @@ const TextFieldGroup = ({
   error,
   type,
   onChange,
-  validator
+  validator,
+  disabled
 }) => {
   value = value || "";
   return (
@@ -22,6 +23,7 @@ const TextFieldGroup = ({
         type={type}
         name={field}
         className="form-control"
+        disabled={disabled}
       />
       {error && <span className="help-block">{error}</span>}
     </div>

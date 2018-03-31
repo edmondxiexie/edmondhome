@@ -2,8 +2,12 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-const ImageFieldGroup = ({ value, label, error, onClick }) => {
+const ImageFieldGroup = ({ value, label, error, width, height, onClick }) => {
   const borderColor = error ? "#a9444a" : "#ccc";
+
+  const widthLimit = width || "100%";
+  const heightLimit = height || "200px";
+
   const imageComponent = value ? (
     <div
       style={{
@@ -17,7 +21,11 @@ const ImageFieldGroup = ({ value, label, error, onClick }) => {
       <img
         src={value}
         className="img-rounded"
-        style={{ width: "100%", maxHeight: "200px" }}
+        style={{
+          width: widthLimit,
+          maxHeight: heightLimit,
+          objectFit: "cover"
+        }}
         onClick={onClick}
       />
     </div>
@@ -51,6 +59,8 @@ const ImageFieldGroup = ({ value, label, error, onClick }) => {
 ImageFieldGroup.propTypes = {
   label: React.PropTypes.string.isRequired,
   error: React.PropTypes.string,
+  width: React.PropTypes.string,
+  height: React.PropTypes.string,
   onClick: React.PropTypes.func.isRequired
 };
 
