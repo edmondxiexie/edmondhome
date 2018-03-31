@@ -198,7 +198,7 @@ class DetailHomnePage extends React.Component {
                   <i className="fa fa-star" />
                   <i className="fa fa-star" />
                   <i className="fa fa-star-half" />
-                  <span>4.5</span>
+                  <span>&nbsp;4.5</span>
                 </div>
               </div>
               <hr />

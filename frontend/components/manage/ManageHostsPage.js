@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import GalleryCard from "../common/GalleryCard";
 
 class ManageHostsPage extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class ManageHostsPage extends Component {
     this.props.fetchHostHomes(this.props.user.id);
   }
 
-  onRedirecct(e, id) {
+  onRedirect(e, id) {
     e.preventDefault();
     this.context.router.push(`/homes/${id}`);
   }
@@ -17,29 +18,34 @@ class ManageHostsPage extends Component {
   buildGallery(homes) {
     let gallery = [];
     for (let home of homes) {
-      let { id, title, host_id, description, image } = home;
-      if (title.length > 15) {
-        title = title.substr(0, 15) + "...";
-      }
+      let {
+        id,
+        title,
+        description,
+        image,
+        property_type,
+        room_type,
+        price,
+        district
+      } = home;
+      // if (title.length > 15) {
+      //   title = title.substr(0, 15) + "...";
+      // }
       gallery.push(
-        <div
-          key={id}
-          className="col-md-4 col-sm-6 gallery-card"
-          onClick={e => this.onRedirecct(e, id)}
-        >
-          <img src={image} className="card-img" />
-          <div className="caption">
-            <p>
-              <span>
-                <strong>{`ID: ${id}`}</strong>
-              </span>
-              <span>
-                <strong>{`Host ID: ${host_id}`}</strong>
-              </span>
-            </p>
-            <h4>{title}</h4>
-            <p>{description}</p>
-          </div>
+        <div key={id} className="col-md-4 col-sm-6">
+          <GalleryCard
+            propertyType={property_type}
+            roomType={room_type}
+            price={price}
+            district={district}
+            id={id}
+            title={title}
+            description={description}
+            image={image}
+            handleClick={(e, id) => {
+              this.onRedirect(e, id);
+            }}
+          />
         </div>
       );
     }

@@ -3,7 +3,6 @@ import ManageHostsPage from "./ManageHostsPage";
 import * as hostActions from "../../actions/hostActions";
 
 const mapStateToProps = state => {
-  console.log("----state----", state);
   return {
     user: state.auth.user,
     hostHomes: state.host.hostHomes
