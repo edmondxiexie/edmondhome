@@ -3,10 +3,12 @@ import auth from "./authReducer";
 import homes from "./homeReducer";
 import profile from "./profileReducer";
 import host from "./hostReducer";
+import trips from "./tripReducer";
 
 export default combineReducers({
   auth,
   homes,
   profile,
-  host
+  host,
+  trips
 });

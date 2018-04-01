@@ -47,7 +47,7 @@ class Profile extends React.Component {
         id,
         email,
         username,
-        // timezone,
+        timezone,
         fullname,
         education,
         company,
@@ -57,7 +57,7 @@ class Profile extends React.Component {
         id,
         email,
         username,
-        // timezone,
+        timezone,
         fullname,
         education,
         company
@@ -137,6 +137,266 @@ class Profile extends React.Component {
     this.setState({ nav: newNav });
   }
 
+  buildPhotoEditor() {
+    const {
+      email,
+      username,
+      timezone,
+      password,
+      passwordConfirm,
+      fullname,
+      education,
+      company,
+      errors,
+      isLoading,
+      valid,
+      nav,
+      avatar
+    } = this.state;
+    return (
+      <div>
+        {nav.photo === "active" && (
+          <div>
+            <div className="panel panel-info">
+              <div className="panel-heading">
+                <h3 className="panel-title">Profile Photo</h3>
+              </div>
+              <div className="panel-body edit-panel">
+                <ImageFieldGroup
+                  label="Avatar"
+                  field="avatar"
+                  value={avatar}
+                  width="200px"
+                  height="200px"
+                  onClick={e => this.onOpenImageWidget(e)}
+                  error={errors.avatar}
+                />
+              </div>
+            </div>
+            <div className="panel panel-danger">
+              <div className="panel-heading">
+                <h3 className="panel-title">Enter Password to Save Changes</h3>
+              </div>
+              <div className="panel-body edit-panel">
+                <TextFieldGroup
+                  error={errors.password}
+                  label="Password"
+                  onChange={e => this.onChange(e)}
+                  validator={e => this.checkRequired(e)}
+                  value={password}
+                  field="password"
+                  type="password"
+                />
+                <div className="form-group">
+                  <button
+                    className="btn btn-primary"
+                    onClick={e => this.onSubmit(e)}
+                    disabled={!valid}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-warning pull-right"
+                    onClick={e => {}}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  buildProfileEditor() {
+    const {
+      email,
+      username,
+      timezone,
+      password,
+      passwordConfirm,
+      fullname,
+      education,
+      company,
+      errors,
+      isLoading,
+      valid,
+      nav,
+      avatar
+    } = this.state;
+    return (
+      <div>
+        {nav.profile === "active" && (
+          <div>
+            <div className="panel panel-info">
+              <div className="panel-heading">
+                <h3 className="panel-title">Basic Info</h3>
+              </div>
+              <div className="panel-body edit-panel">
+                <form>
+                  <TextFieldGroup
+                    error={errors.username}
+                    label="Username"
+                    onChange={e => this.onChange(e)}
+                    validator={e => this.checkUserExists(e)}
+                    value={username}
+                    field="username"
+                    disabled={true}
+                  />
+                  <TextFieldGroup
+                    error={errors.email}
+                    label="Email"
+                    onChange={e => this.onChange(e)}
+                    validator={e => this.checkUserExists(e)}
+                    value={email}
+                    field="email"
+                  />
+                  <TextFieldGroup
+                    error={errors.fullname}
+                    label="Fullname"
+                    onChange={e => this.onChange(e)}
+                    value={fullname}
+                    field="fullname"
+                  />
+                  <TextFieldGroup
+                    error={errors.education}
+                    label="Education"
+                    onChange={e => this.onChange(e)}
+                    value={education}
+                    field="education"
+                  />
+                  <TextFieldGroup
+                    error={errors.company}
+                    label="Company"
+                    onChange={e => this.onChange(e)}
+                    value={company}
+                    field="company"
+                  />
+                  <OptionFieldGroup
+                    label="Timezone"
+                    name="timezone"
+                    value={timezone}
+                    options={timezones}
+                    onChange={e => this.onChange(e)}
+                    validator={e => this.checkRequired(e)}
+                    error={errors.timezone}
+                  />
+                </form>
+              </div>
+            </div>
+            <div className="panel panel-danger">
+              <div className="panel-heading">
+                <h3 className="panel-title">Enter Password to Save Changes</h3>
+              </div>
+              <div className="panel-body edit-panel">
+                <TextFieldGroup
+                  error={errors.password}
+                  label="Password"
+                  onChange={e => this.onChange(e)}
+                  validator={e => this.checkRequired(e)}
+                  value={password}
+                  field="password"
+                  type="password"
+                />
+                <div className="form-group">
+                  <button
+                    className="btn btn-primary"
+                    onClick={e => this.onSubmit(e)}
+                    disabled={!valid}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-warning pull-right"
+                    onClick={e => {}}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  buildPasswordEditor() {
+    const {
+      email,
+      username,
+      timezone,
+      password,
+      passwordConfirm,
+      fullname,
+      education,
+      company,
+      errors,
+      isLoading,
+      valid,
+      nav,
+      avatar
+    } = this.state;
+    return (
+      <div>
+        {nav.password === "active" && (
+          <div>
+            <div className="panel panel-danger">
+              <div className="panel-heading">
+                <h3 className="panel-title">Password</h3>
+              </div>
+              <div className="panel-body edit-panel">
+                <TextFieldGroup
+                  error={errors.password}
+                  label="Current Password"
+                  onChange={e => this.onChange(e)}
+                  validator={e => this.checkRequired(e)}
+                  value={password}
+                  field="password"
+                  type="password"
+                />
+                <TextFieldGroup
+                  error={errors.password}
+                  label="New Password"
+                  onChange={e => this.onChange(e)}
+                  validator={e => this.checkRequired(e)}
+                  value={password}
+                  field="password"
+                  type="password"
+                />
+                <TextFieldGroup
+                  error={errors.passwordConfirm}
+                  label="New Password Confirm"
+                  onChange={e => this.onChange(e)}
+                  validator={e => this.checkRequired(e)}
+                  value={passwordConfirm}
+                  field="passwordConfirm"
+                  type="password"
+                />
+                <div className="form-group">
+                  <button
+                    className="btn btn-primary"
+                    onClick={e => this.onSubmit(e)}
+                    disabled={!valid}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-warning pull-right"
+                    onClick={e => {}}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
   render() {
     const profile = JSON.stringify(this.props.profile);
     console.log("profile", profile);
@@ -196,205 +456,9 @@ class Profile extends React.Component {
           </div>
 
           <div className="col-md-9">
-            {nav.profile === "active" && (
-              <div>
-                <div className="panel panel-info">
-                  <div className="panel-heading">
-                    <h3 className="panel-title">Basic Info</h3>
-                  </div>
-                  <div className="panel-body edit-panel">
-                    <form>
-                      <TextFieldGroup
-                        error={errors.username}
-                        label="Username"
-                        onChange={e => this.onChange(e)}
-                        validator={e => this.checkUserExists(e)}
-                        value={username}
-                        field="username"
-                        disabled={true}
-                      />
-                      <TextFieldGroup
-                        error={errors.email}
-                        label="Email"
-                        onChange={e => this.onChange(e)}
-                        validator={e => this.checkUserExists(e)}
-                        value={email}
-                        field="email"
-                      />
-                      <TextFieldGroup
-                        error={errors.fullname}
-                        label="Fullname"
-                        onChange={e => this.onChange(e)}
-                        value={fullname}
-                        field="fullname"
-                      />
-                      <TextFieldGroup
-                        error={errors.education}
-                        label="Education"
-                        onChange={e => this.onChange(e)}
-                        value={education}
-                        field="education"
-                      />
-                      <TextFieldGroup
-                        error={errors.company}
-                        label="Company"
-                        onChange={e => this.onChange(e)}
-                        value={company}
-                        field="company"
-                      />
-                      <OptionFieldGroup
-                        label="Timezone"
-                        name="timezone"
-                        value={timezone}
-                        options={timezones}
-                        onChange={e => this.onChange(e)}
-                        validator={e => this.checkRequired(e)}
-                        error={errors.timezone}
-                      />
-                    </form>
-                  </div>
-                </div>
-                <div className="panel panel-danger">
-                  <div className="panel-heading">
-                    <h3 className="panel-title">
-                      Enter Password to Save Changes
-                    </h3>
-                  </div>
-                  <div className="panel-body edit-panel">
-                    <TextFieldGroup
-                      error={errors.password}
-                      label="Password"
-                      onChange={e => this.onChange(e)}
-                      validator={e => this.checkRequired(e)}
-                      value={password}
-                      field="password"
-                      type="password"
-                    />
-                    <div className="form-group">
-                      <button
-                        className="btn btn-primary"
-                        onClick={e => this.onSubmit(e)}
-                        disabled={!valid}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="btn btn-warning pull-right"
-                        onClick={e => {}}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {nav.photo === "active" && (
-              <div>
-                <div className="panel panel-info">
-                  <div className="panel-heading">
-                    <h3 className="panel-title">Profile Photo</h3>
-                  </div>
-                  <div className="panel-body edit-panel">
-                    <ImageFieldGroup
-                      label="Avatar"
-                      field="avatar"
-                      value={avatar}
-                      width="200px"
-                      height="200px"
-                      onClick={e => this.onOpenImageWidget(e)}
-                      error={errors.avatar}
-                    />
-                  </div>
-                </div>
-                <div className="panel panel-danger">
-                  <div className="panel-heading">
-                    <h3 className="panel-title">
-                      Enter Password to Save Changes
-                    </h3>
-                  </div>
-                  <div className="panel-body edit-panel">
-                    <TextFieldGroup
-                      error={errors.password}
-                      label="Password"
-                      onChange={e => this.onChange(e)}
-                      validator={e => this.checkRequired(e)}
-                      value={password}
-                      field="password"
-                      type="password"
-                    />
-                    <div className="form-group">
-                      <button
-                        className="btn btn-primary"
-                        onClick={e => this.onSubmit(e)}
-                        disabled={!valid}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="btn btn-warning pull-right"
-                        onClick={e => {}}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {nav.password === "active" && (
-              <div>
-                <div className="panel panel-danger">
-                  <div className="panel-heading">
-                    <h3 className="panel-title">Password</h3>
-                  </div>
-                  <div className="panel-body edit-panel">
-                    <TextFieldGroup
-                      error={errors.password}
-                      label="Current Password"
-                      onChange={e => this.onChange(e)}
-                      validator={e => this.checkRequired(e)}
-                      value={password}
-                      field="password"
-                      type="password"
-                    />
-                    <TextFieldGroup
-                      error={errors.password}
-                      label="New Password"
-                      onChange={e => this.onChange(e)}
-                      validator={e => this.checkRequired(e)}
-                      value={password}
-                      field="password"
-                      type="password"
-                    />
-                    <TextFieldGroup
-                      error={errors.passwordConfirm}
-                      label="New Password Confirm"
-                      onChange={e => this.onChange(e)}
-                      validator={e => this.checkRequired(e)}
-                      value={passwordConfirm}
-                      field="passwordConfirm"
-                      type="password"
-                    />
-                    <div className="form-group">
-                      <button
-                        className="btn btn-primary"
-                        onClick={e => this.onSubmit(e)}
-                        disabled={!valid}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="btn btn-warning pull-right"
-                        onClick={e => {}}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+            {this.buildProfileEditor()}
+            {this.buildPhotoEditor()}
+            {this.buildPasswordEditor()}
           </div>
         </div>
       </div>

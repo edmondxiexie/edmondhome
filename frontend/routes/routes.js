@@ -11,6 +11,7 @@ import DetailHomePageContainer from "../components/homes/detail/DetailHomePageCo
 import EditHomePageContainer from "../components/homes/edit/EditHomePageContainer";
 import ProfileContainer from "../components/profile/ProfileContainer";
 import ManageHostsPageContainer from "../components/manage/ManageHostsPageContainer";
+import IndexTripsPageContainer from "../components/trips/index/IndexTripsPageContainer";
 
 export default (
   <Route path="/" component={Root}>
@@ -23,5 +24,6 @@ export default (
     <Route path="/homes/:id/edit" component={EditHomePageContainer} />
     <Route path="/profile" component={ProfileContainer} />
     <Route path="/manage" component={ManageHostsPageContainer} />
+    <Route path="/trips" component={IndexTripsPageContainer} />
   </Route>
 );

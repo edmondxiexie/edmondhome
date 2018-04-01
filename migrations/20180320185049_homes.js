@@ -4,7 +4,6 @@ exports.up = function(knex, Promise) {
     table.string("title").notNullable();
     table.text("description").notNullable();
     table.string("image").notNullable();
-    table.string("host_id").notNullable();
     table.string("price").notNullable();
     table.string("district").notNullable();
     table.string("property_type").notNullable();
@@ -16,6 +15,13 @@ exports.up = function(knex, Promise) {
     table.string("bath_availability").notNullable();
     table.string("target").notNullable();
     table.timestamps();
+    table
+      .integer("host_id")
+      .notNullable()
+      .references("id")
+      .inTable("users")
+      .onDelete("CASCADE")
+      .index();
   });
 };
 

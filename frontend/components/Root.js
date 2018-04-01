@@ -7,6 +7,12 @@ class Root extends React.Component {
       <div>
         <NavBarContainer />
         <div className="container root-container">{this.props.children}</div>
+        <footer className="container footer">
+          <hr />
+          <div>&nbsp;&nbsp;© 2018 Copyright: Edmond Home</div>
+          <br />
+          <br />
+        </footer>
       </div>
     );
   }

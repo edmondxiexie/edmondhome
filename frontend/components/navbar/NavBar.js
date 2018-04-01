@@ -70,7 +70,7 @@ class NavBar extends React.Component {
               <Link to="/manage">Manage Hosts</Link>
             </li>
             <li>
-              <a href="#">My Trips</a>
+              <Link to="/trips">My Trips</Link>
             </li>
             <li>
               <a href="#">Wishlist</a>

@@ -3,6 +3,7 @@ const Faker = require("faker");
 
 const USER_NUM = 50;
 const HOME_NUM = USER_NUM * 20;
+const TRIP_NUM = USER_NUM * 20;
 
 const imageUrls = [
   "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112935/8039654500_796cd8d4f0_z.jpg",
@@ -77,6 +78,27 @@ function buildUserSeed(knex) {
   return res;
 }
 
+function buildTripSeed(knex) {
+  let res = [];
+  for (let i = 1; i <= TRIP_NUM; i++) {
+    let dFrom = new Date();
+    dFrom.setDate(dFrom.getDate() - Math.floor(Math.random() * 3 + 1));
+    let dTo = new Date();
+    dTo.setDate(dTo.getDate() + Math.floor(Math.random() * 3 + 1));
+    res.push(
+      knex("trips").insert({
+        check_in_time: dFrom,
+        check_out_time: dTo,
+        reserved_guests: Faker.random.number({ min: 1, max: 4 }),
+        guest_id: Math.floor(Math.random() * USER_NUM + 1),
+        home_id: Math.floor(Math.random() * HOME_NUM + 1),
+        created_at: new Date(),
+        updated_at: new Date()
+      })
+    );
+  }
+  return res;
+}
 exports.seed = function(knex, Promise) {
   return knex("users")
     .del()
@@ -88,6 +110,13 @@ exports.seed = function(knex, Promise) {
         .del()
         .then(function() {
           return Promise.all(buildHomeSeed(knex));
+        })
+        .then(function() {
+          return knex("trips")
+            .del()
+            .then(function() {
+              return Promise.all(buildTripSeed(knex));
+            });
         });
     });
 };

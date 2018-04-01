@@ -18,8 +18,6 @@ class GalleryCard extends Component {
       handleClick
     } = this.props;
 
-    console.log("type");
-
     let trimedTitle = title;
 
     if (title.length > 50) {
