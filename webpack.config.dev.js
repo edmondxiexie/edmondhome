@@ -29,10 +29,15 @@ export default {
       {
         test: /\.css$/,
         loaders: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass", "scss"],
+        include: [path.join(__dirname, "backend/src/css/")]
       }
     ]
   },
   resolve: {
-    extentions: ["", ".js", ".css"]
+    extentions: ["", ".js"]
   }
 };

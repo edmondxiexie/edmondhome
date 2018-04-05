@@ -5,7 +5,7 @@ import NewHomePage from "./NewHomePage";
 const mapStateToProps = state => {
   // debugger;
   return {
-    user: state.auth.user
+    auth: state.auth
   };
 };
 

@@ -2,6 +2,8 @@ import bookshelf from "../orm/bookshelf";
 import Trip from "./trip";
 import User from "./user";
 
+bookshelf.plugin("pagination");
+
 export default bookshelf.Model.extend({
   tableName: "homes",
   trip: function() {

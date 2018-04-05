@@ -56,9 +56,38 @@ class IndexHomePage extends React.Component {
   render() {
     let homes = this.props.homes || [];
     return (
-      <div className="container row">
-        <h1 className="text-center">Index page</h1>
-        {this.buildGallery(homes)}
+      <div>
+        <div className="container row">
+          <h1 className="text-center">Index page</h1>
+          {this.buildGallery(homes)}
+        </div>
+        <ul className="pagination">
+          <li className="page-item">
+            <a className="page-link" href="#">
+              Previous
+            </a>
+          </li>
+          <li className="page-item">
+            <a className="page-link" href="#">
+              1
+            </a>
+          </li>
+          <li className="page-item">
+            <a className="page-link" href="#">
+              2
+            </a>
+          </li>
+          <li className="page-item">
+            <a className="page-link" href="#">
+              3
+            </a>
+          </li>
+          <li className="page-item">
+            <a className="page-link" href="#">
+              Next
+            </a>
+          </li>
+        </ul>
       </div>
     );
   }

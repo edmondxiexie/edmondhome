@@ -1,4 +1,5 @@
 import React from "react";
+// import "../../../backend/src/css/home.scss";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class HomePage extends React.Component {
   render() {
     const slogan = this.state.username || "Edmond Home";
     return (
-      <div className="jumbotron">
+      <div className="jumbotron home-page">
         <h1>{`Welcome! ${slogan}`}</h1>
       </div>
     );

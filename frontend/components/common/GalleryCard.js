@@ -31,6 +31,9 @@ class GalleryCard extends Component {
           handleClick(e, id);
         }}
       >
+        <div className="favorite">
+          <i className="fa fa-heart-o" />
+        </div>
         <img src={image} className="card-img" />
         <div className="caption">
           <div>

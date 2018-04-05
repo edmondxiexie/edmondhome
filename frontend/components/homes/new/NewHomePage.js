@@ -40,6 +40,12 @@ class NewHomePage extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (!this.props.auth.isAuthenticated) {
+      this.context.router.push("/login");
+    }
+  }
+
   checkRequired(e) {
     e.preventDefault();
     const field = e.target.name;
@@ -114,7 +120,7 @@ class NewHomePage extends React.Component {
       description: Faker.lorem.paragraph(),
       image:
         "http://res.cloudinary.com/dqace5qmb/image/upload/v1522018205/5129896990_526a74d91f_o.jpg",
-      host_id: this.props.user.id,
+      host_id: this.props.auth.user.id,
       price: "235",
       district: "NEW YORK",
       property_type: "APARTMENT",

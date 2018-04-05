@@ -69,6 +69,22 @@ router.post("/", (req, res) => {
   }
 });
 
+// GET api/homes/count
+router.get("/count", (req, res) => {
+  console.log("******GET api/homes/count PASS!!******");
+  Home.count("*")
+    .then(count => {
+      console.log("******Fetch homes/count SUCCESS!!******");
+      return res.json(count);
+    })
+    .catch(errors => {
+      console.log("******Fetch homes FAIL!!******");
+      return res
+        .status(500)
+        .json({ errors: true, message: "errors in GET api/homes/count" });
+    });
+});
+
 // GET api/homes/:id
 router.get("/:id", (req, res) => {
   console.log("******GET api/homes/:id PASS!!******");
@@ -95,7 +111,10 @@ router.get("/", (req, res) => {
     select: ["*"]
   })
     .orderBy("id", "ASC")
-    .fetchAll()
+    .fetchPage({
+      pageSize: 12,
+      page: 3
+    })
     .then(homes => {
       console.log("******Fetch homes SUCCESS!!******");
       return res.json(homes);
