@@ -9,8 +9,9 @@ import { setCurrentUser } from "./actions/authActions";
 
 import routes from "./routes/routes";
 import store from "./store/store";
+import "../backend/src/css/main";
 
-require("../backend/src/css/home");
+// require("../backend/src/css/main");
 // console.log("token: ", localStorage.jwtToken);
 if (localStorage.jwtToken) {
   authUtil.setAuthorizationToken(localStorage.jwtToken);
