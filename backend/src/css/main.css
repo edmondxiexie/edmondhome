@@ -5,7 +5,6 @@
 @import url("components/datetimepicker/datepicker-addon.css");
 @import url("components/common/GalleryCard.css");
 @import url("components/profile/Profile.css");
-@import url("./home.scss");
 
 footer {
   color: #999;

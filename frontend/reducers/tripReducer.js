@@ -1,7 +1,7 @@
 import { GET_TRIPS } from "../utils/tripUtil";
 
 const defaultTrips = Object.freeze({
-  trips: {},
+  trips: [],
   errors: []
 });
 

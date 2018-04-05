@@ -5,13 +5,13 @@ import * as tripsActions from "../../../actions/tripActions";
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    trips: state.trips.trips || {}
+    trips: state.trips.trips || []
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTrips: guestId => {
+    fetchTrips: guestId => {
       return dispatch(tripsActions.fetchTrips(guestId));
     }
   };

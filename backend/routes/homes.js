@@ -57,7 +57,6 @@ router.post("/", (req, res) => {
         return res.json({ home });
       })
       .catch(errors => {
-        console.log("****** errors" + errors);
         console.log("******Add homes FAIL!!******");
         return res
           .status(500)

@@ -73,7 +73,7 @@ class NavBar extends React.Component {
               <Link to="/trips">My Trips</Link>
             </li>
             <li>
-              <a href="#">Wishlist</a>
+              <Link to="/wishlist">Wishlist</Link>
             </li>
             <li role="separator" className="divider" />
             <li>

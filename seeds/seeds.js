@@ -4,6 +4,7 @@ const Faker = require("faker");
 const USER_NUM = 50;
 const HOME_NUM = USER_NUM * 20;
 const TRIP_NUM = USER_NUM * 20;
+const WISHLIST_NUM = USER_NUM * 10;
 
 const imageUrls = [
   "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112935/8039654500_796cd8d4f0_z.jpg",
@@ -99,6 +100,22 @@ function buildTripSeed(knex) {
   }
   return res;
 }
+
+function buildWishlistSeed(knex) {
+  let res = [];
+  for (let i = 1; i <= WISHLIST_NUM; i++) {
+    res.push(
+      knex("wishlist").insert({
+        keeper_id: Math.floor(Math.random() * USER_NUM + 1),
+        home_id: Math.floor(Math.random() * HOME_NUM + 1),
+        created_at: new Date(),
+        updated_at: new Date()
+      })
+    );
+  }
+  return res;
+}
+
 exports.seed = function(knex, Promise) {
   return knex("users")
     .del()
@@ -116,6 +133,13 @@ exports.seed = function(knex, Promise) {
             .del()
             .then(function() {
               return Promise.all(buildTripSeed(knex));
+            })
+            .then(function() {
+              return knex("wishlist")
+                .del()
+                .then(function() {
+                  return Promise.all(buildWishlistSeed(knex));
+                });
             });
         });
     });

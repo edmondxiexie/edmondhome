@@ -27,17 +27,12 @@ export default {
         loaders: ["react-hot", "babel"]
       },
       {
-        test: /\.css$/,
-        loaders: ["style-loader", "css-loader"]
-      },
-      {
         test: /\.scss$/,
-        loaders: ["style", "css", "sass", "scss"],
-        include: [path.join(__dirname, "backend/src/css/")]
+        loaders: ["style-loader", "css-loader", "sass-loader"]
       }
     ]
   },
   resolve: {
-    extentions: ["", ".js"]
+    extensions: ["", ".js", ".css", ".scss"]
   }
 };

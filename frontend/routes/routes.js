@@ -12,6 +12,7 @@ import EditHomePageContainer from "../components/homes/edit/EditHomePageContaine
 import ProfileContainer from "../components/profile/ProfileContainer";
 import ManageHostsPageContainer from "../components/manage/ManageHostsPageContainer";
 import IndexTripsPageContainer from "../components/trips/index/IndexTripsPageContainer";
+import IndexWishlistPageContainer from "../components/wishlist/index/IndexWishlistPageContainer";
 
 export default (
   <Route path="/" component={Root}>
@@ -25,5 +26,6 @@ export default (
     <Route path="/profile" component={ProfileContainer} />
     <Route path="/manage" component={ManageHostsPageContainer} />
     <Route path="/trips" component={IndexTripsPageContainer} />
+    <Route path="/wishlist" component={IndexWishlistPageContainer} />
   </Route>
 );

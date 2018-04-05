@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import GalleryCard from "../../common/GalleryCard";
 
-class IndexTripsPage extends Component {
+class IndexWishlistPage extends Component {
   constructor(props) {
     super(props);
   }
 
   componentWillMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.fetchTrips(this.props.auth.user.id);
+      this.props.fetchWishlist(this.props.auth.user.id);
     }
   }
 
@@ -17,10 +17,10 @@ class IndexTripsPage extends Component {
     this.context.router.push(`/homes/${id}`);
   }
 
-  buildGallery(trips) {
+  buildGallery(wishlist) {
     let gallery = [];
-    for (let trip of trips) {
-      let { home, check_in_time, check_out_time } = trip;
+    for (let wish of wishlist) {
+      let { home } = wish;
       let {
         id,
         title,
@@ -34,6 +34,7 @@ class IndexTripsPage extends Component {
 
       gallery.push(
         <div key={id} className="col-md-4 col-sm-6">
+          <h1>{id}</h1>
           <GalleryCard
             propertyType={property_type}
             roomType={room_type}
@@ -54,18 +55,18 @@ class IndexTripsPage extends Component {
   }
 
   render() {
-    const trips = this.props.trips || [];
+    const wishlist = this.props.wishlist || [];
     return (
       <div className="container row">
-        <h1 className="text-center">Trip Page</h1>
-        {this.buildGallery(trips)}
+        <h1 className="text-center">Wishlist Page</h1>
+        {this.buildGallery(wishlist)}
       </div>
     );
   }
 }
 
-IndexTripsPage.contextTypes = {
+IndexWishlistPage.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default IndexTripsPage;
+export default IndexWishlistPage;
