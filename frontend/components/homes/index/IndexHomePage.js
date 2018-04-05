@@ -8,15 +8,35 @@ class IndexHomePage extends React.Component {
 
   componentWillMount() {
     this.props.fetchHomes();
+    if (this.props.auth.isAuthenticated) {
+      this.props.fetchWishlist(this.props.auth.user.id);
+    }
   }
 
   onRedirect(e, id) {
     e.preventDefault();
-    console.log("---onclick---");
     this.context.router.push(`/homes/${id}`);
   }
 
-  buildGallery(homes) {
+  addToWishlist(e, home_id) {
+    e.stopPropagation();
+    const wishData = {
+      home_id: home_id,
+      keeper_id: this.props.auth.user.id
+    };
+    this.props.addWishlist(wishData).then(res => {
+      this.props.fetchWishlist(this.props.auth.user.id);
+    });
+  }
+
+  deleteFromWishlist(e, id) {
+    e.stopPropagation();
+    this.props.deleteWishlist(id).then(res => {
+      this.props.fetchWishlist(this.props.auth.user.id);
+    });
+  }
+
+  buildGallery(homes, wishlist) {
     let gallery = [];
     for (let home of homes) {
       let {
@@ -29,9 +49,17 @@ class IndexHomePage extends React.Component {
         price,
         district
       } = home;
-      // if (title.length > 15) {
-      //   title = title.substr(0, 15) + "...";
-      // }
+
+      let onWishlist = false;
+      let wishId = null;
+
+      for (let wish of wishlist) {
+        if (id === wish.home_id) {
+          onWishlist = true;
+          wishId = wish.id;
+          break;
+        }
+      }
       gallery.push(
         <div key={id} className="col-md-4 col-sm-6">
           <GalleryCard
@@ -43,9 +71,13 @@ class IndexHomePage extends React.Component {
             title={title}
             description={description}
             image={image}
+            showWishlist={true}
+            onWishlist={onWishlist}
             handleClick={(e, id) => {
               this.onRedirect(e, id);
             }}
+            addToWishlist={e => this.addToWishlist(e, id)}
+            deleteFromWishlist={e => this.deleteFromWishlist(e, wishId)}
           />
         </div>
       );
@@ -55,11 +87,13 @@ class IndexHomePage extends React.Component {
 
   render() {
     let homes = this.props.homes || [];
+    const wishlist = this.props.wishlist || [];
+
     return (
       <div>
         <div className="container row">
           <h1 className="text-center">Index page</h1>
-          {this.buildGallery(homes)}
+          {this.buildGallery(homes, wishlist)}
         </div>
         <ul className="pagination">
           <li className="page-item">

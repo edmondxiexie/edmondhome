@@ -38,4 +38,31 @@ router.post("/", (req, res) => {
     });
 });
 
+// DELETE api/wishlist/:id
+router.delete("/:id", (req, res) => {
+  console.log("******DELETE api/wishlist/:id PASS!!******");
+  const id = req.params.id;
+  Wishlist.query({ select: ["*"], where: { id: id } })
+    .fetch()
+    .then(wish => {
+      if (!wish) {
+        console.log("******DELETE api/wishlist/:id FAIL!!******");
+        return res.status(404).json({ message: "wishlist not found" });
+      }
+      wish.destroy().then(() => {
+        console.log("******DELETE api/wishlist/:id SUCCESS!!******");
+        return res.json({
+          success: true,
+          message: "wishlist successfully deleted!"
+        });
+      });
+    })
+    .catch(err => {
+      console.log("******DELETE api/wishlist/:id FAIL!!******");
+      return res
+        .status(500)
+        .json({ message: "fetch wishlist fail", error: err });
+    });
+});
+
 export default router;

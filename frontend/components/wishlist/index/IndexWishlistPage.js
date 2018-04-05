@@ -12,6 +12,24 @@ class IndexWishlistPage extends Component {
     }
   }
 
+  addToWishlist(e, home_id) {
+    e.stopPropagation();
+    const wishData = {
+      home_id: home_id,
+      keeper_id: this.props.auth.user.id
+    };
+    this.props.addWishlist(wishData).then(res => {
+      this.props.fetchWishlist(this.props.auth.user.id);
+    });
+  }
+
+  deleteFromWishlist(e, id) {
+    e.stopPropagation();
+    this.props.deleteWishlist(id).then(res => {
+      this.props.fetchWishlist(this.props.auth.user.id);
+    });
+  }
+
   onRedirect(e, id) {
     e.preventDefault();
     this.context.router.push(`/homes/${id}`);
@@ -47,6 +65,10 @@ class IndexWishlistPage extends Component {
             handleClick={(e, id) => {
               this.onRedirect(e, id);
             }}
+            showWishlist={true}
+            onWishlist={true}
+            addToWishlist={e => this.addToWishlist(e, id)}
+            deleteFromWishlist={e => this.deleteFromWishlist(e, wish.id)}
           />
         </div>
       );

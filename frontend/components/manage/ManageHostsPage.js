@@ -45,6 +45,7 @@ class ManageHostsPage extends Component {
             handleClick={(e, id) => {
               this.onRedirect(e, id);
             }}
+            showWishlist={false}
           />
         </div>
       );

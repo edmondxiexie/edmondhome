@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class GalleryCard extends Component {
   constructor(props) {
@@ -15,7 +16,11 @@ class GalleryCard extends Component {
       roomType,
       price,
       district,
-      handleClick
+      onWishlist,
+      showWishlist,
+      handleClick,
+      addToWishlist,
+      deleteFromWishlist
     } = this.props;
 
     let trimedTitle = title;
@@ -31,9 +36,27 @@ class GalleryCard extends Component {
           handleClick(e, id);
         }}
       >
-        <div className="favorite">
-          <i className="fa fa-heart-o" />
-        </div>
+        {onWishlist
+          ? showWishlist && (
+              <div
+                className="favorite"
+                onClick={e => {
+                  deleteFromWishlist(e, id);
+                }}
+              >
+                <i className="fa fa-heart" />
+              </div>
+            )
+          : showWishlist && (
+              <div
+                className="favorite"
+                onClick={e => {
+                  addToWishlist(e, id);
+                }}
+              >
+                <i className="fa fa-heart-o" />
+              </div>
+            )}
         <img src={image} className="card-img" />
         <div className="caption">
           <div>
@@ -55,5 +78,21 @@ class GalleryCard extends Component {
     );
   }
 }
+
+GalleryCard.propTypes = {
+  id: PropTypes.number,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
+  propertyType: PropTypes.string,
+  roomType: PropTypes.string,
+  price: PropTypes.string,
+  district: PropTypes.string,
+  handleClick: PropTypes.func,
+  showWishlist: PropTypes.bool,
+  onWishlist: PropTypes.bool,
+  addToWishlist: PropTypes.func,
+  deleteFromWishlist: PropTypes.func
+};
 
 export default GalleryCard;

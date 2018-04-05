@@ -17,3 +17,15 @@ export const fetchWishlist = keeperId => {
     });
   };
 };
+
+export const addWishlist = wishData => {
+  return dispatch => {
+    return wishlistUtil.postWishlistUtil(wishData);
+  };
+};
+
+export const deleteWishlist = id => {
+  return dispatch => {
+    return wishlistUtil.deleteWishlistUtil(id);
+  };
+};

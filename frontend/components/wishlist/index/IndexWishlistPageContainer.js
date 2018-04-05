@@ -13,6 +13,12 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchWishlist: keeperId => {
       return dispatch(wishlistActions.fetchWishlist(keeperId));
+    },
+    addWishlist: wishData => {
+      return dispatch(wishlistActions.addWishlist(wishData));
+    },
+    deleteWishlist: id => {
+      return dispatch(wishlistActions.deleteWishlist(id));
     }
   };
 };
