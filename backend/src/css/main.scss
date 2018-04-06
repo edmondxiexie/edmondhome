@@ -4,8 +4,10 @@
 @import "components/datetimepicker/datepicker";
 @import "components/datetimepicker/datepicker-addon";
 @import "components/common/GalleryCard";
-@import "components/common/Pagination.scss";
+@import "components/common/Pagination";
 @import "components/profile/Profile";
+@import "components/alert/Alert";
+@import "root";
 
 footer {
   color: #999;

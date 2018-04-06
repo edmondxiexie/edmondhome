@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import IndexHomePage from "./IndexHomePage";
 import * as homeActions from "../../../actions/homeActions";
 import * as wishlistActions from "../../../actions/wishlistActions";
+import * as alertActions from "../../../actions/alertActions";
 
 const mapStateToProps = state => {
   return {
@@ -31,6 +32,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWishlist: id => {
       return dispatch(wishlistActions.deleteWishlist(id));
+    },
+    setAlert: alert => {
+      return dispatch(alertActions.setAlert(alert));
     }
   };
 };

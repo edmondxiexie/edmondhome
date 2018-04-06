@@ -145,34 +145,50 @@ class IndexHomePage extends React.Component {
     return gallery;
   }
 
+  textAlert(e) {
+    e.preventDefault();
+    console.log("----------test");
+    this.props.setAlert("TEST ALERT");
+    setTimeout(() => {
+      this.props.setAlert("");
+    }, 3000);
+  }
+
   render() {
     let homes = this.state.homes;
     const wishlist = this.props.wishlist || [];
 
     return (
       <div>
-        <Pagination
-          page={this.state.page}
-          pages={this.state.pages}
-          onChangePage={e => {
-            this.onChangePage(e);
-          }}
-          onNextPage={e => {
-            this.onNextPage(e);
-          }}
-          onPreviousPage={e => {
-            this.onPreviousPage(e);
-          }}
-          onFirstPage={e => {
-            this.onFirstPage(e);
-          }}
-          onLastPage={e => {
-            this.onLastPage(e);
-          }}
-        />
-
         <div className="container row">
           <h1 className="text-center">Index page</h1>
+          <button
+            className="btn btn-primary"
+            onClick={e => {
+              this.textAlert(e);
+            }}
+          >
+            Alert
+          </button>
+          <Pagination
+            page={this.state.page}
+            pages={this.state.pages}
+            onChangePage={e => {
+              this.onChangePage(e);
+            }}
+            onNextPage={e => {
+              this.onNextPage(e);
+            }}
+            onPreviousPage={e => {
+              this.onPreviousPage(e);
+            }}
+            onFirstPage={e => {
+              this.onFirstPage(e);
+            }}
+            onLastPage={e => {
+              this.onLastPage(e);
+            }}
+          />
           {this.buildGallery(homes, wishlist)}
         </div>
 

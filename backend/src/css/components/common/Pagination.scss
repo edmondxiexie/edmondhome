@@ -2,22 +2,22 @@
   display: flex;
   justify-content: center;
 
-  & button {
+  button {
     padding: 6px 12px;
     color: #337ab7;
     border: 1px solid #ddd;
   }
 
-  & a {
+  a {
     cursor: pointer;
   }
 
-  & .disabled-link {
+  .disabled-link {
     pointer-events: none;
     color: #ddd;
   }
 
-  & input {
+  input {
     padding: 6px 12px;
     color: #337ab7;
     border: 1px solid #ddd;

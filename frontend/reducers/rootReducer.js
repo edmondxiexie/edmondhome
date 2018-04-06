@@ -5,6 +5,7 @@ import profile from "./profileReducer";
 import host from "./hostReducer";
 import trips from "./tripReducer";
 import wishlist from "./wishlistReducer";
+import alert from "./alertReducer";
 
 export default combineReducers({
   auth,
@@ -12,5 +13,6 @@ export default combineReducers({
   profile,
   host,
   trips,
-  wishlist
+  wishlist,
+  alert
 });
