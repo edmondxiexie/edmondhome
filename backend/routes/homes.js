@@ -126,6 +126,31 @@ router.get("/", (req, res) => {
     });
 });
 
+// GET api/homes/pages/:page
+router.get("/pages/:page", (req, res) => {
+  console.log("******GET api/homes/pages/:page PASS!!******");
+  const page = req.params.page;
+
+  Home.query({
+    select: ["*"]
+  })
+    .orderBy("id", "ASC")
+    .fetchPage({
+      pageSize: 12,
+      page: page
+    })
+    .then(homes => {
+      console.log("******Fetch homes SUCCESS!!******");
+      return res.json(homes);
+    })
+    .catch(errors => {
+      console.log("******Fetch homes FAIL!!******");
+      return res
+        .status(500)
+        .json({ errors: true, message: "errors in GET api/homes/page/:page" });
+    });
+});
+
 // PUT api/homes/:id/edit
 router.put("/:id/edit", (req, res) => {
   console.log("******GET api/:id/edit PASS!!******");

@@ -2,6 +2,9 @@ import axios from "axios";
 
 // for reducer
 export const GET_HOMES = "GET_HOMES";
+export const GET_HOMES_PAGE = "GET_HOMES_PAGE";
+export const GET_HOMES_COUNT = "GET_HOMES_COUNT";
+
 export const GET_HOME = "GET_HOME";
 export const PUT_HOME = "PUT_HOME";
 
@@ -24,4 +27,14 @@ export const postHomeUtil = homeData => {
 export const putHomeUtil = (id, homeData) => {
   console.log("******/homes/:id/edit UTIL******");
   return axios.put(`/api/homes/${id}/edit`, homeData);
+};
+
+export const getHomesPageUtil = page => {
+  console.log("******/homes/pages/:page UTIL******");
+  return axios.get(`/api/homes/pages/${page}`);
+};
+
+export const getHomesCountUtil = () => {
+  console.log("******/homes/count UTIL******");
+  return axios.get("/api/homes/count");
 };

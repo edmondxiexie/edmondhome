@@ -1,0 +1,35 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  & button {
+    padding: 6px 12px;
+    color: #337ab7;
+    border: 1px solid #ddd;
+  }
+
+  & a {
+    cursor: pointer;
+  }
+
+  & .disabled-link {
+    pointer-events: none;
+    color: #ddd;
+  }
+
+  & input {
+    padding: 6px 12px;
+    color: #337ab7;
+    border: 1px solid #ddd;
+    border-left: none;
+
+    width: 60px;
+    text-decoration: none;
+
+    text-align: center;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

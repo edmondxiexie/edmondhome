@@ -2,6 +2,8 @@ import * as homeUtil from "../utils/homeUtil";
 import { isEmpty, merge, assign } from "lodash";
 
 const defaultHome = Object.freeze({
+  homesCount: null,
+  page: null,
   homes: null,
   home: null,
   error: []
@@ -9,7 +11,7 @@ const defaultHome = Object.freeze({
 
 const HomeReducer = (state = defaultHome, action) => {
   Object.freeze(state);
-  let homes, home;
+  let homes, home, homesCount;
   switch (action.type) {
     case homeUtil.GET_HOMES:
       console.log("******/homes REDUCER GET******");
@@ -26,6 +28,18 @@ const HomeReducer = (state = defaultHome, action) => {
       home = action.home;
       const newPutHomeState = Object.assign({}, state, { home: home });
       return newPutHomeState;
+    case homeUtil.GET_HOMES_COUNT:
+      console.log("******/home REDUCER GET******");
+      homesCount = action.homesCount;
+      const newHomesCountState = Object.assign({}, state, {
+        homesCount: homesCount
+      });
+      return newHomesCountState;
+    case homeUtil.GET_HOMES_PAGE:
+      console.log("******/home REDUCER GET******");
+      homes = action.homes;
+      const newHomesPageState = Object.assign({}, state, { homes: homes });
+      return newHomesPageState;
     default:
       return state;
   }

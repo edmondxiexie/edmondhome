@@ -8,6 +8,20 @@ export const getHomes = homes => {
   };
 };
 
+export const getHomesCount = homesCount => {
+  return {
+    type: homeUtil.GET_HOMES_COUNT,
+    homesCount
+  };
+};
+
+export const getHomesPage = homes => {
+  return {
+    type: homeUtil.GET_HOMES_PAGE,
+    homes
+  };
+};
+
 export const getHome = home => {
   return {
     type: homeUtil.GET_HOME,
@@ -41,6 +55,26 @@ export const fetchHomes = () => {
       const homes = res.data;
       localStorage.setItem("homes", homes);
       dispatch(getHomes(homes));
+    });
+  };
+};
+
+export const fetchHomesPage = page => {
+  return dispatch => {
+    return homeUtil.getHomesPageUtil(page).then(res => {
+      const homes = res.data;
+      localStorage.setItem(`homes-${page}`, homes);
+      dispatch(getHomesPage(homes));
+    });
+  };
+};
+
+export const fetchHomesCount = () => {
+  return dispatch => {
+    return homeUtil.getHomesCountUtil().then(res => {
+      const homesCount = res.data;
+      localStorage.setItem("homes-count", homesCount);
+      dispatch(getHomesCount(homesCount));
     });
   };
 };

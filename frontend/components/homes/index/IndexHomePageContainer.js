@@ -6,6 +6,7 @@ import * as wishlistActions from "../../../actions/wishlistActions";
 const mapStateToProps = state => {
   return {
     auth: state.auth,
+    homesCount: state.homes.homesCount,
     homes: state.homes.homes,
     wishlist: state.wishlist.wishlist || []
   };
@@ -15,6 +16,12 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchHomes: () => {
       return dispatch(homeActions.fetchHomes());
+    },
+    fetchHomesPage: page => {
+      return dispatch(homeActions.fetchHomesPage(page));
+    },
+    fetchHomesCount: () => {
+      return dispatch(homeActions.fetchHomesCount());
     },
     fetchWishlist: keeperId => {
       return dispatch(wishlistActions.fetchWishlist(keeperId));
