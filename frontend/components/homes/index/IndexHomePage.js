@@ -147,7 +147,6 @@ class IndexHomePage extends React.Component {
 
   textAlert(e) {
     e.preventDefault();
-    console.log("----------test");
     this.props.setAlert("TEST ALERT");
     setTimeout(() => {
       this.props.setAlert("");
