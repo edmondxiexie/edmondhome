@@ -15,6 +15,7 @@ class Pagination extends Component {
     const {
       page,
       pages,
+      onKeyDown,
       onChangePage,
       onNextPage,
       onPreviousPage,
@@ -57,9 +58,8 @@ class Pagination extends Component {
               type="text"
               name="page"
               value={page}
-              onChange={e => {
-                onChangePage(e);
-              }}
+              onChange={onChangePage}
+              onKeyDown={onKeyDown}
             />
           </li>
           <li className="page-item">

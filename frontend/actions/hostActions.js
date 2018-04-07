@@ -22,7 +22,6 @@ export const fetchHostHomes = hostID => {
   return dispatch => {
     return hostUtil.getHostHomesUtil(hostID).then(res => {
       const hostHomes = res.data;
-      localStorage.setItem("hostHomes", hostHomes);
       dispatch(getHostHomes(hostHomes));
     });
   };
@@ -33,7 +32,6 @@ export const fetchHostHomesCount = hostId => {
   return dispatch => {
     return hostUtil.getHostHomesCountUtil(hostId).then(res => {
       const hostHomesCount = res.data;
-      localStorage.setItem("hostHomesCount", hostHomesCount);
       dispatch(getHostHomesCount(hostHomesCount));
     });
   };

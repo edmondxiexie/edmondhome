@@ -14,7 +14,7 @@ class NavBar extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.auth) {
+    if (this.props.auth.isAuthenticated) {
       const userId = this.props.auth.user.id;
       this.props.fetchHostHomesCount(userId);
       this.props.fetchTripsCount(userId);
@@ -96,7 +96,7 @@ class NavBar extends React.Component {
             </li>
             <li>
               <Link to="/wishlist">
-                Wishlist{" "}
+                Wishlist
                 <span className="badge pull-right">{wishlistCount}</span>
               </Link>
             </li>

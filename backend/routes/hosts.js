@@ -7,14 +7,11 @@ const router = express.Router();
 router.get("/:host_id/count", (req, res) => {
   console.log("******GET api/hosts/:host_id/count PASS!!******");
   const host_id = req.params.host_id;
-  Home.query({
-    select: ["*"],
-    where: { host_id: host_id }
-  })
-    .fetchAll()
-    .then(homes => {
-      console.log("******Fetch host homes/count SUCCESS!!******");
-      return res.json(homes.length);
+  Home.where("host_id", host_id)
+    .count()
+    .then(count => {
+      console.log("******Fetch host count/count SUCCESS!!******");
+      return res.json(count);
     })
     .catch(error => {
       console.log("******Fetch host homes/count FAIL!!******");

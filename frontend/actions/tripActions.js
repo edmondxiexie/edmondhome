@@ -22,7 +22,6 @@ export const fetchTrips = guestId => {
   return dispatch => {
     return tripUtil.getTripsUtil(guestId).then(res => {
       const trips = res.data;
-      localStorage.setItem("trips", trips);
       dispatch(getTrips(trips));
     });
   };
@@ -33,7 +32,6 @@ export const fetchTripsCount = guestId => {
   return dispatch => {
     return tripUtil.getTripsCountUtil(guestId).then(res => {
       const tripsCount = res.data;
-      localStorage.setItem("tripsCount", tripsCount);
       dispatch(getTripsCount(tripsCount));
     });
   };

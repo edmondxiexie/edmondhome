@@ -12,7 +12,6 @@ export const getUserProfile = id => {
   return dispatch => {
     return userUtil.getUserProfile(id).then(res => {
       const profile = res.data;
-      localStorage.setItem("profile", profile);
       dispatch(setProfile(profile));
     });
   };

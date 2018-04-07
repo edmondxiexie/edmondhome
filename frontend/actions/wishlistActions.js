@@ -19,7 +19,6 @@ export const fetchWishlist = keeperId => {
   return dispatch => {
     return wishlistUtil.getWishlistUtil(keeperId).then(res => {
       const wishlist = res.data;
-      localStorage.setItem("wishlist", wishlist);
       dispatch(getWishlist(wishlist));
     });
   };
@@ -30,7 +29,6 @@ export const fetchWishlistCount = keeperId => {
   return dispatch => {
     return wishlistUtil.getWishlistCountUtil(keeperId).then(res => {
       const wishlistCount = res.data;
-      localStorage.setItem("wishlistCount", wishlistCount);
       dispatch(getWishlistCount(wishlistCount));
     });
   };

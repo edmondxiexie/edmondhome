@@ -22,6 +22,13 @@ export const getHomesPage = homes => {
   };
 };
 
+export const setCurrentPage = page => {
+  return {
+    type: homeUtil.SET_HOMES_CURRENT_PAGE,
+    page
+  };
+};
+
 export const getHome = home => {
   return {
     type: homeUtil.GET_HOME,
@@ -43,7 +50,6 @@ export const fetchHome = id => {
   return dispatch => {
     return homeUtil.getHomeUtil(id).then(res => {
       const home = res.data;
-      localStorage.setItem("home", home);
       dispatch(getHome(home));
     });
   };
@@ -53,7 +59,6 @@ export const fetchHomes = () => {
   return dispatch => {
     return homeUtil.getHomesUtil().then(res => {
       const homes = res.data;
-      localStorage.setItem("homes", homes);
       dispatch(getHomes(homes));
     });
   };
@@ -63,7 +68,7 @@ export const fetchHomesPage = page => {
   return dispatch => {
     return homeUtil.getHomesPageUtil(page).then(res => {
       const homes = res.data;
-      localStorage.setItem(`homes-${page}`, homes);
+      dispatch(setCurrentPage(page));
       dispatch(getHomesPage(homes));
     });
   };
@@ -73,7 +78,6 @@ export const fetchHomesCount = () => {
   return dispatch => {
     return homeUtil.getHomesCountUtil().then(res => {
       const homesCount = res.data;
-      localStorage.setItem("homesCount", homesCount);
       dispatch(getHomesCount(homesCount));
     });
   };
@@ -90,7 +94,6 @@ export const patchHome = (id, homeData) => {
   return dispatch => {
     return homeUtil.putHomeUtil(id, homeData).then(res => {
       const home = res.data;
-      localStorage.setItem("home", home);
       dispatch(putHome(home));
     });
   };

@@ -7,6 +7,7 @@ import * as alertActions from "../../../actions/alertActions";
 const mapStateToProps = state => {
   return {
     auth: state.auth,
+    page: state.homes.page,
     homesCount: state.homes.homesCount,
     homes: state.homes.homes,
     wishlist: state.wishlist.wishlist || []
@@ -35,6 +36,9 @@ const mapDispatchToProps = dispatch => {
     },
     setAlert: alert => {
       return dispatch(alertActions.setAlert(alert));
+    },
+    fetchWishlistCount: keeperId => {
+      return dispatch(wishlistActions.fetchWishlistCount(keeperId));
     }
   };
 };

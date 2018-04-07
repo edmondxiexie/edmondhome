@@ -6,7 +6,7 @@ class IndexHomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 1,
+      page: localStorage.indexHomePage || 1,
       pages: 1,
       homes: [],
       homesCount: 0
@@ -19,7 +19,6 @@ class IndexHomePage extends React.Component {
       this.setState({ pages: pages });
     });
     this.props.fetchHomesPage(this.state.page).then(() => {
-      this.setState({ homes: this.props.homes });
       if (this.props.auth.isAuthenticated) {
         this.props.fetchWishlist(this.props.auth.user.id);
       }
@@ -28,7 +27,8 @@ class IndexHomePage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const newHomes = nextProps.homes || [];
-    this.setState({ homes: newHomes });
+    const page = nextProps.page;
+    this.setState({ homes: newHomes, page: page });
   }
 
   onRedirect(e, id) {
@@ -44,19 +44,39 @@ class IndexHomePage extends React.Component {
     e.preventDefault();
     let page = e.target.value;
     if (!isNaN(page)) {
-      if (page > 0 && page <= this.state.pages) {
-        page = parseInt(page);
-        this.setState({ page: page });
-        this.fetchNewPage(e.target.value);
+      if (Number(page) !== 0) {
+        if (Number(page) >= this.state.pages) {
+          page = this.state.pages;
+        }
+        this.setState({
+          page: ~~page
+        });
+      } else {
+        this.setState({
+          page: ""
+        });
       }
+    }
+  }
+
+  onChangePagePress(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      let page = e.target.value;
+      this.fetchNewPage(page);
+      localStorage.setItem("indexHomePage", page);
     }
   }
 
   onNextPage(e) {
     e.preventDefault();
-    const newPage = this.state.page + 1;
+    let newPage = this.state.page + 1;
+    if (~~newPage > this.state.pages) {
+      newPage = this.state.pages;
+    }
     this.setState({ page: newPage });
     this.fetchNewPage(newPage);
+    localStorage.setItem("indexHomePage", newPage);
   }
 
   onPreviousPage(e) {
@@ -64,18 +84,22 @@ class IndexHomePage extends React.Component {
     const newPage = this.state.page - 1;
     this.setState({ page: newPage });
     this.fetchNewPage(newPage);
+    localStorage.setItem("indexHomePage", newPage);
   }
 
   onFirstPage(e) {
     e.preventDefault();
     this.setState({ page: 1 });
     this.fetchNewPage(1);
+    localStorage.setItem("indexHomePage", 1);
   }
 
   onLastPage(e) {
     e.preventDefault();
-    this.setState({ page: this.state.pages });
-    this.fetchNewPage(this.state.pages);
+    const pages = this.state.pages;
+    this.setState({ page: pages });
+    this.fetchNewPage(pages);
+    localStorage.setItem("indexHomePage", pages);
   }
 
   addToWishlist(e, home_id) {
@@ -86,6 +110,7 @@ class IndexHomePage extends React.Component {
     };
     this.props.addWishlist(wishData).then(res => {
       this.props.fetchWishlist(this.props.auth.user.id);
+      this.props.fetchWishlistCount(this.props.auth.user.id);
     });
   }
 
@@ -93,6 +118,7 @@ class IndexHomePage extends React.Component {
     e.stopPropagation();
     this.props.deleteWishlist(id).then(res => {
       this.props.fetchWishlist(this.props.auth.user.id);
+      this.props.fetchWishlistCount(this.props.auth.user.id);
     });
   }
 
@@ -154,7 +180,7 @@ class IndexHomePage extends React.Component {
   }
 
   render() {
-    let homes = this.state.homes;
+    let { homes, page, pages } = this.state;
     const wishlist = this.props.wishlist || [];
 
     return (
@@ -170,10 +196,13 @@ class IndexHomePage extends React.Component {
             Alert
           </button>
           <Pagination
-            page={this.state.page}
-            pages={this.state.pages}
+            page={page}
+            pages={pages}
             onChangePage={e => {
               this.onChangePage(e);
+            }}
+            onKeyDown={e => {
+              this.onChangePagePress(e);
             }}
             onNextPage={e => {
               this.onNextPage(e);
@@ -190,26 +219,6 @@ class IndexHomePage extends React.Component {
           />
           {this.buildGallery(homes, wishlist)}
         </div>
-
-        <Pagination
-          page={this.state.page}
-          pages={this.state.pages}
-          onChangePage={e => {
-            this.onChangePage(e);
-          }}
-          onNextPage={e => {
-            this.onNextPage(e);
-          }}
-          onPreviousPage={e => {
-            this.onPreviousPage(e);
-          }}
-          onFirstPage={e => {
-            this.onFirstPage(e);
-          }}
-          onLastPage={e => {
-            this.onLastPage(e);
-          }}
-        />
       </div>
     );
   }

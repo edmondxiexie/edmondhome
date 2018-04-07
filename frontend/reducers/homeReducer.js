@@ -3,7 +3,7 @@ import { isEmpty, merge, assign } from "lodash";
 
 const defaultHome = Object.freeze({
   homesCount: null,
-  page: null,
+  page: 1,
   homes: null,
   home: null,
   error: []
@@ -11,7 +11,7 @@ const defaultHome = Object.freeze({
 
 const HomeReducer = (state = defaultHome, action) => {
   Object.freeze(state);
-  let homes, home, homesCount;
+  let homes, home, homesCount, page;
   switch (action.type) {
     case homeUtil.GET_HOMES:
       console.log("******/homes REDUCER GET******");
@@ -40,6 +40,10 @@ const HomeReducer = (state = defaultHome, action) => {
       homes = action.homes;
       const newHomesPageState = Object.assign({}, state, { homes: homes });
       return newHomesPageState;
+    case homeUtil.SET_HOMES_CURRENT_PAGE:
+      page = action.page;
+      const newPageState = Object.assign({}, state, { page: page });
+      return newPageState;
     default:
       return state;
   }
