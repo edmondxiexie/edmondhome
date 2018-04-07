@@ -8,6 +8,13 @@ export const getTrips = trips => {
   };
 };
 
+export const getTripsCount = tripsCount => {
+  return {
+    type: tripUtil.GET_TRIPS_COUNT,
+    tripsCount
+  };
+};
+
 // For trip actions
 
 export const fetchTrips = guestId => {
@@ -17,6 +24,17 @@ export const fetchTrips = guestId => {
       const trips = res.data;
       localStorage.setItem("trips", trips);
       dispatch(getTrips(trips));
+    });
+  };
+};
+
+export const fetchTripsCount = guestId => {
+  console.log("******/trips/:guest_id/count ACTION******");
+  return dispatch => {
+    return tripUtil.getTripsCountUtil(guestId).then(res => {
+      const tripsCount = res.data;
+      localStorage.setItem("tripsCount", tripsCount);
+      dispatch(getTripsCount(tripsCount));
     });
   };
 };

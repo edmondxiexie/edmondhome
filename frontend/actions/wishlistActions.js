@@ -7,6 +7,13 @@ export const getWishlist = wishlist => {
   };
 };
 
+export const getWishlistCount = wishlistCount => {
+  return {
+    type: wishlistUtil.GET_WISHLIST_COUNT,
+    wishlistCount
+  };
+};
+
 export const fetchWishlist = keeperId => {
   console.log("******/wishlist/:keeper_id ACTION******");
   return dispatch => {
@@ -14,6 +21,17 @@ export const fetchWishlist = keeperId => {
       const wishlist = res.data;
       localStorage.setItem("wishlist", wishlist);
       dispatch(getWishlist(wishlist));
+    });
+  };
+};
+
+export const fetchWishlistCount = keeperId => {
+  console.log("******/wishlist/:keeper_id/count ACTION******");
+  return dispatch => {
+    return wishlistUtil.getWishlistCountUtil(keeperId).then(res => {
+      const wishlistCount = res.data;
+      localStorage.setItem("wishlistCount", wishlistCount);
+      dispatch(getWishlistCount(wishlistCount));
     });
   };
 };

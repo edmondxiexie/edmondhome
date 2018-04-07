@@ -2,6 +2,7 @@ import * as hostUtil from "../utils/hostUtil";
 
 const defaultHost = Object.freeze({
   hostHomes: null,
+  hostHomesCount: null,
   errors: []
 });
 
@@ -15,6 +16,13 @@ const HostReducer = (state = defaultHost, action) => {
         hostHomes: hostHomes
       });
       return newState;
+    case hostUtil.GET_HOST_HOMES_COUNT:
+      console.log("******/host REDUCER GET******");
+      let hostHomesCount = action.hostHomesCount;
+      let newHostHomesCountState = Object.assign({}, state, {
+        hostHomesCount: hostHomesCount
+      });
+      return newHostHomesCountState;
     default:
       return state;
   }

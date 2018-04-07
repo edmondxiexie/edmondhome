@@ -5,14 +5,32 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.auth.user.username
+      username: this.props.auth.user.username,
+      hostHomesCount: "",
+      tripsCount: "",
+      wishlistCount: ""
     };
     // debugger
   }
+
+  componentWillMount() {
+    if (this.props.auth) {
+      const userId = this.props.auth.user.id;
+      this.props.fetchHostHomesCount(userId);
+      this.props.fetchTripsCount(userId);
+      this.props.fetchWishlistCount(userId);
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     // debugger;
     if (nextProps.auth) {
-      this.setState({ username: nextProps.auth.user.username });
+      this.setState({
+        username: nextProps.auth.user.username,
+        hostHomesCount: nextProps.hostHomesCount,
+        tripsCount: nextProps.tripsCount,
+        wishlistCount: nextProps.wishlistCount
+      });
     } else {
       this.setState({ username: "" });
     }
@@ -26,7 +44,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { username } = this.state;
+    const { username, hostHomesCount, tripsCount, wishlistCount } = this.state;
     const { isAuthenticated } = this.props.auth;
 
     const guestLink = (
@@ -67,13 +85,20 @@ class NavBar extends React.Component {
           </a>
           <ul className="dropdown-menu">
             <li>
-              <Link to="/manage">Manage Hosts</Link>
+              <Link to="/manage">
+                Manage Hosts <span className="badge">{hostHomesCount}</span>
+              </Link>
             </li>
             <li>
-              <Link to="/trips">My Trips</Link>
+              <Link to="/trips">
+                My Trips <span className="badge pull-right">{tripsCount}</span>
+              </Link>
             </li>
             <li>
-              <Link to="/wishlist">Wishlist</Link>
+              <Link to="/wishlist">
+                Wishlist{" "}
+                <span className="badge pull-right">{wishlistCount}</span>
+              </Link>
             </li>
             <li role="separator" className="divider" />
             <li>

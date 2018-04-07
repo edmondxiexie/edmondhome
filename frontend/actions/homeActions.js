@@ -73,7 +73,7 @@ export const fetchHomesCount = () => {
   return dispatch => {
     return homeUtil.getHomesCountUtil().then(res => {
       const homesCount = res.data;
-      localStorage.setItem("homes-count", homesCount);
+      localStorage.setItem("homesCount", homesCount);
       dispatch(getHomesCount(homesCount));
     });
   };

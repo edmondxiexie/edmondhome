@@ -4,6 +4,25 @@ import User from "../models/user";
 
 const router = express.Router();
 
+// GET api/trips/:guest_id/count
+router.get("/:guest_id/count", (req, res) => {
+  console.log("******GET api/trips/:guest_id/count PASS!!******");
+  const guest_id = req.params.guest_id;
+  Trip.query({
+    select: ["*"],
+    where: { guest_id: guest_id }
+  })
+    .fetchAll({ withRelated: ["home"] })
+    .then(trips => {
+      console.log("******GET api/trips/:guest_id SUCCESS!!******");
+      return res.json(trips.length);
+    })
+    .catch(err => {
+      console.log("******GET api/trips/:guest_id FAIL!!******");
+      return res.status(500).json({ error: err });
+    });
+});
+
 router.get("/:guest_id", (req, res) => {
   console.log("******GET api/trips/:guest_id PASS!!******");
   const guest_id = req.params.guest_id;

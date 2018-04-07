@@ -8,6 +8,13 @@ export const getHostHomes = hostHomes => {
   };
 };
 
+export const getHostHomesCount = hostHomesCount => {
+  return {
+    type: hostUtil.GET_HOST_HOMES_COUNT,
+    hostHomesCount
+  };
+};
+
 // for host actions
 
 export const fetchHostHomes = hostID => {
@@ -17,6 +24,17 @@ export const fetchHostHomes = hostID => {
       const hostHomes = res.data;
       localStorage.setItem("hostHomes", hostHomes);
       dispatch(getHostHomes(hostHomes));
+    });
+  };
+};
+
+export const fetchHostHomesCount = hostId => {
+  console.log("******/host/:host_id/count ACTION******");
+  return dispatch => {
+    return hostUtil.getHostHomesCountUtil(hostId).then(res => {
+      const hostHomesCount = res.data;
+      localStorage.setItem("hostHomesCount", hostHomesCount);
+      dispatch(getHostHomesCount(hostHomesCount));
     });
   };
 };

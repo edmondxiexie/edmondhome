@@ -3,6 +3,26 @@ import Wishlist from "../models/wishlist";
 
 const router = express.Router();
 
+// GET api/wishlist/:keeper_id/count
+router.get("/:keeper_id/count", (req, res) => {
+  console.log("******GET api/wishlist/:keeper_id/count PASS!!******");
+  const keeper_id = req.params.keeper_id;
+  Wishlist.query({
+    select: ["*"],
+    where: { keeper_id: keeper_id }
+  })
+    .fetchAll({ withRelated: ["home"] })
+    .then(wishlist => {
+      console.log("******GET api/wishlist/:keeper_id SUCCESS!!******");
+      return res.json(wishlist.length);
+    })
+    .catch(err => {
+      console.log("******GET api/wishlist/:keeper_id FAIL!!******");
+      return res.status(500).json({ error: err });
+    });
+});
+
+// GET api/wishlist/:keeper_id
 router.get("/:keeper_id", (req, res) => {
   console.log("******GET api/wishlist/:keeper_id PASS!!******");
   const keeper_id = req.params.keeper_id;
