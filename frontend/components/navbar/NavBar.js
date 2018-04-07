@@ -8,7 +8,8 @@ class NavBar extends React.Component {
       username: this.props.auth.user.username,
       hostHomesCount: "",
       tripsCount: "",
-      wishlistCount: ""
+      wishlistCount: "",
+      search: ""
     };
     // debugger
   }
@@ -41,6 +42,16 @@ class NavBar extends React.Component {
     this.props.logout().then(() => {
       this.context.router.push("/");
     });
+  }
+
+  onSearchChange(e) {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSearchSubmit(e) {
+    e.preventDefault();
+    console.log("Search", this.state.search);
   }
 
   render() {
@@ -115,33 +126,53 @@ class NavBar extends React.Component {
     );
     // debugger
     return (
-      <nav className="navbar navbar-inverse">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <button
-              type="button"
-              className="navbar-toggle collapsed"
-              data-toggle="collapse"
-              data-target="#navbar-collapse"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-            </button>
-            <Link to="/" className="navbar-brand">
-              <span>
-                <img src="/img/brand_logo.png" alt="brand_logo" />
-              </span>
-              <span>ShareRoof</span>
-            </Link>
-          </div>
-
-          <div className="collapse navbar-collapse" id="navbar-collapse">
-            {isAuthenticated ? userLink : guestLink}
-          </div>
+      <nav className="navbar navbar-default">
+        {/* <div className="container-fluid"> */}
+        <div className="navbar-header">
+          <button
+            type="button"
+            className="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar-collapse"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Toggle navigation</span>
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+          </button>
+          <Link to="/" className="navbar-brand">
+            <span>
+              <img src="/img/brand_logo.png" alt="brand_logo" />
+            </span>
+            <span>ShareRoof</span>
+          </Link>
         </div>
+        <div className="search pull-left">
+          <input
+            type="text"
+            name="search"
+            value={this.state.search}
+            onChange={e => {
+              this.onSearchChange(e);
+            }}
+            className="search__input"
+            placeholder="Search"
+          />
+          <button
+            className="search__button"
+            onClick={e => {
+              this.onSearchSubmit(e);
+            }}
+          >
+            <i className="fa fa-search search__icon" />
+          </button>
+        </div>
+
+        <div className="collapse navbar-collapse" id="navbar-collapse">
+          {isAuthenticated ? userLink : guestLink}
+        </div>
+        {/* </div> */}
       </nav>
     );
   }

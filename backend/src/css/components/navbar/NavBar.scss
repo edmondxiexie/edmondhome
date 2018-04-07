@@ -2,9 +2,115 @@
   margin-bottom: 0;
   border-radius: 0;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   .navbar-brand img {
     margin-top: -5px;
     margin-right: 10px;
     width: 30px;
   }
+
+  .search {
+    flex: 0 0 40%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__input {
+      color: var(--color-grey-dark-3);
+      background-color: var(--color-grey-light-2);
+      border: none;
+      padding: 7px 20px;
+      border-radius: 100px;
+      width: 90%;
+      transition: all 0.3s;
+      margin-right: -40px;
+
+      &::placeholder {
+        color: var(--color-grey-dark-3);
+      }
+
+      &:focus {
+        outline: none;
+        width: 100%;
+        background-color: var(--color-grey-light-3);
+      }
+    }
+
+    &__button {
+      border: none;
+      background-color: transparent;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:active {
+        transform: translateY(2px);
+      }
+    }
+
+    &__icon {
+      font-size: 16px;
+      color: var(--color-grey-dark-3);
+    }
+  }
 }
+
+// .search {
+//   flex: 0 0 40%;
+
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+
+//   &__input {
+//     font-family: inherit;
+//     font-size: inherit;
+//     color: inherit;
+//     background-color: var(--color-grey-light-2);
+//     border: none;
+//     padding: 0.7rem 2rem;
+//     border-radius: 100px;
+//     width: 90%;
+//     transition: all 0.3s;
+//     margin-right: -3.25rem;
+
+//     &:focus {
+//       outline: none;
+//       width: 100%;
+//       background-color: var(--color-grey-light-3);
+//     }
+
+//     &::-webkit-input-placeholder {
+//       font-weight: 100;
+//       color: var(--color-grey-light-4);
+//     }
+//   }
+
+//   &__input:focus + &__button {
+//     background-color: var(--color-grey-light-3);
+//   }
+
+//   &__button {
+//     border: none;
+//     background-color: var(--color-grey-light-2);
+
+//     &:focus {
+//       outline: none;
+//     }
+
+//     &:active {
+//       transform: translateY(2px);
+//     }
+//   }
+
+//   &__icon {
+//     height: 2rem;
+//     width: 2rem;
+//     fill: var(--color-grey-dark-3);
+//   }
+// }
