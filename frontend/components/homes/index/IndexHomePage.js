@@ -70,7 +70,8 @@ class IndexHomePage extends React.Component {
 
   onNextPage(e) {
     e.preventDefault();
-    let newPage = this.state.page + 1;
+    const currentPage = ~~this.state.page;
+    let newPage = currentPage + 1;
     if (~~newPage > this.state.pages) {
       newPage = this.state.pages;
     }
@@ -81,7 +82,8 @@ class IndexHomePage extends React.Component {
 
   onPreviousPage(e) {
     e.preventDefault();
-    const newPage = this.state.page - 1;
+    const currentPage = ~~this.state.page;
+    const newPage = currentPage - 1;
     this.setState({ page: newPage });
     this.fetchNewPage(newPage);
     localStorage.setItem("indexHomePage", newPage);
