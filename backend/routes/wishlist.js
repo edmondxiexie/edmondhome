@@ -41,6 +41,27 @@ router.get("/:keeper_id", (req, res) => {
     });
 });
 
+// GET api/wishlist/:keeper_id/:home_id
+router.get("/:keeper_id/:home_id", (req, res) => {
+  console.log("******GET api/wishlist/:keeper_id/:home_id PASS!!******");
+  const keeper_id = req.params.keeper_id;
+  const home_id = req.params.home_id;
+  Wishlist.query({
+    select: ["*"],
+    where: { keeper_id: keeper_id },
+    andWhere: { home_id: home_id }
+  })
+    .fetch()
+    .then(favorite => {
+      console.log("******GET api/wishlist/:keeper_id/:home_id SUCCESS!!******");
+      return res.json(favorite);
+    })
+    .catch(err => {
+      console.log("******GET api/wishlist/:keeper_id/:home_id FAIL!!******");
+      return res.status(500).json({ error: err });
+    });
+});
+
 router.post("/", (req, res) => {
   console.log("******GET api/wishlist/new PASS!!******");
   const { keeper_id, home_id } = req.body;

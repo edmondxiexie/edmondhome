@@ -57,7 +57,7 @@ class IndexTripsPage extends Component {
     const trips = this.props.trips || [];
     return (
       <div className="container row">
-        <h1 className="text-center">Trip Page</h1>
+        <h1 className="page-title">Your trips</h1>
         {this.buildGallery(trips)}
       </div>
     );

@@ -189,7 +189,7 @@ class IndexHomePage extends React.Component {
     return (
       <div>
         <div className="container row">
-          <h1 className="text-center">Index page</h1>
+          <h1 className="page-title">Homes around the world</h1>
           {/* <button
             className="btn btn-primary"
             onClick={e => {
@@ -198,30 +198,30 @@ class IndexHomePage extends React.Component {
           >
             Alert
           </button> */}
-          <Pagination
-            page={page}
-            pages={pages}
-            onChangePage={e => {
-              this.onChangePage(e);
-            }}
-            onKeyDown={e => {
-              this.onChangePagePress(e);
-            }}
-            onNextPage={e => {
-              this.onNextPage(e);
-            }}
-            onPreviousPage={e => {
-              this.onPreviousPage(e);
-            }}
-            onFirstPage={e => {
-              this.onFirstPage(e);
-            }}
-            onLastPage={e => {
-              this.onLastPage(e);
-            }}
-          />
           {this.buildGallery(homes, wishlist)}
         </div>
+        <Pagination
+          page={page}
+          pages={pages}
+          onChangePage={e => {
+            this.onChangePage(e);
+          }}
+          onKeyDown={e => {
+            this.onChangePagePress(e);
+          }}
+          onNextPage={e => {
+            this.onNextPage(e);
+          }}
+          onPreviousPage={e => {
+            this.onPreviousPage(e);
+          }}
+          onFirstPage={e => {
+            this.onFirstPage(e);
+          }}
+          onLastPage={e => {
+            this.onLastPage(e);
+          }}
+        />
       </div>
     );
   }

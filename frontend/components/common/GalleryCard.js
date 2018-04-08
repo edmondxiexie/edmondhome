@@ -38,24 +38,26 @@ class GalleryCard extends Component {
       >
         {onWishlist
           ? showWishlist && (
-              <div
+              <button
                 className="favorite"
                 onClick={e => {
                   deleteFromWishlist(e, id);
                 }}
               >
-                <i className="fa fa-heart" />
-              </div>
+                <i className="fa fa-heart active" />
+                <span>Saved</span>
+              </button>
             )
           : showWishlist && (
-              <div
+              <button
                 className="favorite"
                 onClick={e => {
                   addToWishlist(e, id);
                 }}
               >
                 <i className="fa fa-heart-o" />
-              </div>
+                <span>Save</span>
+              </button>
             )}
         <img src={image} className="card-img" />
         <div className="caption">

@@ -80,7 +80,7 @@ class IndexWishlistPage extends Component {
     const wishlist = this.props.wishlist || [];
     return (
       <div className="container row">
-        <h1 className="text-center">Wishlist Page</h1>
+        <h1 className="page-title">Your wishlist</h1>
         {this.buildGallery(wishlist)}
       </div>
     );

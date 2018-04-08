@@ -3,6 +3,7 @@ import * as wishlistUtil from "../utils/wishlistUtil";
 const defaultWishlist = Object.freeze({
   wishlist: [],
   wishlistCount: null,
+  favorite: null,
   errors: []
 });
 
@@ -23,6 +24,12 @@ export default (state = defaultWishlist, action) => {
         wishlistCount: wishlistCount
       });
       return newWishlistCountState;
+    case wishlistUtil.GET_FAVORITE:
+      const favorite = action.favorite;
+      const newFavoriteState = Object.assign({}, state, {
+        favorite: favorite
+      });
+      return newFavoriteState;
     default:
       return state;
   }

@@ -18,12 +18,27 @@ class DetailHomnePage extends React.Component {
         "http://res.cloudinary.com/dqace5qmb/image/upload/v1522312537/avatar.jpg",
       host_name: "Edmond Xie",
       host_email: "edmond@gmail.com",
-      host_phone: "412-111-1111"
+      host_phone: "412-111-1111",
+      favorite: null
     };
   }
 
   componentWillMount() {
     this.props.fetchHome(this.props.params.id);
+    if (this.props.auth.isAuthenticated) {
+      this.props
+        .getFavorite(this.props.auth.user.id, this.props.params.id)
+        .then(() => {
+          this.setState({ favorite: this.props.favorite });
+        });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.favorite !== null) {
+      // console.log("receive props", nextProps);
+      this.setState({ favorite: nextProps.favorite });
+    }
   }
 
   onRedirectDelete(e) {
@@ -48,8 +63,25 @@ class DetailHomnePage extends React.Component {
     });
   }
 
+  addToWishlist(e, home_id) {
+    e.stopPropagation();
+    const wishData = {
+      home_id: home_id,
+      keeper_id: this.props.auth.user.id
+    };
+    this.props.addWishlist(wishData).then(() => {
+      this.props.getFavorite(this.props.auth.user.id, this.props.params.id);
+    });
+  }
+
+  deleteFromWishlist(e, id) {
+    e.stopPropagation();
+    this.props.deleteWishlist(id).then(() => {
+      this.setState({ favorite: null });
+    });
+  }
+
   buildDetailComponent() {
-    // debugger;
     if (!_.isEmpty(this.state.home)) {
       const { id, title, description } = this.state.home;
       //   debugger;
@@ -72,8 +104,28 @@ class DetailHomnePage extends React.Component {
     return options;
   }
 
-  handleDateChange(date) {
-    console.log("-----date-----", date);
+  buildFavoriteButton() {
+    return this.state.favorite ? (
+      <button
+        className="favorite"
+        onClick={e => {
+          this.deleteFromWishlist(e, this.state.favorite.id);
+        }}
+      >
+        <i className="fa fa-heart active" />
+        <span>Saved</span>
+      </button>
+    ) : (
+      <button
+        className="favorite"
+        onClick={e => {
+          this.addToWishlist(e, this.props.home.id);
+        }}
+      >
+        <i className="fa fa-heart-o" />
+        <span>Save</span>
+      </button>
+    );
   }
 
   autoFill(e) {
@@ -128,9 +180,10 @@ class DetailHomnePage extends React.Component {
     const guestsOptions = this.buildGuestsOptions(guest_availability);
 
     return (
-      <div>
-        <img src={image} className="img-cover" />
+      <div className="home-detail-page-base">
+        {this.props.auth.isAuthenticated && this.buildFavoriteButton()}
 
+        <img src={image} className="img-cover" />
         <div className="detail-base row">
           <div className="detail-info col-md-8 col-sm-12">
             <div className="basic-info">
