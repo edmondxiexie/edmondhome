@@ -160,7 +160,7 @@ class IndexHomePage extends React.Component {
             title={title}
             description={description}
             image={image}
-            showWishlist={true}
+            showFavButton={this.props.auth.isAuthenticated}
             onWishlist={onWishlist}
             handleClick={(e, id) => {
               this.onRedirect(e, id);
@@ -190,14 +190,6 @@ class IndexHomePage extends React.Component {
       <div>
         <div className="container row">
           <h1 className="page-title">Homes around the world</h1>
-          {/* <button
-            className="btn btn-primary"
-            onClick={e => {
-              this.textAlert(e);
-            }}
-          >
-            Alert
-          </button> */}
           {this.buildGallery(homes, wishlist)}
         </div>
         <Pagination

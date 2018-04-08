@@ -17,7 +17,7 @@ class GalleryCard extends Component {
       price,
       district,
       onWishlist,
-      showWishlist,
+      showFavButton,
       handleClick,
       addToWishlist,
       deleteFromWishlist
@@ -37,7 +37,7 @@ class GalleryCard extends Component {
         }}
       >
         {onWishlist
-          ? showWishlist && (
+          ? showFavButton && (
               <button
                 className="favorite"
                 onClick={e => {
@@ -48,7 +48,7 @@ class GalleryCard extends Component {
                 <span>Saved</span>
               </button>
             )
-          : showWishlist && (
+          : showFavButton && (
               <button
                 className="favorite"
                 onClick={e => {
@@ -91,7 +91,7 @@ GalleryCard.propTypes = {
   price: PropTypes.string,
   district: PropTypes.string,
   handleClick: PropTypes.func,
-  showWishlist: PropTypes.bool,
+  showFavButton: PropTypes.bool,
   onWishlist: PropTypes.bool,
   addToWishlist: PropTypes.func,
   deleteFromWishlist: PropTypes.func
