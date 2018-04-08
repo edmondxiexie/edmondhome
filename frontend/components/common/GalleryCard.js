@@ -39,7 +39,7 @@ class GalleryCard extends Component {
         {onWishlist
           ? showFavButton && (
               <button
-                className="favorite"
+                className="favorite-btn"
                 onClick={e => {
                   deleteFromWishlist(e, id);
                 }}
@@ -50,7 +50,7 @@ class GalleryCard extends Component {
             )
           : showFavButton && (
               <button
-                className="favorite"
+                className="favorite-btn"
                 onClick={e => {
                   addToWishlist(e, id);
                 }}

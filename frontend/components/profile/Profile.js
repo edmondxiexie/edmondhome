@@ -53,6 +53,7 @@ class Profile extends React.Component {
         company,
         password_digest
       } = nextProps.profile;
+
       this.setState({
         id,
         email,
@@ -135,6 +136,36 @@ class Profile extends React.Component {
     };
     newNav[nav] = "active";
     this.setState({ nav: newNav });
+  }
+
+  onProfileSave(e) {
+    e.preventDefault();
+    // const { errors, valid } = validateInput(this.state);
+    const {
+      username,
+      email,
+      timezone,
+      password,
+      fullname,
+      education,
+      company,
+      avatar
+    } = this.state;
+    const userData = {
+      username,
+      email,
+      timezone,
+      fullname,
+      password,
+      education,
+      company,
+      avatar
+    };
+    const valid = true;
+    if (valid) {
+      this.props.patchUserProfile(this.props.auth.user.id, userData);
+      this.setState({ errors: {}, isLoading: true });
+    }
   }
 
   buildPhotoEditor() {
@@ -223,8 +254,7 @@ class Profile extends React.Component {
       errors,
       isLoading,
       valid,
-      nav,
-      avatar
+      nav
     } = this.state;
     return (
       <div>
@@ -252,6 +282,7 @@ class Profile extends React.Component {
                     validator={e => this.checkUserExists(e)}
                     value={email}
                     field="email"
+                    disabled={true}
                   />
                   <TextFieldGroup
                     error={errors.fullname}
@@ -302,18 +333,18 @@ class Profile extends React.Component {
                 />
                 <div className="form-group">
                   <button
-                    className="btn btn-primary"
-                    onClick={e => this.onSubmit(e)}
+                    className="btn btn-primary pull-right"
+                    onClick={e => this.onProfileSave(e)}
                     disabled={!valid}
                   >
                     Save
                   </button>
-                  <button
+                  {/* <button
                     className="btn btn-warning pull-right"
                     onClick={e => {}}
                   >
                     Cancel
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

@@ -150,7 +150,7 @@ router.get("/pages/:page", (req, res) => {
 
 // PUT api/homes/:id/edit
 router.put("/:id/edit", (req, res) => {
-  console.log("******GET api/:id/edit PASS!!******");
+  console.log("******PUT api/:id/edit PASS!!******");
   const id = req.params.id;
   const {
     title,
@@ -189,11 +189,11 @@ router.put("/:id/edit", (req, res) => {
       { patch: true }
     )
     .then(home => {
-      console.log("******GET api/:id/edit SUCCESS!!******");
+      console.log("******PUT api/:id/edit SUCCESS!!******");
       return res.json({ success: true, home: home, id: id });
     })
     .catch(err => {
-      console.log("******GET api/:id/edit FAIL!!******");
+      console.log("******PUT api/:id/edit FAIL!!******");
       return res.status(401).json({ error: err });
     });
 });

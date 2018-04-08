@@ -105,7 +105,6 @@ export const fetchHomesByKeywords = keywords => {
       const homes = res.data;
       const newHomes = [];
       const newHomesMap = {};
-      console.log("home", homes[0]);
       for (let home of homes) {
         for (let keyword of keywords) {
           if (home.title.toLowerCase().indexOf(keyword.toLowerCase()) != -1) {

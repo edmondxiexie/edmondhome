@@ -115,7 +115,11 @@ class NavBar extends React.Component {
             </li>
             <li role="separator" className="divider" />
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile">
+                Profile<span className="badge pull-right">
+                  <i className="fa fa-user" aria-hidden="true" />
+                </span>
+              </Link>
             </li>
           </ul>
         </li>
@@ -172,31 +176,9 @@ class NavBar extends React.Component {
             Submit
           </button>
         </form>
-        {/* <div className="search">
-          <input
-            type="text"
-            name="search"
-            value={this.state.search}
-            onChange={e => {
-              this.onSearchChange(e);
-            }}
-            className="search__input"
-            placeholder="Search"
-          />
-          <button
-            className="search__button"
-            onClick={e => {
-              this.onSearchSubmit(e);
-            }}
-          >
-            <i className="fa fa-search search__icon" />
-          </button>
-        </div> */}
-
         <div className="collapse navbar-collapse" id="navbar-collapse">
           {isAuthenticated ? userLink : guestLink}
         </div>
-        {/* </div> */}
       </nav>
     );
   }

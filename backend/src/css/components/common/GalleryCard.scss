@@ -62,7 +62,7 @@
     font-weight: 300;
   }
 
-  .favorite {
+  .favorite-btn {
     position: absolute;
     color: #484848;
     font-size: 15px;
@@ -72,6 +72,13 @@
     top: 20px;
     right: 20px;
     padding: 8px 16px;
+    outline: none;
+
+    transition: all 0.2s;
+
+    &:active {
+      transform: translateY(1px);
+    }
 
     i {
       &.active {

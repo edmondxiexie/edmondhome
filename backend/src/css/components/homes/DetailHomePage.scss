@@ -1,7 +1,7 @@
 .home-detail-page-base {
   position: relative;
 
-  .favorite {
+  .favorite-btn {
     position: absolute;
     color: #484848;
     font-size: 15px;
@@ -10,6 +10,7 @@
     box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.14);
     top: 20px;
     right: calc(50% - 50vw + 50px);
+    outline: none;
 
     padding: 8px 16px;
 

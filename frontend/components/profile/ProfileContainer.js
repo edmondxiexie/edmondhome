@@ -12,6 +12,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getUserProfile: id => {
       return dispatch(profileActions.getUserProfile(id));
+    },
+    patchUserProfile: (id, userData) => {
+      return dispatch(profileActions.patchUserProfile(id, userData));
     }
   };
 };

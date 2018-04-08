@@ -107,7 +107,7 @@ class DetailHomnePage extends React.Component {
   buildFavoriteButton() {
     return this.state.favorite ? (
       <button
-        className="favorite"
+        className="favorite-btn"
         onClick={e => {
           this.deleteFromWishlist(e, this.state.favorite.id);
         }}
@@ -117,7 +117,7 @@ class DetailHomnePage extends React.Component {
       </button>
     ) : (
       <button
-        className="favorite"
+        className="favorite-btn"
         onClick={e => {
           this.addToWishlist(e, this.props.home.id);
         }}
