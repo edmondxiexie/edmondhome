@@ -4,6 +4,7 @@ import { logout } from "../../actions/authActions";
 import * as hostActions from "../../actions/hostActions";
 import * as tripActions from "../../actions/tripActions";
 import * as wishlistActions from "../../actions/wishlistActions";
+import * as homeActions from "../../actions/homeActions";
 
 const mapStateToProps = state => {
   //   debugger;
@@ -28,6 +29,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchWishlistCount: keeperId => {
       return dispatch(wishlistActions.fetchWishlistCount(keeperId));
+    },
+    fetchHomesByKeywords: keywords => {
+      return dispatch(homeActions.fetchHomesByKeywords(keywords));
     }
   };
 };

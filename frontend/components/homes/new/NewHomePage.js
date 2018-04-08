@@ -1,6 +1,7 @@
 import React from "react";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import Faker from "faker";
+import swal from "sweetalert2";
 
 import OptionFieldGroup from "../../common/OptionFieldGroup";
 import ImageFieldGroup from "../../common/ImageFieldGroup";

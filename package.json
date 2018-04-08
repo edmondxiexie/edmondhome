@@ -33,6 +33,7 @@
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
     "shortid": "^2.2.6",
+    "sweetalert2": "^7.18.0",
     "validator": "^5.4.0"
   },
   "devDependencies": {

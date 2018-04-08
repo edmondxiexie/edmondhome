@@ -11,7 +11,6 @@ class NavBar extends React.Component {
       wishlistCount: "",
       search: ""
     };
-    // debugger
   }
 
   componentWillMount() {
@@ -24,7 +23,6 @@ class NavBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // debugger;
     if (nextProps.auth) {
       this.setState({
         username: nextProps.auth.user.username,
@@ -51,7 +49,11 @@ class NavBar extends React.Component {
 
   onSearchSubmit(e) {
     e.preventDefault();
-    console.log("Search", this.state.search);
+    const keywords = this.state.search.trim().split(" ");
+
+    this.props.fetchHomesByKeywords(keywords);
+    this.setState({ search: "" });
+    console.log("Search", keywords);
   }
 
   render() {
@@ -148,7 +150,29 @@ class NavBar extends React.Component {
             <span>ShareRoof</span>
           </Link>
         </div>
-        <div className="search pull-left">
+        <form className="navbar-form navbar-left">
+          <div className="form-group">
+            <input
+              className="form-control"
+              type="text"
+              name="search"
+              value={this.state.search}
+              placeholder="Search"
+              onChange={e => {
+                this.onSearchChange(e);
+              }}
+            />
+          </div>
+          <button
+            className="btn btn-default"
+            onClick={e => {
+              this.onSearchSubmit(e);
+            }}
+          >
+            Submit
+          </button>
+        </form>
+        {/* <div className="search">
           <input
             type="text"
             name="search"
@@ -167,7 +191,7 @@ class NavBar extends React.Component {
           >
             <i className="fa fa-search search__icon" />
           </button>
-        </div>
+        </div> */}
 
         <div className="collapse navbar-collapse" id="navbar-collapse">
           {isAuthenticated ? userLink : guestLink}

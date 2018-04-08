@@ -98,3 +98,43 @@ export const patchHome = (id, homeData) => {
     });
   };
 };
+
+export const fetchHomesByKeywords = keywords => {
+  return dispatch => {
+    return homeUtil.getHomesUtil().then(res => {
+      const homes = res.data;
+      const newHomes = [];
+      const newHomesMap = {};
+      console.log("home", homes[0]);
+      for (let home of homes) {
+        for (let keyword of keywords) {
+          if (home.title.toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
+            newHomesMap[home.id] = true;
+          }
+          if (
+            home.description.toLowerCase().indexOf(keyword.toLowerCase()) != -1
+          ) {
+            newHomesMap[home.id] = true;
+          }
+          if (
+            home.district.toLowerCase().indexOf(keyword.toLowerCase()) != -1
+          ) {
+            newHomesMap[home.id] = true;
+          }
+          if (home.target.toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
+            newHomesMap[home.id] = true;
+          }
+        }
+      }
+
+      for (let home of homes) {
+        if (newHomesMap[home.id]) {
+          newHomes.push(home);
+        }
+      }
+
+      dispatch(getHomesCount(newHomes.length));
+      dispatch(getHomes(newHomes));
+    });
+  };
+};

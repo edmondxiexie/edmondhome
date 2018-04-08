@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import * as homeActions from "../../../actions/homeActions";
+import * as alertActions from "../../../actions/alertActions";
 import NewHomePage from "./NewHomePage";
 
 const mapStateToProps = state => {
@@ -13,6 +14,9 @@ const mapDispatchToProps = dispatch => {
   return {
     createHome: data => {
       return dispatch(homeActions.createHome(data));
+    },
+    setAlert: alert => {
+      return dispatch(alertActions.setAlert(alert));
     }
   };
 };

@@ -1,4 +1,5 @@
 import React from "react";
+
 import GalleryCard from "../../common/GalleryCard";
 import Pagination from "../../common/Pagination";
 
@@ -189,14 +190,14 @@ class IndexHomePage extends React.Component {
       <div>
         <div className="container row">
           <h1 className="text-center">Index page</h1>
-          <button
+          {/* <button
             className="btn btn-primary"
             onClick={e => {
               this.textAlert(e);
             }}
           >
             Alert
-          </button>
+          </button> */}
           <Pagination
             page={page}
             pages={pages}

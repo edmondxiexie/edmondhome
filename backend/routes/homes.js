@@ -110,10 +110,7 @@ router.get("/", (req, res) => {
     select: ["*"]
   })
     .orderBy("id", "ASC")
-    .fetchPage({
-      pageSize: 12,
-      page: 3
-    })
+    .fetchAll()
     .then(homes => {
       console.log("******Fetch homes SUCCESS!!******");
       return res.json(homes);
