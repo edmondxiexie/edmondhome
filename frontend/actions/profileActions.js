@@ -20,12 +20,38 @@ export const getUserProfile = id => {
 export const patchUserProfile = (id, userData) => {
   return dispatch => {
     return userUtil.putUserUtil(id, userData).then(res => {
-      const profile = res.data;
-      console.log("------profile----", profile);
+      const profile = res.data.user;
       dispatch({
         type: userUtil.PUT_USER,
         profile: profile
       });
+      return res.data;
+    });
+  };
+};
+
+export const patchUserAvatarProfile = (id, userData) => {
+  return dispatch => {
+    return userUtil.putUserAvatarUtil(id, userData).then(res => {
+      const profile = res.data.user;
+      dispatch({
+        type: userUtil.PUT_USER_AVATAR,
+        profile: profile
+      });
+      return res.data;
+    });
+  };
+};
+
+export const patchUserPasswordProfile = (id, userData) => {
+  return dispatch => {
+    return userUtil.putUserPasswordUtil(id, userData).then(res => {
+      const profile = res.data.user;
+      dispatch({
+        type: userUtil.PUT_USER_PASSWORD,
+        profile: profile
+      });
+      return res.data;
     });
   };
 };

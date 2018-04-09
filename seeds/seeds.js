@@ -6,6 +6,8 @@ const HOME_NUM = USER_NUM * 20;
 const TRIP_NUM = USER_NUM * 20;
 const WISHLIST_NUM = USER_NUM * 10;
 
+const userSeedsData = require("./data/userSeedsData");
+
 const imageUrls = [
   "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112935/8039654500_796cd8d4f0_z.jpg",
   "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112935/8965577171_719591ff4d_z.jpg",
@@ -71,6 +73,8 @@ function buildUserSeed(knex) {
         fullname: Faker.name.findName(),
         education: Faker.name.title(),
         company: Faker.company.companyName(),
+        avatar: Faker.random.arrayElement(userSeedsData.avatarUrls),
+        phone: Faker.phone.phoneNumberFormat(),
         updated_at: new Date(),
         created_at: new Date()
       })

@@ -14,6 +14,8 @@ exports.up = function(knex, Promise) {
     table.string("fullname");
     table.string("education");
     table.string("company");
+    table.string("avatar");
+    table.string("phone");
     table.timestamps();
   });
 };

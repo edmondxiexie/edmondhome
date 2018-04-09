@@ -1,4 +1,4 @@
-import { GET_USER_PROFILE, PUT_USER } from "../utils/userUtil";
+import * as userUtil from "../utils/userUtil";
 
 const defaultProfile = Object.freeze({
   profile: {},
@@ -9,17 +9,32 @@ export default (state = defaultProfile, action) => {
   Object.freeze(state);
   let profile, newState;
   switch (action.type) {
-    case GET_USER_PROFILE:
+    case userUtil.GET_USER_PROFILE:
       console.log("pass GET_USER_PROFILE reducer");
       profile = action.profile;
       newState = Object.assign({}, state, {
         profile: profile
       });
       return newState;
-    case PUT_USER:
+    case userUtil.PUT_USER:
       profile = action.profile;
+      const newProfile = Object.assign({}, state.profile, profile);
       newState = Object.assign({}, state, {
-        profile: profile
+        profile: newProfile
+      });
+      return newState;
+    case userUtil.PUT_USER_AVATAR:
+      profile = action.profile;
+      const newAvatarProfile = Object.assign({}, state.profile, profile);
+      newState = Object.assign({}, state, {
+        profile: newAvatarProfile
+      });
+      return newState;
+    case userUtil.PUT_USER_PASSWORD:
+      profile = action.profile;
+      const newPasswordProfile = Object.assign({}, state.profile, profile);
+      newState = Object.assign({}, state, {
+        profile: newPasswordProfile
       });
       return newState;
     default:

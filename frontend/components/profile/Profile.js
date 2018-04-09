@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import timezones from "../signup/timezone/timezone";
 import map from "lodash/map";
 import classnames from "classnames";
-// import validateInput from "../../../backend/common/validations/signup";
+import validateInput from "../../../backend/common/validations/profile";
 import TextFieldGroup from "../common/TextFieldGroup";
 import OptionFieldGroup from "../common/OptionFieldGroup";
 import ImageFieldGroup from "../common/ImageFieldGroup";
@@ -18,10 +18,14 @@ class Profile extends React.Component {
       username: "",
       timezone: "Pacific/Honolulu",
       password: "",
+      newPassword: "",
+      newPasswordConfirm: "",
       passwordConfirm: "",
       fullname: "",
       education: "",
       company: "",
+      avatar: "",
+
       errors: {},
       isLoading: false,
       valid: true,
@@ -29,9 +33,7 @@ class Profile extends React.Component {
         profile: "active",
         photo: "",
         password: ""
-      },
-      avatar:
-        "http://res.cloudinary.com/dqace5qmb/image/upload/v1522312537/avatar.jpg"
+      }
     };
   }
 
@@ -51,7 +53,8 @@ class Profile extends React.Component {
         fullname,
         education,
         company,
-        password_digest
+        phone,
+        avatar
       } = nextProps.profile;
 
       this.setState({
@@ -61,7 +64,9 @@ class Profile extends React.Component {
         timezone,
         fullname,
         education,
-        company
+        company,
+        phone,
+        avatar
       });
     }
   }
@@ -81,6 +86,28 @@ class Profile extends React.Component {
         }
       }
     );
+  }
+
+  autoFillPassword(e) {
+    e.preventDefault();
+    this.setState({
+      password: "password",
+      errors: {},
+      isLoading: false,
+      valid: true
+    });
+  }
+
+  autoFillNewPassword(e) {
+    e.preventDefault();
+    this.setState({
+      password: "password",
+      newPassword: "newpassword",
+      newPasswordConfirm: "newpassword",
+      errors: {},
+      isLoading: false,
+      valid: true
+    });
   }
 
   checkRequired(e) {
@@ -135,110 +162,104 @@ class Profile extends React.Component {
       password: ""
     };
     newNav[nav] = "active";
-    this.setState({ nav: newNav });
+    this.setState({ nav: newNav, password: "" });
   }
 
   onProfileSave(e) {
     e.preventDefault();
-    // const { errors, valid } = validateInput(this.state);
-    const {
-      username,
-      email,
-      timezone,
-      password,
-      fullname,
-      education,
-      company,
-      avatar
-    } = this.state;
+
+    const { errors, valid } = validateInput(this.state, "profile");
+
+    const { timezone, password, fullname, education, company } = this.state;
+
     const userData = {
-      username,
-      email,
       timezone,
       fullname,
       password,
       education,
-      company,
-      avatar
+      company
     };
-    const valid = true;
+
     if (valid) {
-      this.props.patchUserProfile(this.props.auth.user.id, userData);
-      this.setState({ errors: {}, isLoading: true });
+      this.props
+        .patchUserProfile(this.props.auth.user.id, userData)
+        .then(res => {
+          console.log("res", res);
+          this.setState({ errors: {}, valid: true, password: "" });
+        })
+        .catch(err => {
+          this.setState({ errors: err, valid: false, password: "" });
+        });
+    } else {
+      this.setState({ errors, valid });
     }
   }
 
-  buildPhotoEditor() {
-    const {
-      email,
-      username,
-      timezone,
+  onAvatarSave(e) {
+    e.preventDefault();
+
+    const { errors, valid } = validateInput(this.state, "photo");
+
+    const { avatar, password } = this.state;
+
+    const userData = {
+      avatar,
+      password
+    };
+
+    if (valid) {
+      this.props
+        .patchUserAvatarProfile(this.props.auth.user.id, userData)
+        .then(res => {
+          console.log("---------res---------", res);
+          this.setState({ errors: {}, valid: true, password: "" });
+        })
+        .catch(err => {
+          this.setState({ errors: err, valid: false, password: "" });
+        });
+    } else {
+      this.setState({ errors, valid });
+    }
+  }
+
+  onPasswordSave(e) {
+    e.preventDefault();
+
+    const { errors, valid } = validateInput(this.state, "password");
+
+    const { password, newPassword, newPasswordConfirm } = this.state;
+
+    const userData = {
       password,
-      passwordConfirm,
-      fullname,
-      education,
-      company,
-      errors,
-      isLoading,
-      valid,
-      nav,
-      avatar
-    } = this.state;
-    return (
-      <div>
-        {nav.photo === "active" && (
-          <div>
-            <div className="panel panel-info">
-              <div className="panel-heading">
-                <h3 className="panel-title">Profile Photo</h3>
-              </div>
-              <div className="panel-body edit-panel">
-                <ImageFieldGroup
-                  label="Avatar"
-                  field="avatar"
-                  value={avatar}
-                  width="200px"
-                  height="200px"
-                  onClick={e => this.onOpenImageWidget(e)}
-                  error={errors.avatar}
-                />
-              </div>
-            </div>
-            <div className="panel panel-danger">
-              <div className="panel-heading">
-                <h3 className="panel-title">Enter Password to Save Changes</h3>
-              </div>
-              <div className="panel-body edit-panel">
-                <TextFieldGroup
-                  error={errors.password}
-                  label="Password"
-                  onChange={e => this.onChange(e)}
-                  validator={e => this.checkRequired(e)}
-                  value={password}
-                  field="password"
-                  type="password"
-                />
-                <div className="form-group">
-                  <button
-                    className="btn btn-primary"
-                    onClick={e => this.onSubmit(e)}
-                    disabled={!valid}
-                  >
-                    Save
-                  </button>
-                  <button
-                    className="btn btn-warning pull-right"
-                    onClick={e => {}}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    );
+      newPassword,
+      newPasswordConfirm
+    };
+
+    if (valid) {
+      this.props
+        .patchUserPasswordProfile(this.props.auth.user.id, userData)
+        .then(res => {
+          console.log("---------res---------", res);
+          this.setState({
+            errors: {},
+            valid: true,
+            password: "",
+            newPassword: "",
+            newPasswordConfirm: ""
+          });
+        })
+        .catch(err => {
+          this.setState({
+            errors: err,
+            valid: false,
+            password: "",
+            newPassword: "",
+            newPasswordConfirm: ""
+          });
+        });
+    } else {
+      this.setState({ errors, valid });
+    }
   }
 
   buildProfileEditor() {
@@ -247,12 +268,10 @@ class Profile extends React.Component {
       username,
       timezone,
       password,
-      passwordConfirm,
       fullname,
       education,
       company,
       errors,
-      isLoading,
       valid,
       nav
     } = this.state;
@@ -333,18 +352,93 @@ class Profile extends React.Component {
                 />
                 <div className="form-group">
                   <button
-                    className="btn btn-primary pull-right"
+                    className="btn btn-warning pull-left"
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="btn btn-primary save-btn pull-right"
                     onClick={e => this.onProfileSave(e)}
                     disabled={!valid}
                   >
                     Save
                   </button>
-                  {/* <button
+                  <button
                     className="btn btn-warning pull-right"
-                    onClick={e => {}}
+                    onClick={e => this.autoFillPassword(e)}
+                  >
+                    Auto Fill
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  buildPhotoEditor() {
+    const { password, avatar, nav, errors, valid } = this.state;
+    return (
+      <div>
+        {nav.photo === "active" && (
+          <div>
+            <div className="panel panel-info">
+              <div className="panel-heading">
+                <h3 className="panel-title">Profile Photo</h3>
+              </div>
+              <div className="panel-body edit-panel">
+                <ImageFieldGroup
+                  label="Avatar"
+                  field="avatar"
+                  value={avatar}
+                  width="200px"
+                  height="200px"
+                  onClick={e => this.onOpenImageWidget(e)}
+                  error={errors.avatar}
+                />
+              </div>
+            </div>
+            <div className="panel panel-danger">
+              <div className="panel-heading">
+                <h3 className="panel-title">Enter Password to Save Changes</h3>
+              </div>
+              <div className="panel-body edit-panel">
+                <TextFieldGroup
+                  error={errors.password}
+                  label="Password"
+                  onChange={e => this.onChange(e)}
+                  validator={e => this.checkRequired(e)}
+                  value={password}
+                  field="password"
+                  type="password"
+                />
+                <div className="form-group">
+                  <button
+                    className="btn btn-warning pull-left"
+                    onClick={() => {
+                      window.location.reload();
+                    }}
                   >
                     Cancel
-                  </button> */}
+                  </button>
+                  <button
+                    className="btn btn-primary save-btn pull-right"
+                    onClick={e => this.onAvatarSave(e)}
+                    disabled={!valid}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-warning pull-right"
+                    onClick={e => this.autoFillPassword(e)}
+                  >
+                    Auto Fill
+                  </button>
                 </div>
               </div>
             </div>
@@ -356,19 +450,13 @@ class Profile extends React.Component {
 
   buildPasswordEditor() {
     const {
-      email,
-      username,
-      timezone,
       password,
-      passwordConfirm,
-      fullname,
-      education,
-      company,
+      newPassword,
+      newPasswordConfirm,
       errors,
       isLoading,
       valid,
-      nav,
-      avatar
+      nav
     } = this.state;
     return (
       <div>
@@ -389,36 +477,44 @@ class Profile extends React.Component {
                   type="password"
                 />
                 <TextFieldGroup
-                  error={errors.password}
+                  error={errors.newPassword}
                   label="New Password"
                   onChange={e => this.onChange(e)}
                   validator={e => this.checkRequired(e)}
-                  value={password}
-                  field="password"
+                  value={newPassword}
+                  field="newPassword"
                   type="password"
                 />
                 <TextFieldGroup
-                  error={errors.passwordConfirm}
+                  error={errors.newPasswordConfirm}
                   label="New Password Confirm"
                   onChange={e => this.onChange(e)}
                   validator={e => this.checkRequired(e)}
-                  value={passwordConfirm}
-                  field="passwordConfirm"
+                  value={newPasswordConfirm}
+                  field="newPasswordConfirm"
                   type="password"
                 />
                 <div className="form-group">
                   <button
-                    className="btn btn-primary"
-                    onClick={e => this.onSubmit(e)}
+                    className="btn btn-warning pull-left"
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="btn btn-primary save-btn pull-right"
+                    onClick={e => this.onPasswordSave(e)}
                     disabled={!valid}
                   >
                     Save
                   </button>
                   <button
                     className="btn btn-warning pull-right"
-                    onClick={e => {}}
+                    onClick={e => this.autoFillNewPassword(e)}
                   >
-                    Cancel
+                    Auto Fill
                   </button>
                 </div>
               </div>
@@ -430,7 +526,6 @@ class Profile extends React.Component {
   }
   render() {
     const profile = JSON.stringify(this.props.profile);
-    console.log("profile", profile);
 
     const {
       email,

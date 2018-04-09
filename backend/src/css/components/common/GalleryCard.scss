@@ -76,9 +76,9 @@
 
     transition: all 0.2s;
 
-    &:active {
-      transform: translateY(1px);
-    }
+    // &:active {
+    // transform: translateY(1px);
+    // }
 
     i {
       &.active {

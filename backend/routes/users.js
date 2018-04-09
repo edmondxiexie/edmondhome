@@ -25,23 +25,83 @@ router.get("/:id", (req, res) => {
     });
 });
 
+// PUT api/users/:id/edit/password
+router.put("/:id/edit/password", (req, res) => {
+  console.log("******PUT api/users/:id/edit/password PASS!!******");
+  const id = req.params.id;
+  const { password, newPassword } = req.body;
+
+  User.where({ id: id })
+    .fetch()
+    .then(user => {
+      if (bcrypt.compareSync(password, user.get("password_digest"))) {
+        const password_digest = bcrypt.hashSync(newPassword, 10);
+
+        User.where({ id: id })
+          .save(
+            {
+              password_digest
+            },
+            { patch: true }
+          )
+          .then(user => {
+            console.log(
+              "******PUT api/users/:id/edit/password SUCCESS!!******"
+            );
+            return res.json({ success: true, user: user, id: id });
+          })
+          .catch(err => {
+            console.log("******PUT api/users/:id/edit/password FAIL!!******");
+            return res.status(401).json({ errors: err });
+          });
+      } else {
+        return res
+          .status(401)
+          .json({ errors: { password: "Password Incorrect" } });
+      }
+    });
+});
+
+// PUT api/users/:id/edit/avatar
+router.put("/:id/edit/avatar", (req, res) => {
+  console.log("******PUT api/users/:id/edit/avatar PASS!!******");
+  const id = req.params.id;
+  const { avatar, password } = req.body;
+
+  User.where({ id: id })
+    .fetch()
+    .then(user => {
+      if (bcrypt.compareSync(password, user.get("password_digest"))) {
+        User.where({ id: id })
+          .save(
+            {
+              avatar
+            },
+            { patch: true }
+          )
+          .then(user => {
+            console.log("******PUT api/users/:id/edit/avatar SUCCESS!!******");
+            return res.json({ success: true, user: user, id: id });
+          })
+          .catch(err => {
+            console.log("******PUT api/users/:id/edit/avatar FAIL!!******");
+            return res.status(401).json({ errors: err });
+          });
+      } else {
+        return res
+          .status(401)
+          .json({ errors: { password: "Password Incorrect" } });
+      }
+    });
+});
+
 // PUT api/users/:id/edit
 router.put("/:id/edit", (req, res) => {
-  console.log("******GET api/users/:id/edit PASS!!******");
+  console.log("******PUT api/users/:id/edit PASS!!******");
   const id = req.params.id;
-  const {
-    email,
-    username,
-    timezone,
-    password,
-    fullname,
-    education,
-    company
-  } = req.body;
+  const { timezone, password, fullname, education, company } = req.body;
 
-  User.query({
-    where: { id: id }
-  })
+  User.where({ id: id })
     .fetch()
     .then(user => {
       if (bcrypt.compareSync(password, user.get("password_digest"))) {
@@ -55,20 +115,18 @@ router.put("/:id/edit", (req, res) => {
             },
             { patch: true }
           )
-          .then(() => {
+          .then(user => {
             console.log("******PUT api/users/:id/edit SUCCESS!!******");
-            User.where({ id: id })
-              .fetch()
-              .then(user => {
-                return res.json({ success: true, user: user, id: id });
-              });
+            return res.json({ success: true, user: user, id: id });
           })
           .catch(err => {
             console.log("******PUT api/users/:id/edit FAIL!!******");
-            return res.status(401).json({ error: err });
+            return res.status(401).json({ errors: err });
           });
       } else {
-        res.status(401).json({ errors: { password: "Password Incorrect" } });
+        return res
+          .status(401)
+          .json({ errors: { password: "Password Incorrect" } });
       }
     });
 });
