@@ -23,10 +23,10 @@ class Pagination extends Component {
       onLastPage
     } = this.props;
 
-    let disablePrevious = page === 1 ? "disabled-link" : "";
-    let disableFirst = page === 1 ? "disabled-link" : "";
-    let disableNext = page === pages ? "disabled-link" : "";
-    let disableLast = page === pages ? "disabled-link" : "";
+    let disablePrevious = String(page) === "1" ? "disabled-link" : "";
+    let disableFirst = String(page) === "1" ? "disabled-link" : "";
+    let disableNext = String(page) === String(pages) ? "disabled-link" : "";
+    let disableLast = String(page) === String(pages) ? "disabled-link" : "";
 
     return (
       <nav>

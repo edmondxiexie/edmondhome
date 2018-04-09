@@ -85,12 +85,16 @@ router.post("/login", (req, res) => {
             },
             jwtSecret.jwtSecret
           );
-          res.json({ token });
+          return res.json({ token });
         } else {
-          res.status(401).json({ errors: { password: "Password Incorrect" } });
+          return res
+            .status(401)
+            .json({ errors: { password: "Password Incorrect" } });
         }
       } else {
-        res.status(401).json({ errors: { identifier: "User not found" } });
+        return res
+          .status(401)
+          .json({ errors: { identifier: "User not found" } });
       }
     });
 });

@@ -74,7 +74,11 @@ class Login extends React.Component {
       this.setState({ errors, valid });
     } else {
       this.props.login(this.state).then(
-        res => {
+        () => {
+          const userId = this.props.auth.user.id;
+          this.props.fetchHostHomesCount(userId);
+          this.props.fetchTripsCount(userId);
+          this.props.fetchWishlistCount(userId);
           this.context.router.push("/");
         },
         err => {

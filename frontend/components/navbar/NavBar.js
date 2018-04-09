@@ -23,12 +23,13 @@ class NavBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.auth) {
+    if (nextProps.auth.isAuthenticated) {
       this.setState({
         username: nextProps.auth.user.username,
         hostHomesCount: nextProps.hostHomesCount,
         tripsCount: nextProps.tripsCount,
-        wishlistCount: nextProps.wishlistCount
+        wishlistCount: nextProps.wishlistCount,
+        search: nextProps.searchStr
       });
     } else {
       this.setState({ username: "" });
@@ -49,11 +50,16 @@ class NavBar extends React.Component {
 
   onSearchSubmit(e) {
     e.preventDefault();
-    const keywords = this.state.search.trim().split(" ");
+    const keywordsStr = this.state.search.trim();
 
-    this.props.fetchHomesByKeywords(keywords);
-    this.setState({ search: "" });
-    console.log("Search", keywords);
+    this.props.fetchHomesByKeywords(keywordsStr);
+    console.log("Search", keywordsStr);
+  }
+
+  onRedirectToHomes(e) {
+    e.preventDefault();
+    this.props.fetchHomesPage(1);
+    this.context.router.push("/homes");
   }
 
   render() {
@@ -80,7 +86,14 @@ class NavBar extends React.Component {
     const userLink = (
       <ul className="nav navbar-nav navbar-right">
         <li>
-          <Link to="/homes">Homes</Link>
+          <a
+            href="#"
+            onClick={e => {
+              this.onRedirectToHomes(e);
+            }}
+          >
+            Homes
+          </a>
         </li>
         <li>
           <Link to="/homes/new">Host your place</Link>

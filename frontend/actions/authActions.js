@@ -32,7 +32,8 @@ export const logout = () => {
   console.log("******/logout ACTION******");
   return dispatch => {
     return authUtil.logoutUtil().then(() => {
-      localStorage.removeItem("jwtToken");
+      // localStorage.removeItem("jwtToken");
+      localStorage.clear();
       authUtil.setAuthorizationToken(false);
       dispatch(setCurrentUser({}));
     });

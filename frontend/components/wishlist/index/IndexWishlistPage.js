@@ -65,7 +65,7 @@ class IndexWishlistPage extends Component {
             handleClick={(e, id) => {
               this.onRedirect(e, id);
             }}
-            showWishlist={true}
+            showFavButton={true}
             onWishlist={true}
             addToWishlist={e => this.addToWishlist(e, id)}
             deleteFromWishlist={e => this.deleteFromWishlist(e, wish.id)}

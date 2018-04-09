@@ -9,8 +9,9 @@ const mapStateToProps = state => {
     auth: state.auth,
     page: state.homes.page,
     homesCount: state.homes.homesCount,
-    homes: state.homes.homes,
-    wishlist: state.wishlist.wishlist || []
+    homes: state.homes.homes || [],
+    wishlist: state.wishlist.wishlist || [],
+    searchStr: state.homes.searchStr || ""
   };
 };
 

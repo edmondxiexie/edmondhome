@@ -8,6 +8,14 @@ export const getHomes = homes => {
   };
 };
 
+export const getHomesSearch = (homes, searchStr) => {
+  return {
+    type: homeUtil.GET_HOMES_SEARCH,
+    homes,
+    searchStr
+  };
+};
+
 export const getHomesCount = homesCount => {
   return {
     type: homeUtil.GET_HOMES_COUNT,
@@ -99,7 +107,9 @@ export const patchHome = (id, homeData) => {
   };
 };
 
-export const fetchHomesByKeywords = keywords => {
+export const fetchHomesByKeywords = keywordsStr => {
+  const keywords = keywordsStr.split(" ");
+
   return dispatch => {
     return homeUtil.getHomesUtil().then(res => {
       const homes = res.data;
@@ -133,7 +143,7 @@ export const fetchHomesByKeywords = keywords => {
       }
 
       dispatch(getHomesCount(newHomes.length));
-      dispatch(getHomes(newHomes));
+      dispatch(getHomesSearch(newHomes, keywordsStr));
     });
   };
 };

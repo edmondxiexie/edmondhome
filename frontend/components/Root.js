@@ -7,7 +7,7 @@ class Root extends React.Component {
     return (
       <div className="root">
         <NavBarContainer />
-        {/* <AlertContainer /> */}
+        <AlertContainer />
         <div className="container root-container">{this.props.children}</div>
         <footer className="container footer">
           <hr />

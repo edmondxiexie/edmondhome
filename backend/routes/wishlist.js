@@ -7,14 +7,11 @@ const router = express.Router();
 router.get("/:keeper_id/count", (req, res) => {
   console.log("******GET api/wishlist/:keeper_id/count PASS!!******");
   const keeper_id = req.params.keeper_id;
-  Wishlist.query({
-    select: ["*"],
-    where: { keeper_id: keeper_id }
-  })
-    .fetchAll({ withRelated: ["home"] })
-    .then(wishlist => {
+  Wishlist.where("keeper_id", keeper_id)
+    .count()
+    .then(count => {
       console.log("******GET api/wishlist/:keeper_id SUCCESS!!******");
-      return res.json(wishlist.length);
+      return res.json(count);
     })
     .catch(err => {
       console.log("******GET api/wishlist/:keeper_id FAIL!!******");

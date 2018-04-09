@@ -12,7 +12,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     hostHomesCount: state.host.hostHomesCount,
     tripsCount: state.trips.tripsCount,
-    wishlistCount: state.wishlist.wishlistCount
+    wishlistCount: state.wishlist.wishlistCount,
+    searchStr: state.homes.searchStr
   };
 };
 
@@ -32,6 +33,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchHomesByKeywords: keywords => {
       return dispatch(homeActions.fetchHomesByKeywords(keywords));
+    },
+    fetchHomesPage: page => {
+      return dispatch(homeActions.fetchHomesPage(page));
     }
   };
 };

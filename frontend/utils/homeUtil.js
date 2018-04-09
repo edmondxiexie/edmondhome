@@ -5,7 +5,7 @@ export const GET_HOMES = "GET_HOMES";
 export const GET_HOMES_PAGE = "GET_HOMES_PAGE";
 export const GET_HOMES_COUNT = "GET_HOMES_COUNT";
 export const SET_HOMES_CURRENT_PAGE = "SET_HOMES_CURRENT_PAGE";
-
+export const GET_HOMES_SEARCH = "GET_HOMES_SEARCH";
 export const GET_HOME = "GET_HOME";
 export const PUT_HOME = "PUT_HOME";
 

@@ -10,7 +10,9 @@ class IndexHomePage extends React.Component {
       page: localStorage.indexHomePage || 1,
       pages: 1,
       homes: [],
-      homesCount: 0
+      homesCount: 0,
+      searchStr: this.props.searchStr,
+      isLoading: true
     };
   }
 
@@ -24,12 +26,14 @@ class IndexHomePage extends React.Component {
         this.props.fetchWishlist(this.props.auth.user.id);
       }
     });
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 1000);
   }
 
   componentWillReceiveProps(nextProps) {
-    const newHomes = nextProps.homes || [];
-    const page = nextProps.page;
-    this.setState({ homes: newHomes, page: page });
+    const { homes, page, searchStr } = nextProps;
+    this.setState({ homes: homes, page: page, searchStr: searchStr });
   }
 
   onRedirect(e, id) {
@@ -182,40 +186,94 @@ class IndexHomePage extends React.Component {
     }, 3000);
   }
 
-  render() {
-    let { homes, page, pages } = this.state;
+  buildIndexHomesPage() {
+    const { homes, page, pages } = this.state;
     const wishlist = this.props.wishlist || [];
-
-    return (
-      <div>
-        <div className="container row">
+    if (this.state.searchStr === "") {
+      return (
+        <div>
           <h1 className="page-title">Homes around the world</h1>
-          {this.buildGallery(homes, wishlist)}
+          <Pagination
+            page={page}
+            pages={pages}
+            onChangePage={e => {
+              this.onChangePage(e);
+            }}
+            onKeyDown={e => {
+              this.onChangePagePress(e);
+            }}
+            onNextPage={e => {
+              this.onNextPage(e);
+            }}
+            onPreviousPage={e => {
+              this.onPreviousPage(e);
+            }}
+            onFirstPage={e => {
+              this.onFirstPage(e);
+            }}
+            onLastPage={e => {
+              this.onLastPage(e);
+            }}
+          />
+          <div className="container row">
+            {this.buildGallery(homes, wishlist)}
+          </div>
+          <Pagination
+            page={page}
+            pages={pages}
+            onChangePage={e => {
+              this.onChangePage(e);
+            }}
+            onKeyDown={e => {
+              this.onChangePagePress(e);
+            }}
+            onNextPage={e => {
+              this.onNextPage(e);
+            }}
+            onPreviousPage={e => {
+              this.onPreviousPage(e);
+            }}
+            onFirstPage={e => {
+              this.onFirstPage(e);
+            }}
+            onLastPage={e => {
+              this.onLastPage(e);
+            }}
+          />
         </div>
-        <Pagination
-          page={page}
-          pages={pages}
-          onChangePage={e => {
-            this.onChangePage(e);
-          }}
-          onKeyDown={e => {
-            this.onChangePagePress(e);
-          }}
-          onNextPage={e => {
-            this.onNextPage(e);
-          }}
-          onPreviousPage={e => {
-            this.onPreviousPage(e);
-          }}
-          onFirstPage={e => {
-            this.onFirstPage(e);
-          }}
-          onLastPage={e => {
-            this.onLastPage(e);
-          }}
-        />
-      </div>
-    );
+      );
+    } else {
+      if (homes.length) {
+        return (
+          <div>
+            <h1 className="page-title">{`Here is the search result for '${
+              this.state.searchStr
+            }'`}</h1>
+            <div className="container row">
+              {this.buildGallery(homes, wishlist)}
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="jumbotron">
+            <h1 className="page-title">
+              {`Sorry we don't find the search result for '${
+                this.state.searchStr
+              }'`}
+            </h1>
+          </div>
+        );
+      }
+    }
+  }
+
+  render() {
+    if (this.state.homes.length === 0) {
+      return <div>Loading...</div>;
+    } else {
+      return this.buildIndexHomesPage();
+    }
   }
 }
 

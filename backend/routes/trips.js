@@ -8,14 +8,11 @@ const router = express.Router();
 router.get("/:guest_id/count", (req, res) => {
   console.log("******GET api/trips/:guest_id/count PASS!!******");
   const guest_id = req.params.guest_id;
-  Trip.query({
-    select: ["*"],
-    where: { guest_id: guest_id }
-  })
-    .fetchAll({ withRelated: ["home"] })
-    .then(trips => {
+  Trip.where("guest_id", guest_id)
+    .count()
+    .then(count => {
       console.log("******GET api/trips/:guest_id SUCCESS!!******");
-      return res.json(trips.length);
+      return res.json(count);
     })
     .catch(err => {
       console.log("******GET api/trips/:guest_id FAIL!!******");

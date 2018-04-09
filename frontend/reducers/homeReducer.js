@@ -6,6 +6,7 @@ const defaultHome = Object.freeze({
   page: 1,
   homes: null,
   home: null,
+  searchStr: "",
   error: []
 });
 
@@ -38,12 +39,23 @@ const HomeReducer = (state = defaultHome, action) => {
     case homeUtil.GET_HOMES_PAGE:
       console.log("******/home REDUCER GET******");
       homes = action.homes;
-      const newHomesPageState = Object.assign({}, state, { homes: homes });
+      const newHomesPageState = Object.assign({}, state, {
+        homes: homes,
+        searchStr: ""
+      });
       return newHomesPageState;
     case homeUtil.SET_HOMES_CURRENT_PAGE:
       page = action.page;
       const newPageState = Object.assign({}, state, { page: page });
       return newPageState;
+    case homeUtil.GET_HOMES_SEARCH:
+      homes = action.homes;
+      const searchStr = action.searchStr;
+      const newHomesSearchState = Object.assign({}, state, {
+        homes: homes,
+        searchStr: searchStr
+      });
+      return newHomesSearchState;
     default:
       return state;
   }
