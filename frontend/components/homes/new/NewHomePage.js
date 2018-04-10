@@ -2,9 +2,11 @@ import React from "react";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import Faker from "faker";
 import swal from "sweetalert2";
+import classnames from "classnames";
 
 import OptionFieldGroup from "../../common/OptionFieldGroup";
 import ImageFieldGroup from "../../common/ImageFieldGroup";
+import SelectFieldGroup from "../../common/SelectFieldGroup";
 
 import districtOptions from "../asset/district/district";
 import roomTypeOptions from "../asset/roomtype/roomtype";
@@ -14,8 +16,12 @@ import guestAvailAbilityOptions from "../asset/guestavailability/guestavailabili
 import bedAvailAbilityOptions from "../asset/bedavailability/bedavailability";
 import roomAvailAbilityOptions from "../asset/roomavailability/roomavailability";
 import bathAvailAbilityOptions from "../asset/bathavailability/bathavailability";
+import amenitiesOptions from "../asset/amenities/amenities";
+
 import isEmpty from "lodash/isEmpty";
 import validateInput from "../../../../backend/common/validations/home";
+
+import Select from "react-select";
 
 class NewHomePage extends React.Component {
   constructor(props) {
@@ -35,6 +41,9 @@ class NewHomePage extends React.Component {
       beds_availability: "",
       bath_availability: "",
       target: "",
+      amenities: [],
+      otherAmenities: [],
+
       errors: {},
       isLoading: false,
       valid: true
@@ -82,6 +91,14 @@ class NewHomePage extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+  }
+
+  onAmenitiesChange(amenities) {
+    this.setState({ amenities });
+  }
+
+  onOtherAmenitiesChange(otherAmenities) {
+    this.setState({ otherAmenities });
   }
 
   onOpenImageWidget(e) {
@@ -154,10 +171,13 @@ class NewHomePage extends React.Component {
       beds_availability,
       bath_availability,
       target,
+      amenities,
+      otherAmenities,
       errors,
       isLoading,
       valid
     } = this.state;
+
     return (
       <div>
         <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>
@@ -170,6 +190,7 @@ class NewHomePage extends React.Component {
           Auto Fill
         </button>
         <h1>Host your place</h1>
+
         <TextFieldGroup
           field="title"
           label="Home Title"
@@ -231,6 +252,41 @@ class NewHomePage extends React.Component {
           validator={e => this.checkRequired(e)}
           error={errors.room_type}
         />
+
+        <SelectFieldGroup
+          label="Amenities"
+          value={amenities}
+          options={amenitiesOptions}
+          placeholder="Select available amenities"
+          closeOnSelect={false}
+          removeSelected={true}
+          disabled={false}
+          multi={true}
+          onChange={value => this.onAmenitiesChange(value)}
+          validator={e => this.checkRequired(e)}
+          error={errors.room_type}
+        />
+
+        <div
+          className={classnames("form-group", {
+            "has-error": errors.otherAmenities
+          })}
+        >
+          <label className="control-label">Other Amenities</label>
+          <Select.Creatable
+            multi={true}
+            placeholder="Input other Amenities."
+            onChange={value => {
+              this.onOtherAmenitiesChange(value);
+            }}
+            value={otherAmenities}
+            noResultsText="Input other amenities which are not on the list."
+          />
+          {errors.otherAmenities && (
+            <span className="help-block">{errors.otherAmenities}</span>
+          )}
+        </div>
+
         <OptionFieldGroup
           label="Setup For Guest"
           name="setup_for_guest"
