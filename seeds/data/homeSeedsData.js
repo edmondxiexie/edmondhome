@@ -31,5 +31,17 @@ module.exports = {
     "The Artist's Experience",
     "Modern, Well-Appointed Room in NYC!",
     "Soho 2 Bedroom Private Terrace"
-  ]
+  ],
+
+  districts: [
+    "LOS ANGELES",
+    "SAN FRANCISCO",
+    "PITTSBURGH",
+    "SHANGHAI",
+    "NEW YORK"
+  ],
+
+  room_types: ["ENTIRE PLACE", "PRIVATE ROOM", "SHARED ROOM"],
+
+  setup_for_guest: ["Set up for guest", "Do it yourself", "Pay for clean up"]
 };

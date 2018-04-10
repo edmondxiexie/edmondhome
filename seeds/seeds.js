@@ -7,6 +7,7 @@ const TRIP_NUM = USER_NUM * 20;
 const WISHLIST_NUM = USER_NUM * 10;
 
 const userSeedsData = require("./data/userSeedsData");
+const homeSeedsData = require("./data/homeSeedsData");
 
 const imageUrls = [
   "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112935/8039654500_796cd8d4f0_z.jpg",
@@ -25,29 +26,17 @@ function buildHomeSeed(knex) {
   for (let i = 1; i <= HOME_NUM; i++) {
     res.push(
       knex("homes").insert({
-        title: Faker.name.jobTitle(),
+        title: Faker.random.arrayElement(homeSeedsData.titles),
         description: Faker.lorem.paragraph(),
-        image: Faker.random.arrayElement(imageUrls),
+        image: Faker.random.arrayElement(homeSeedsData.imageUrls),
         host_id: Faker.random.number({ min: 1, max: 50 }),
         price: Faker.random.number({ min: 50, max: 500 }),
-        district: Faker.random.arrayElement([
-          "LOS ANGELES",
-          "SAN FRANCISCO",
-          "PITTSBURGH",
-          "SHANGHAI",
-          "NEW YORK"
-        ]),
+        district: Faker.random.arrayElement(homeSeedsData.districts),
         property_type: Faker.random.arrayElement(["APARTMENT", "HOUSE"]),
-        room_type: Faker.random.arrayElement([
-          "ENTIRE PLACE",
-          "PRIVATE ROOM",
-          "SHARED ROOM"
-        ]),
-        setup_for_guest: Faker.random.arrayElement([
-          "Set up for guest",
-          "Do it yourself",
-          "Pay for clean up"
-        ]),
+        room_type: Faker.random.arrayElement(homeSeedsData.room_types),
+        setup_for_guest: Faker.random.arrayElement(
+          homeSeedsData.setup_for_guest
+        ),
         guest_availability: Faker.random.number({ min: 1, max: 12 }),
         rooms_availability: Faker.random.number({ min: 1, max: 4 }),
         beds_availability: Faker.random.number({ min: 1, max: 8 }),
