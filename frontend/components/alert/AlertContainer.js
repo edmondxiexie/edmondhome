@@ -3,9 +3,6 @@ import AlertList from "./AlertList";
 import * as alertActions from "../../actions/alertActions";
 
 const mapStateToProps = state => {
-  // if (state.alert.length) {
-  //   debugger;
-  // }
   return {
     alert: state.alert
   };
@@ -13,8 +10,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setAlert: alert => {
-      return dispatch(alertActions.setAlert(alert));
+    addAlert: alert => {
+      return dispatch(alertActions.addAlert(alert));
     },
     deleteAlert: id => {
       return dispatch(alertActions.deleteAlert(id));

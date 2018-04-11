@@ -6,6 +6,12 @@ class AlertItem extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.deleteAlert(this.props.alert.id);
+    }, 5000);
+  }
+
   closeAlert(e, id) {
     e.preventDefault();
     this.props.deleteAlert(id);
@@ -15,7 +21,6 @@ class AlertItem extends Component {
     const { id, type, text } = this.props.alert;
     return (
       <div>
-        <br />
         <div
           className={classnames("alert", {
             "alert-success": type === "success",

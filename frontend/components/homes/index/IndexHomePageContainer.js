@@ -35,8 +35,8 @@ const mapDispatchToProps = dispatch => {
     deleteWishlist: id => {
       return dispatch(wishlistActions.deleteWishlist(id));
     },
-    setAlert: alert => {
-      return dispatch(alertActions.setAlert(alert));
+    addAlert: alert => {
+      return dispatch(alertActions.addAlert(alert));
     },
     fetchWishlistCount: keeperId => {
       return dispatch(wishlistActions.fetchWishlistCount(keeperId));

@@ -184,7 +184,7 @@ class IndexHomePage extends React.Component {
       text: "Test Alert",
       type: "success"
     };
-    this.props.setAlert(alert);
+    this.props.addAlert(alert);
   }
 
   buildIndexHomesPage() {

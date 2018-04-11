@@ -15,8 +15,8 @@ const mapDispatchToProps = dispatch => {
     createHome: data => {
       return dispatch(homeActions.createHome(data));
     },
-    setAlert: alert => {
-      return dispatch(alertActions.setAlert(alert));
+    addAlert: alert => {
+      return dispatch(alertActions.addAlert(alert));
     }
   };
 };

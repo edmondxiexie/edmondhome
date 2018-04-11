@@ -20,7 +20,7 @@ class AlertList extends Component {
     });
 
     return (
-      <div className="container">
+      <div className="alert-wrapper">
         <ReactCSSTransitionGroup
           transitionName="alert"
           transitionEnterTimeout={500}
