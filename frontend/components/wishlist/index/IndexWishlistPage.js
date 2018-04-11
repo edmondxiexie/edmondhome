@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GalleryCard from "../../common/GalleryCard";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class IndexWishlistPage extends Component {
   constructor(props) {
@@ -81,7 +82,13 @@ class IndexWishlistPage extends Component {
     return (
       <div className="container row">
         <h1 className="page-title">Your wishlist</h1>
-        {this.buildGallery(wishlist)}
+        <ReactCSSTransitionGroup
+          transitionName="alert"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+        >
+          {this.buildGallery(wishlist)}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

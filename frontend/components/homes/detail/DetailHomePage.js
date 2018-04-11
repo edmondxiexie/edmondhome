@@ -34,6 +34,10 @@ class DetailHomnePage extends React.Component {
     }
   }
 
+  componentDidMount() {
+    $("#date-time-wrapper input").attr("disabled", "disabled");
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.favorite !== null) {
       // console.log("receive props", nextProps);

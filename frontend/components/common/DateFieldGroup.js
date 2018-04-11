@@ -7,7 +7,7 @@ const DateFieldGroup = ({ name, value, label, error, onChange, disabled }) => {
   return (
     <div className={classnames("form-group", { "has-error": error })}>
       <label className="control-label">{label}</label>
-      <div style={{ position: "relative" }}>
+      <div id="date-time-wrapper" style={{ position: "relative" }}>
         <DateTimeField
           disabled="true"
           dateTime={value}

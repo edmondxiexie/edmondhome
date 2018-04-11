@@ -5,6 +5,7 @@
 @import "components/datetimepicker/datepicker-addon";
 @import "components/common/GalleryCard";
 @import "components/common/Pagination";
+@import "components/common/SelectFieldGroup";
 @import "components/profile/Profile";
 @import "components/alert/Alert";
 @import "root";
@@ -17,4 +18,43 @@ footer {
 
 .root-container {
   min-height: calc(100vh - 70px);
+}
+
+.alert-enter {
+  opacity: 0.01;
+}
+
+.alert-enter.alert-enter-active {
+  opacity: 1;
+  transition: all 500ms ease-out;
+  animation: onAlertEnter 500ms ease-out;
+}
+
+.alert-leave {
+  opacity: 1;
+}
+
+.alert-leave.alert-leave-active {
+  opacity: 0.01;
+
+  animation: onAlertLeave 500ms ease-in;
+  transition: all 500ms ease-in;
+}
+
+@keyframes onAlertEnter {
+  0% {
+    -webkit-transform: translateY(-20px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+  }
+}
+
+@keyframes onAlertLeave {
+  0% {
+    -webkit-transform: translateY(0px);
+  }
+  100% {
+    -webkit-transform: translateY(-20px);
+  }
 }

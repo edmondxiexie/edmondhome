@@ -93,8 +93,17 @@ class NewHomePage extends React.Component {
     });
   }
 
+  onSelectChange(selected, key) {
+    if (selected) {
+      this.setState({ [key]: selected.value });
+    } else {
+      this.setState({ [key]: "" });
+    }
+  }
+
   onAmenitiesChange(amenities) {
     this.setState({ amenities });
+    console.log(amenities);
   }
 
   onOtherAmenitiesChange(otherAmenities) {
@@ -225,6 +234,18 @@ class NewHomePage extends React.Component {
           validator={e => this.checkRequired(e)}
           error={errors.price}
         />
+
+        <SelectFieldGroup
+          label="District"
+          name="district"
+          value={district}
+          options={districtOptions}
+          placeholder="Choose Your District"
+          onChange={value => this.onSelectChange(value, "district")}
+          validator={e => this.checkRequired(e)}
+          error={errors.district}
+        />
+
         <OptionFieldGroup
           label="District"
           name="district"

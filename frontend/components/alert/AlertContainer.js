@@ -1,10 +1,13 @@
 import { connect } from "react-redux";
-import Alert from "./Alert";
+import AlertList from "./AlertList";
 import * as alertActions from "../../actions/alertActions";
 
 const mapStateToProps = state => {
+  // if (state.alert.length) {
+  //   debugger;
+  // }
   return {
-    alert: state.alert.alert
+    alert: state.alert
   };
 };
 
@@ -12,8 +15,11 @@ const mapDispatchToProps = dispatch => {
   return {
     setAlert: alert => {
       return dispatch(alertActions.setAlert(alert));
+    },
+    deleteAlert: id => {
+      return dispatch(alertActions.deleteAlert(id));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Alert);
+export default connect(mapStateToProps, mapDispatchToProps)(AlertList);

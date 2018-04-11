@@ -43,6 +43,7 @@ const SelectFieldGroup = ({
         onChange={value => {
           onChange(value);
         }}
+        onBlur={validator}
       />
       {error && <span className="help-block">{error}</span>}
     </div>
@@ -51,7 +52,9 @@ const SelectFieldGroup = ({
 
 SelectFieldGroup.propTypes = {
   label: React.PropTypes.string.isRequired,
-  value: React.PropTypes.array.isRequired,
+  name: React.PropTypes.string,
+
+  //   value: React.PropTypes.object.isRequired,
   options: React.PropTypes.object.isRequired,
   placeholder: React.PropTypes.string,
   closeOnSelect: React.PropTypes.bool,

@@ -184,11 +184,8 @@ class Profile extends React.Component {
       this.props
         .patchUserProfile(this.props.auth.user.id, userData)
         .then(res => {
-          console.log("res", res);
-          this.setState({ errors: {}, valid: true, password: "" });
-        })
-        .catch(err => {
-          this.setState({ errors: err, valid: false, password: "" });
+          const { errors, user } = res;
+          this.setState({ errors: errors, valid: true, password: "" });
         });
     } else {
       this.setState({ errors, valid });
@@ -211,11 +208,9 @@ class Profile extends React.Component {
       this.props
         .patchUserAvatarProfile(this.props.auth.user.id, userData)
         .then(res => {
+          const { errors, user } = res;
           console.log("---------res---------", res);
-          this.setState({ errors: {}, valid: true, password: "" });
-        })
-        .catch(err => {
-          this.setState({ errors: err, valid: false, password: "" });
+          this.setState({ errors: errors, valid: true, password: "" });
         });
     } else {
       this.setState({ errors, valid });

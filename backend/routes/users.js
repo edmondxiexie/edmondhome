@@ -48,16 +48,19 @@ router.put("/:id/edit/password", (req, res) => {
             console.log(
               "******PUT api/users/:id/edit/password SUCCESS!!******"
             );
-            return res.json({ success: true, user: user, id: id });
+            return res.json({ valid: true, user: user, errors: {} });
           })
           .catch(err => {
             console.log("******PUT api/users/:id/edit/password FAIL!!******");
             return res.status(401).json({ errors: err });
           });
       } else {
-        return res
-          .status(401)
-          .json({ errors: { password: "Password Incorrect" } });
+        console.log("******PUT api/users/:id/edit/password FAIL!!******");
+        return res.json({
+          errors: { password: "Password Incorrect" },
+          user: {},
+          valid: false
+        });
       }
     });
 });
@@ -81,16 +84,20 @@ router.put("/:id/edit/avatar", (req, res) => {
           )
           .then(user => {
             console.log("******PUT api/users/:id/edit/avatar SUCCESS!!******");
-            return res.json({ success: true, user: user, id: id });
+            return res.json({ valid: true, user: user, errors: {} });
           })
           .catch(err => {
             console.log("******PUT api/users/:id/edit/avatar FAIL!!******");
-            return res.status(401).json({ errors: err });
+            return res.json({ errors: err });
           });
       } else {
-        return res
-          .status(401)
-          .json({ errors: { password: "Password Incorrect" } });
+        console.log("******PUT api/users/:id/edit/avatar FAIL!!******");
+        console.log("pass here!!");
+        return res.json({
+          errors: { password: "Password Incorrect" },
+          user: {},
+          valid: false
+        });
       }
     });
 });
@@ -117,16 +124,19 @@ router.put("/:id/edit", (req, res) => {
           )
           .then(user => {
             console.log("******PUT api/users/:id/edit SUCCESS!!******");
-            return res.json({ success: true, user: user, id: id });
+            return res.json({ valid: true, user: user, errors: {} });
           })
           .catch(err => {
             console.log("******PUT api/users/:id/edit FAIL!!******");
-            return res.status(401).json({ errors: err });
+            return res.json({ errors: err });
           });
       } else {
-        return res
-          .status(401)
-          .json({ errors: { password: "Password Incorrect" } });
+        console.log("******PUT api/users/:id/edit FAIL!!******");
+        return res.json({
+          errors: { password: "Password Incorrect" },
+          user: {},
+          valid: false
+        });
       }
     });
 });
