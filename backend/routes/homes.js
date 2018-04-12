@@ -174,8 +174,14 @@ router.put("/:id/edit", (req, res) => {
     rooms_availability,
     beds_availability,
     bath_availability,
-    target
+    target,
+    amenities,
+    otherAmenities
   } = req.body;
+
+  const amenitiesStr = JSON.stringify(amenities);
+  const otherAmenitiesStr = JSON.stringify(otherAmenities);
+
   Home.where({ id: id })
     .save(
       {
@@ -192,7 +198,9 @@ router.put("/:id/edit", (req, res) => {
         rooms_availability,
         beds_availability,
         bath_availability,
-        target
+        target,
+        amenities: amenitiesStr,
+        otherAmenities: otherAmenitiesStr
       },
       { patch: true }
     )

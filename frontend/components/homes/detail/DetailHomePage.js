@@ -24,6 +24,7 @@ class DetailHomnePage extends React.Component {
   }
 
   componentWillMount() {
+    window.scrollTo(0, 0);
     this.props.fetchHome(this.props.params.id);
     if (this.props.auth.isAuthenticated) {
       this.props
@@ -60,7 +61,6 @@ class DetailHomnePage extends React.Component {
   }
 
   onDateChange(e, name) {
-    console.log("******", [name]);
     this.setState({
       [name]: e
     });
@@ -191,7 +191,6 @@ class DetailHomnePage extends React.Component {
   }
 
   render() {
-    console.log(this.props.home);
     const {
       id,
       title,

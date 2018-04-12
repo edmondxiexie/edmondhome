@@ -1,10 +1,8 @@
 import React from "react";
-import TextFieldGroup from "../../common/TextFieldGroup";
 import Faker from "faker";
-import swal from "sweetalert2";
 import classnames from "classnames";
 
-import OptionFieldGroup from "../../common/OptionFieldGroup";
+import TextFieldGroup from "../../common/TextFieldGroup";
 import ImageFieldGroup from "../../common/ImageFieldGroup";
 import SelectFieldGroup from "../../common/SelectFieldGroup";
 
@@ -63,8 +61,6 @@ class NewHomePage extends React.Component {
 
   checkSelectReuired(e, name) {
     e.preventDefault();
-
-    console.log("name", name);
 
     const field = name;
 
@@ -129,7 +125,6 @@ class NewHomePage extends React.Component {
 
   onAmenitiesChange(amenities) {
     this.setState({ amenities });
-    console.log(amenities);
   }
 
   onOtherAmenitiesChange(otherAmenities) {
@@ -227,8 +222,6 @@ class NewHomePage extends React.Component {
       isLoading,
       valid
     } = this.state;
-
-    console.log("state", this.state);
 
     return (
       <div>

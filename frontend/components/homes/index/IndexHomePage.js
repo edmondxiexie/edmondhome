@@ -70,6 +70,7 @@ class IndexHomePage extends React.Component {
       let page = e.target.value;
       this.fetchNewPage(page);
       localStorage.setItem("indexHomePage", page);
+      window.scrollTo(0, 0);
     }
   }
 
@@ -83,6 +84,7 @@ class IndexHomePage extends React.Component {
     this.setState({ page: newPage });
     this.fetchNewPage(newPage);
     localStorage.setItem("indexHomePage", newPage);
+    window.scrollTo(0, 0);
   }
 
   onPreviousPage(e) {
@@ -92,6 +94,7 @@ class IndexHomePage extends React.Component {
     this.setState({ page: newPage });
     this.fetchNewPage(newPage);
     localStorage.setItem("indexHomePage", newPage);
+    window.scrollTo(0, 0);
   }
 
   onFirstPage(e) {
@@ -99,6 +102,7 @@ class IndexHomePage extends React.Component {
     this.setState({ page: 1 });
     this.fetchNewPage(1);
     localStorage.setItem("indexHomePage", 1);
+    window.scrollTo(0, 0);
   }
 
   onLastPage(e) {
@@ -107,6 +111,7 @@ class IndexHomePage extends React.Component {
     this.setState({ page: pages });
     this.fetchNewPage(pages);
     localStorage.setItem("indexHomePage", pages);
+    window.scrollTo(0, 0);
   }
 
   addToWishlist(e, home_id) {
@@ -194,14 +199,14 @@ class IndexHomePage extends React.Component {
       return (
         <div>
           <h1 className="page-title">Homes around the world</h1>
-          <button
+          {/* <button
             className="btn btn-primary"
             onClick={e => {
               this.textAlert(e);
             }}
           >
             Alert test
-          </button>
+          </button> */}
           <Pagination
             page={page}
             pages={pages}

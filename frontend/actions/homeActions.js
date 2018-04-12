@@ -101,8 +101,9 @@ export const patchHome = (id, homeData) => {
   console.log("******/home/:id/edit ACTION PUT******");
   return dispatch => {
     return homeUtil.putHomeUtil(id, homeData).then(res => {
-      const home = res.data;
+      const home = res.data.home;
       dispatch(putHome(home));
+      return res.data;
     });
   };
 };

@@ -216,8 +216,6 @@ class Profile extends React.Component {
         .then(res => {
           const { errors, valid, user } = res;
 
-          console.log("res", res);
-
           const alert = {};
 
           if (valid) {

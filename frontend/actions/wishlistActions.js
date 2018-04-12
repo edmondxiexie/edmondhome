@@ -50,7 +50,6 @@ export const getFavorite = (keeperId, homeId) => {
   return dispatch => {
     return wishlistUtil.getFavoriteUtil(keeperId, homeId).then(res => {
       const favorite = res.data;
-      console.log("data", res.data);
       dispatch({
         type: wishlistUtil.GET_FAVORITE,
         favorite

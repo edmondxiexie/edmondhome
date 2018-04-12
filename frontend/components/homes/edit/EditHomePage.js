@@ -1,9 +1,10 @@
 import React from "react";
-import TextFieldGroup from "../../common/TextFieldGroup";
 import Faker from "faker";
+import classnames from "classnames";
 
-import OptionFieldGroup from "../../common/OptionFieldGroup";
+import TextFieldGroup from "../../common/TextFieldGroup";
 import ImageFieldGroup from "../../common/ImageFieldGroup";
+import SelectFieldGroup from "../../common/SelectFieldGroup";
 
 import districtOptions from "../asset/district/district";
 import roomTypeOptions from "../asset/roomtype/roomtype";
@@ -13,8 +14,12 @@ import guestAvailAbilityOptions from "../asset/guestavailability/guestavailabili
 import bedAvailAbilityOptions from "../asset/bedavailability/bedavailability";
 import roomAvailAbilityOptions from "../asset/roomavailability/roomavailability";
 import bathAvailAbilityOptions from "../asset/bathavailability/bathavailability";
+import amenitiesOptions from "../asset/amenities/amenities";
+
 import isEmpty from "lodash/isEmpty";
 import validateInput from "../../../../backend/common/validations/home";
+
+import Select from "react-select";
 
 class EditHomePage extends React.Component {
   constructor(props) {
@@ -34,6 +39,9 @@ class EditHomePage extends React.Component {
       beds_availability: "",
       bath_availability: "",
       target: "",
+      amenities: [],
+      otherAmenities: [],
+
       errors: {},
       isLoading: false,
       valid: true
@@ -41,11 +49,20 @@ class EditHomePage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchHome(this.props.params.id);
+    if (!this.props.auth.isAuthenticated) {
+      const alert = {
+        text: "You must log in first.",
+        type: "danger"
+      };
+      this.props.addAlert(alert);
+      this.context.router.push("/login");
+    } else {
+      this.props.fetchHome(this.props.params.id);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.home) {
+    if (!isEmpty(nextProps.home)) {
       const {
         title,
         description,
@@ -62,6 +79,10 @@ class EditHomePage extends React.Component {
         bath_availability,
         target
       } = nextProps.home;
+
+      const amenities = JSON.parse(nextProps.home.amenities);
+      const otherAmenities = JSON.parse(nextProps.home.otherAmenities);
+
       this.setState({
         title,
         description,
@@ -76,9 +97,30 @@ class EditHomePage extends React.Component {
         rooms_availability,
         beds_availability,
         bath_availability,
+        amenities,
+        otherAmenities,
         target
       });
     }
+  }
+
+  checkSelectReuired(e, name) {
+    e.preventDefault();
+
+    const field = name;
+
+    const val = this.state[field];
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    if (val === "") {
+      errors[field] = "This field is required";
+      valid = false;
+    } else {
+      delete errors[field];
+      valid = isEmpty(errors);
+    }
+    this.setState({ errors, valid });
   }
 
   checkRequired(e) {
@@ -100,10 +142,21 @@ class EditHomePage extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+
     const { errors, valid } = validateInput(this.state);
     if (valid) {
       this.props.patchHome(this.props.params.id, this.state).then(res => {
-        this.context.router.push(`/homes/${this.props.params.id}`);
+        const { success, id } = res;
+        if (success) {
+          alert.text = "Home updated successfully.";
+          alert.type = "success";
+          this.props.addAlert(alert);
+          this.context.router.push(`/homes/${id}`);
+        } else {
+          alert.text = "Home update Failed.";
+          alert.type = "danger";
+          this.props.addAlert(alert);
+        }
       });
     } else {
       this.setState({ errors, valid });
@@ -114,6 +167,22 @@ class EditHomePage extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+  }
+
+  onSelectChange(selected, key) {
+    if (selected) {
+      this.setState({ [key]: selected.value });
+    } else {
+      this.setState({ [key]: "" });
+    }
+  }
+
+  onAmenitiesChange(amenities) {
+    this.setState({ amenities });
+  }
+
+  onOtherAmenitiesChange(otherAmenities) {
+    this.setState({ otherAmenities });
   }
 
   onOpenImageWidget(e) {
@@ -149,15 +218,30 @@ class EditHomePage extends React.Component {
   autoFill(e) {
     e.preventDefault();
     this.setState({
-      title: Faker.name.jobTitle(),
-      description: Faker.lorem.sentence(),
+      title: "Silicon Valley Condo for Relaxation or Business",
+      description: Faker.lorem.paragraph(),
       image:
-        "https://res.cloudinary.com/dqace5qmb/image/upload/v1522018201/4976907567_99bd3fd7a4_o.jpg",
-      host_id: "1",
+        "http://res.cloudinary.com/dqace5qmb/image/upload/v1522018205/5129896990_526a74d91f_o.jpg",
+      host_id: this.props.auth.user.id,
       price: "235",
       district: "NEW YORK",
       property_type: "APARTMENT",
       room_type: "ENTIRE PLACE",
+      amenities: [
+        { value: "kitchen", label: "Kitchen" },
+        { value: "wifi", label: "Wifi" },
+        { value: "tv", label: "TV" },
+        { value: "heating", label: "Heating" },
+        { value: "parking", label: "Parking" },
+        { value: "air conditioning", label: "Air conditioning" },
+        { value: "iron", label: "Iron" },
+        { value: "hair dryer", label: "Hair Dryer" },
+        { value: "first aid kit", label: "First aid kit" }
+      ],
+      otherAmenities: [
+        { value: "A Lovely Cat", label: "A Lovely Cat" },
+        { value: "Outdoor Swimming Pool", label: "Outdoor Swimming Pool" }
+      ],
       setup_for_guest: "Set up for guest",
       guest_availability: "4",
       rooms_availability: "2",
@@ -186,6 +270,8 @@ class EditHomePage extends React.Component {
       beds_availability,
       bath_availability,
       target,
+      amenities,
+      otherAmenities,
       errors,
       isLoading,
       valid
@@ -203,6 +289,7 @@ class EditHomePage extends React.Component {
           Auto Fill
         </button>
         <h1>Host your place</h1>
+
         <TextFieldGroup
           field="title"
           label="Home Title"
@@ -237,78 +324,128 @@ class EditHomePage extends React.Component {
           validator={e => this.checkRequired(e)}
           error={errors.price}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="District"
           name="district"
           value={district}
           options={districtOptions}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          placeholder="Choose Your District"
+          onChange={value => this.onSelectChange(value, "district")}
+          validator={e => this.checkSelectReuired(e, "district")}
           error={errors.district}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Property Type"
           name="property_type"
-          options={propertyTypeOptions}
           value={property_type}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={propertyTypeOptions}
+          placeholder="Choose Your Property Type"
+          onChange={value => this.onSelectChange(value, "property_type")}
+          validator={e => this.checkSelectReuired(e, "property_type")}
           error={errors.property_type}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Room Type"
           name="room_type"
-          options={roomTypeOptions}
           value={room_type}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={roomTypeOptions}
+          placeholder="Choose Your Room Type"
+          onChange={value => this.onSelectChange(value, "room_type")}
+          validator={e => this.checkSelectReuired(e, "room_type")}
           error={errors.room_type}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
+          label="Amenities"
+          value={amenities}
+          options={amenitiesOptions}
+          placeholder="Select available amenities"
+          closeOnSelect={false}
+          removeSelected={true}
+          disabled={false}
+          multi={true}
+          onChange={value => this.onAmenitiesChange(value)}
+          validator={e => this.checkRequired(e)}
+          error={errors.amenities}
+        />
+        <div
+          className={classnames("form-group", {
+            "has-error": errors.otherAmenities
+          })}
+        >
+          <label className="control-label">Other Amenities</label>
+          <Select.Creatable
+            multi={true}
+            placeholder="Input other Amenities."
+            onChange={value => {
+              this.onOtherAmenitiesChange(value);
+            }}
+            value={otherAmenities}
+            noResultsText="Input other amenities which are not on the list."
+          />
+          {errors.otherAmenities && (
+            <span className="help-block">{errors.otherAmenities}</span>
+          )}
+        </div>
+
+        <SelectFieldGroup
           label="Setup For Guest"
           name="setup_for_guest"
-          options={guestSetupOptions}
           value={setup_for_guest}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={guestSetupOptions}
+          placeholder="Choose Your Room Type"
+          onChange={value => this.onSelectChange(value, "setup_for_guest")}
+          validator={e => this.checkSelectReuired(e, "setup_for_guest")}
           error={errors.setup_for_guest}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Guest Availability"
           name="guest_availability"
-          options={guestAvailAbilityOptions}
           value={guest_availability}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={guestAvailAbilityOptions}
+          placeholder="Choose Your Guest Availability"
+          onChange={value => this.onSelectChange(value, "guest_availability")}
+          validator={e => this.checkSelectReuired(e, "guest_availability")}
           error={errors.guest_availability}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Rooms Availability"
           name="rooms_availability"
-          options={roomAvailAbilityOptions}
           value={rooms_availability}
-          onChange={e => this.onChange(e)}
+          options={roomAvailAbilityOptions}
+          placeholder="Choose Your Rooms Availability"
+          onChange={value => this.onSelectChange(value, "rooms_availability")}
+          validator={e => this.checkSelectReuired(e, "rooms_availability")}
           error={errors.rooms_availability}
-          validator={e => this.checkRequired(e)}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Beds Availability"
           name="beds_availability"
-          options={bedAvailAbilityOptions}
           value={beds_availability}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={bedAvailAbilityOptions}
+          placeholder="Choose Your Beds Availability"
+          onChange={value => this.onSelectChange(value, "beds_availability")}
+          validator={e => this.checkSelectReuired(e, "beds_availability")}
           error={errors.beds_availability}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Bath Availability"
           name="bath_availability"
-          options={bathAvailAbilityOptions}
           value={bath_availability}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={bedAvailAbilityOptions}
+          placeholder="Choose Your Bath Availability"
+          onChange={value => this.onSelectChange(value, "bath_availability")}
+          validator={e => this.checkSelectReuired(e, "bath_availability")}
           error={errors.bath_availability}
         />
+
         <TextFieldGroup
           field="target"
           label="Target"
