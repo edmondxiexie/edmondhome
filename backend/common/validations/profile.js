@@ -5,7 +5,7 @@ export default function validateInput(data, type) {
   let errors = {};
 
   switch (type) {
-    case "profile":
+    case "basic":
       if (Validator.isNull(data.timezone)) {
         errors.timezone = "This field is required";
       }
@@ -13,7 +13,7 @@ export default function validateInput(data, type) {
         errors.password = "This field is required";
       }
       break;
-    case "photo":
+    case "avatar":
       if (Validator.isNull(data.avatar)) {
         errors.avatar = "This field is required";
       }

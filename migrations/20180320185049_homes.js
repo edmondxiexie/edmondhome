@@ -14,6 +14,8 @@ exports.up = function(knex, Promise) {
     table.string("beds_availability").notNullable();
     table.string("bath_availability").notNullable();
     table.string("target").notNullable();
+    table.text("amenities");
+    table.text("otherAmenities");
     table.timestamps();
     table
       .integer("host_id")

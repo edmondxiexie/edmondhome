@@ -83,7 +83,7 @@ class IndexWishlistPage extends Component {
       <div className="container row">
         <h1 className="page-title">Your wishlist</h1>
         <ReactCSSTransitionGroup
-          transitionName="alert"
+          transitionName="slide"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}
         >

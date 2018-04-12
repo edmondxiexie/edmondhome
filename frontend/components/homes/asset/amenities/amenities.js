@@ -1,13 +1,17 @@
 export default {
+  Kitchen: "kitchen",
   Wifi: "wifi",
-  Shampoo: "shampoo",
-  Closet: "closet",
+  "Hot tub": "hot tub",
+  Parking: "parking",
+  Essentials: "essentials",
   TV: "tv",
   Heating: "heating",
-  AC: "ac",
-  Breakfast: "breakfast",
-  Desk: "desk",
+  "Air conditioning": "air conditioning",
+  "Hot water": "hot water",
+  Lockbox: "lockbox",
+  "Washing machine": "washing machine",
+  "First aid kit": "first aid kit",
+  "Laptop friendly workspace": "laptop friendly workspace",
   Iron: "iron",
-  "Hair Dryer": "hair dryer",
-  Pets: "pets"
+  "Hair Dryer": "hair dryer"
 };

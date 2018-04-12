@@ -29,8 +29,14 @@ router.post("/", (req, res) => {
       rooms_availability,
       beds_availability,
       bath_availability,
-      target
+      target,
+      amenities,
+      otherAmenities
     } = req.body;
+
+    const amenitiesStr = JSON.stringify(amenities);
+    const otherAmenitiesStr = JSON.stringify(otherAmenities);
+
     console.log(req.body);
     Home.forge(
       {
@@ -47,7 +53,9 @@ router.post("/", (req, res) => {
         rooms_availability,
         beds_availability,
         bath_availability,
-        target
+        target,
+        amenities: amenitiesStr,
+        otherAmenities: otherAmenitiesStr
       },
       { hasTimestamps: true }
     )
@@ -92,7 +100,7 @@ router.get("/:id", (req, res) => {
     select: ["*"],
     where: { id: id }
   })
-    .fetch()
+    .fetch({ withRelated: ["host"] })
     .then(home => {
       console.log("******Fetch home SUCCESS!!******");
       return res.json(home);

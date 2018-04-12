@@ -18,9 +18,11 @@ class GalleryCard extends Component {
       district,
       onWishlist,
       showFavButton,
+      showEditButton,
       handleClick,
       addToWishlist,
-      deleteFromWishlist
+      deleteFromWishlist,
+      onEditClick
     } = this.props;
 
     let trimedTitle = title;
@@ -59,6 +61,19 @@ class GalleryCard extends Component {
                 <span>Save</span>
               </button>
             )}
+
+        {showEditButton && (
+          <button
+            className="edit-btn"
+            onClick={e => {
+              onEditClick(e, id);
+            }}
+          >
+            <i className="fa fa-pencil active" />
+            <span>Edit</span>
+          </button>
+        )}
+
         <img src={image} className="card-img" />
         <div className="caption">
           <div>
@@ -92,9 +107,17 @@ GalleryCard.propTypes = {
   district: PropTypes.string,
   handleClick: PropTypes.func,
   showFavButton: PropTypes.bool,
+  showEditButton: PropTypes.bool,
   onWishlist: PropTypes.bool,
   addToWishlist: PropTypes.func,
-  deleteFromWishlist: PropTypes.func
+  deleteFromWishlist: PropTypes.func,
+  onEditClick: PropTypes.func
+};
+
+GalleryCard.defaultProps = {
+  onWishlist: false,
+  showFavButton: false,
+  showEditButton: false
 };
 
 export default GalleryCard;

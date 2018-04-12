@@ -1,6 +1,8 @@
 import { connect } from "react-redux";
 import Profile from "./Profile";
 import * as profileActions from "../../actions/profileActions";
+import * as alertActions from "../../actions/alertActions";
+
 const mapStateToProps = state => {
   return {
     auth: state.auth,
@@ -13,14 +15,11 @@ const mapDispatchToProps = dispatch => {
     getUserProfile: id => {
       return dispatch(profileActions.getUserProfile(id));
     },
-    patchUserProfile: (id, userData) => {
-      return dispatch(profileActions.patchUserProfile(id, userData));
+    patchUserProfile: (id, userData, dataType) => {
+      return dispatch(profileActions.patchUserProfile(id, userData, dataType));
     },
-    patchUserAvatarProfile: (id, userData) => {
-      return dispatch(profileActions.patchUserAvatarProfile(id, userData));
-    },
-    patchUserPasswordProfile: (id, userData) => {
-      return dispatch(profileActions.patchUserPasswordProfile(id, userData));
+    addAlert: alert => {
+      return dispatch(alertActions.addAlert(alert));
     }
   };
 };

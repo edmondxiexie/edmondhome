@@ -30,8 +30,8 @@ class Profile extends React.Component {
       isLoading: false,
       valid: true,
       nav: {
-        profile: "active",
-        photo: "",
+        basic: "active",
+        avatar: "",
         password: ""
       }
     };
@@ -102,8 +102,8 @@ class Profile extends React.Component {
     e.preventDefault();
     this.setState({
       password: "password",
-      newPassword: "newpassword",
-      newPasswordConfirm: "newpassword",
+      newPassword: "password",
+      newPasswordConfirm: "password",
       errors: {},
       isLoading: false,
       valid: true
@@ -157,100 +157,77 @@ class Profile extends React.Component {
   onChangeNav(e, nav) {
     e.preventDefault();
     const newNav = {
-      profile: "",
-      photo: "",
+      basic: "",
+      avatar: "",
       password: ""
     };
     newNav[nav] = "active";
-    this.setState({ nav: newNav, password: "" });
+    this.setState({ nav: newNav, password: "", valid: true, errors: {} });
   }
 
-  onProfileSave(e) {
+  onProfileSave(e, type) {
     e.preventDefault();
 
-    const { errors, valid } = validateInput(this.state, "profile");
-
-    const { timezone, password, fullname, education, company } = this.state;
-
-    const userData = {
+    const {
       timezone,
       fullname,
-      password,
       education,
-      company
-    };
-
-    if (valid) {
-      this.props
-        .patchUserProfile(this.props.auth.user.id, userData)
-        .then(res => {
-          const { errors, user } = res;
-          this.setState({ errors: errors, valid: true, password: "" });
-        });
-    } else {
-      this.setState({ errors, valid });
-    }
-  }
-
-  onAvatarSave(e) {
-    e.preventDefault();
-
-    const { errors, valid } = validateInput(this.state, "photo");
-
-    const { avatar, password } = this.state;
-
-    const userData = {
+      company,
       avatar,
-      password
-    };
-
-    if (valid) {
-      this.props
-        .patchUserAvatarProfile(this.props.auth.user.id, userData)
-        .then(res => {
-          const { errors, user } = res;
-          console.log("---------res---------", res);
-          this.setState({ errors: errors, valid: true, password: "" });
-        });
-    } else {
-      this.setState({ errors, valid });
-    }
-  }
-
-  onPasswordSave(e) {
-    e.preventDefault();
-
-    const { errors, valid } = validateInput(this.state, "password");
-
-    const { password, newPassword, newPasswordConfirm } = this.state;
-
-    const userData = {
       password,
       newPassword,
       newPasswordConfirm
-    };
+    } = this.state;
+    let validateResult, userData;
+
+    switch (type) {
+      case "basic":
+        userData = {
+          timezone,
+          fullname,
+          password,
+          education,
+          company
+        };
+        validateResult = validateInput(this.state, "basic");
+        break;
+      case "avatar":
+        userData = {
+          avatar,
+          password
+        };
+        validateResult = validateInput(this.state, "avatar");
+        break;
+      case "password":
+        userData = {
+          password,
+          newPassword,
+          newPasswordConfirm
+        };
+        validateResult = validateInput(this.state, "password");
+        break;
+    }
+
+    const { errors, valid } = validateResult;
 
     if (valid) {
       this.props
-        .patchUserPasswordProfile(this.props.auth.user.id, userData)
+        .patchUserProfile(this.props.auth.user.id, userData, type)
         .then(res => {
-          console.log("---------res---------", res);
-          this.setState({
-            errors: {},
-            valid: true,
-            password: "",
-            newPassword: "",
-            newPasswordConfirm: ""
-          });
-        })
-        .catch(err => {
-          this.setState({
-            errors: err,
-            valid: false,
-            password: "",
-            newPassword: "",
-            newPasswordConfirm: ""
-          });
+          const { errors, valid, user } = res;
+
+          console.log("res", res);
+
+          const alert = {};
+
+          if (valid) {
+            alert.text = "Changes saved successfully.";
+            alert.type = "success";
+            this.props.addAlert(alert);
+            this.setState({ errors: errors, valid: valid, password: "" });
+          } else {
+            this.setState({ errors: errors, valid: valid, password: "" });
+          }
         });
     } else {
       this.setState({ errors, valid });
@@ -272,11 +249,11 @@ class Profile extends React.Component {
     } = this.state;
     return (
       <div>
-        {nav.profile === "active" && (
+        {nav.basic === "active" && (
           <div>
             <div className="panel panel-info">
               <div className="panel-heading">
-                <h3 className="panel-title">Basic Info</h3>
+                <h3 className="panel-title">Basic Profile</h3>
               </div>
               <div className="panel-body edit-panel">
                 <form>
@@ -331,7 +308,7 @@ class Profile extends React.Component {
                 </form>
               </div>
             </div>
-            <div className="panel panel-danger">
+            <div className="panel panel-info">
               <div className="panel-heading">
                 <h3 className="panel-title">Enter Password to Save Changes</h3>
               </div>
@@ -356,7 +333,7 @@ class Profile extends React.Component {
                   </button>
                   <button
                     className="btn btn-primary save-btn pull-right"
-                    onClick={e => this.onProfileSave(e)}
+                    onClick={e => this.onProfileSave(e, "basic")}
                     disabled={!valid}
                   >
                     Save
@@ -380,7 +357,7 @@ class Profile extends React.Component {
     const { password, avatar, nav, errors, valid } = this.state;
     return (
       <div>
-        {nav.photo === "active" && (
+        {nav.avatar === "active" && (
           <div>
             <div className="panel panel-info">
               <div className="panel-heading">
@@ -398,7 +375,7 @@ class Profile extends React.Component {
                 />
               </div>
             </div>
-            <div className="panel panel-danger">
+            <div className="panel panel-info">
               <div className="panel-heading">
                 <h3 className="panel-title">Enter Password to Save Changes</h3>
               </div>
@@ -423,7 +400,7 @@ class Profile extends React.Component {
                   </button>
                   <button
                     className="btn btn-primary save-btn pull-right"
-                    onClick={e => this.onAvatarSave(e)}
+                    onClick={e => this.onProfileSave(e, "avatar")}
                     disabled={!valid}
                   >
                     Save
@@ -457,7 +434,7 @@ class Profile extends React.Component {
       <div>
         {nav.password === "active" && (
           <div>
-            <div className="panel panel-danger">
+            <div className="panel panel-info">
               <div className="panel-heading">
                 <h3 className="panel-title">Password</h3>
               </div>
@@ -500,7 +477,7 @@ class Profile extends React.Component {
                   </button>
                   <button
                     className="btn btn-primary save-btn pull-right"
-                    onClick={e => this.onPasswordSave(e)}
+                    onClick={e => this.onProfileSave(e, "password")}
                     disabled={!valid}
                   >
                     Save
@@ -519,9 +496,8 @@ class Profile extends React.Component {
       </div>
     );
   }
-  render() {
-    const profile = JSON.stringify(this.props.profile);
 
+  render() {
     const {
       email,
       username,
@@ -540,28 +516,30 @@ class Profile extends React.Component {
 
     return (
       <div>
-        <div className="row profile-edit-page">
+        <h1 className="page-title">Personal Profile</h1>
+
+        <div className="container row profile-edit-page">
           <div className="col-md-3">
             <div className="avatar">
               <img src={avatar} />
             </div>
             <ul className="nav nav-pills nav-stacked">
-              <li className={nav.profile}>
+              <li className={nav.basic}>
                 <a
                   onClick={e => {
-                    this.onChangeNav(e, "profile");
+                    this.onChangeNav(e, "basic");
                   }}
                 >
-                  Edit Profile
+                  Basic Profile
                 </a>
               </li>
-              <li className={nav.photo}>
+              <li className={nav.avatar}>
                 <a
                   onClick={e => {
-                    this.onChangeNav(e, "photo");
+                    this.onChangeNav(e, "avatar");
                   }}
                 >
-                  Photos
+                  Avatar
                 </a>
               </li>
               <li className={nav.password}>

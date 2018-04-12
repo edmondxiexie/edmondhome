@@ -102,9 +102,9 @@ router.put("/:id/edit/avatar", (req, res) => {
     });
 });
 
-// PUT api/users/:id/edit
-router.put("/:id/edit", (req, res) => {
-  console.log("******PUT api/users/:id/edit PASS!!******");
+// PUT api/users/:id/edit/basic
+router.put("/:id/edit/basic", (req, res) => {
+  console.log("******PUT api/users/:id/edit/basic PASS!!******");
   const id = req.params.id;
   const { timezone, password, fullname, education, company } = req.body;
 
@@ -123,15 +123,15 @@ router.put("/:id/edit", (req, res) => {
             { patch: true }
           )
           .then(user => {
-            console.log("******PUT api/users/:id/edit SUCCESS!!******");
+            console.log("******PUT api/users/:id/edit/basic SUCCESS!!******");
             return res.json({ valid: true, user: user, errors: {} });
           })
           .catch(err => {
-            console.log("******PUT api/users/:id/edit FAIL!!******");
-            return res.json({ errors: err });
+            console.log("******PUT api/users/:id/edit/basic FAIL!!******");
+            return res.json({ errors: err, valid: false });
           });
       } else {
-        console.log("******PUT api/users/:id/edit FAIL!!******");
+        console.log("******PUT api/users/:id/edit/basic FAIL!!******");
         return res.json({
           errors: { password: "Password Incorrect" },
           user: {},

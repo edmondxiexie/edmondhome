@@ -98,6 +98,11 @@ class SignUp extends React.Component {
               isLoading: false
             })
             .then(res => {
+              const alert = {
+                text: "New account created Successfully.",
+                type: "success"
+              };
+              this.props.addAlert(alert);
               return this.context.router.push("/");
             });
         }, 100);

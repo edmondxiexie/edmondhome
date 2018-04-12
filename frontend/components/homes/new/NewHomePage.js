@@ -52,8 +52,34 @@ class NewHomePage extends React.Component {
 
   componentWillMount() {
     if (!this.props.auth.isAuthenticated) {
+      const alert = {
+        text: "You must log in first.",
+        type: "danger"
+      };
+      this.props.addAlert(alert);
       this.context.router.push("/login");
     }
+  }
+
+  checkSelectReuired(e, name) {
+    e.preventDefault();
+
+    console.log("name", name);
+
+    const field = name;
+
+    const val = this.state[field];
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    if (val === "") {
+      errors[field] = "This field is required";
+      valid = false;
+    } else {
+      delete errors[field];
+      valid = isEmpty(errors);
+    }
+    this.setState({ errors, valid });
   }
 
   checkRequired(e) {
@@ -152,6 +178,21 @@ class NewHomePage extends React.Component {
       district: "NEW YORK",
       property_type: "APARTMENT",
       room_type: "ENTIRE PLACE",
+      amenities: [
+        { value: "kitchen", label: "Kitchen" },
+        { value: "wifi", label: "Wifi" },
+        { value: "tv", label: "TV" },
+        { value: "heating", label: "Heating" },
+        { value: "parking", label: "Parking" },
+        { value: "air conditioning", label: "Air conditioning" },
+        { value: "iron", label: "Iron" },
+        { value: "hair dryer", label: "Hair Dryer" },
+        { value: "first aid kit", label: "First aid kit" }
+      ],
+      otherAmenities: [
+        { value: "A Lovely Cat", label: "A Lovely Cat" },
+        { value: "Outdoor Swimming Pool", label: "Outdoor Swimming Pool" }
+      ],
       setup_for_guest: "Set up for guest",
       guest_availability: "4",
       rooms_availability: "2",
@@ -186,6 +227,8 @@ class NewHomePage extends React.Component {
       isLoading,
       valid
     } = this.state;
+
+    console.log("state", this.state);
 
     return (
       <div>
@@ -242,35 +285,29 @@ class NewHomePage extends React.Component {
           options={districtOptions}
           placeholder="Choose Your District"
           onChange={value => this.onSelectChange(value, "district")}
-          validator={e => this.checkRequired(e)}
+          validator={e => this.checkSelectReuired(e, "district")}
           error={errors.district}
         />
 
-        <OptionFieldGroup
-          label="District"
-          name="district"
-          value={district}
-          options={districtOptions}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
-          error={errors.district}
-        />
-        <OptionFieldGroup
+        <SelectFieldGroup
           label="Property Type"
           name="property_type"
-          options={propertyTypeOptions}
           value={property_type}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={propertyTypeOptions}
+          placeholder="Choose Your Property Type"
+          onChange={value => this.onSelectChange(value, "property_type")}
+          validator={e => this.checkSelectReuired(e, "property_type")}
           error={errors.property_type}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Room Type"
           name="room_type"
-          options={roomTypeOptions}
           value={room_type}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={roomTypeOptions}
+          placeholder="Choose Your Room Type"
+          onChange={value => this.onSelectChange(value, "room_type")}
+          validator={e => this.checkSelectReuired(e, "room_type")}
           error={errors.room_type}
         />
 
@@ -285,7 +322,7 @@ class NewHomePage extends React.Component {
           multi={true}
           onChange={value => this.onAmenitiesChange(value)}
           validator={e => this.checkRequired(e)}
-          error={errors.room_type}
+          error={errors.amenities}
         />
 
         <div
@@ -308,51 +345,61 @@ class NewHomePage extends React.Component {
           )}
         </div>
 
-        <OptionFieldGroup
+        <SelectFieldGroup
           label="Setup For Guest"
           name="setup_for_guest"
-          options={guestSetupOptions}
           value={setup_for_guest}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={guestSetupOptions}
+          placeholder="Choose Your Room Type"
+          onChange={value => this.onSelectChange(value, "setup_for_guest")}
+          validator={e => this.checkSelectReuired(e, "setup_for_guest")}
           error={errors.setup_for_guest}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Guest Availability"
           name="guest_availability"
-          options={guestAvailAbilityOptions}
           value={guest_availability}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={guestAvailAbilityOptions}
+          placeholder="Choose Your Guest Availability"
+          onChange={value => this.onSelectChange(value, "guest_availability")}
+          validator={e => this.checkSelectReuired(e, "guest_availability")}
           error={errors.guest_availability}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Rooms Availability"
           name="rooms_availability"
-          options={roomAvailAbilityOptions}
           value={rooms_availability}
-          onChange={e => this.onChange(e)}
+          options={roomAvailAbilityOptions}
+          placeholder="Choose Your Rooms Availability"
+          onChange={value => this.onSelectChange(value, "rooms_availability")}
+          validator={e => this.checkSelectReuired(e, "rooms_availability")}
           error={errors.rooms_availability}
-          validator={e => this.checkRequired(e)}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Beds Availability"
           name="beds_availability"
-          options={bedAvailAbilityOptions}
           value={beds_availability}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={bedAvailAbilityOptions}
+          placeholder="Choose Your Beds Availability"
+          onChange={value => this.onSelectChange(value, "beds_availability")}
+          validator={e => this.checkSelectReuired(e, "beds_availability")}
           error={errors.beds_availability}
         />
-        <OptionFieldGroup
+
+        <SelectFieldGroup
           label="Bath Availability"
           name="bath_availability"
-          options={bathAvailAbilityOptions}
           value={bath_availability}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
+          options={bedAvailAbilityOptions}
+          placeholder="Choose Your Bath Availability"
+          onChange={value => this.onSelectChange(value, "bath_availability")}
+          validator={e => this.checkSelectReuired(e, "bath_availability")}
           error={errors.bath_availability}
         />
+
         <TextFieldGroup
           field="target"
           label="Target"

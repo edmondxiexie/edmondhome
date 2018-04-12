@@ -40,7 +40,6 @@ class DetailHomnePage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.favorite !== null) {
-      // console.log("receive props", nextProps);
       this.setState({ favorite: nextProps.favorite });
     }
   }
@@ -88,7 +87,6 @@ class DetailHomnePage extends React.Component {
   buildDetailComponent() {
     if (!_.isEmpty(this.state.home)) {
       const { id, title, description } = this.state.home;
-      //   debugger;
       return (
         <div>
           <label>{`ID: ${id}`}</label>
@@ -132,6 +130,46 @@ class DetailHomnePage extends React.Component {
     );
   }
 
+  buildAmenities(amenities) {
+    const icons = {
+      kitchen: "fa-cutlery",
+      wifi: "fa-wifi",
+      "hot tub": "fa-bath",
+      parking: "fa-product-hunt",
+      essentials: "fa-life-ring",
+      tv: "fa-television",
+      heating: "fa-thermometer-three-quarters",
+      "air conditioning": "fa-snowflake-o",
+      "hot water": "fa-tint",
+      lockbox: "fa-lock",
+      "washing machine": "fa-shopping-basket",
+      "first aid kit": "fa-medkit",
+      "laptop friendly workspace": "fa-laptop",
+      iron: "fa-sun-o",
+      "hair dryer": "fa-user",
+      other: "fa-thumbs-o-up"
+    };
+
+    if (amenities) {
+      let gallery = [];
+      for (let amenity of amenities) {
+        const icon = icons[amenity.value]
+          ? icons[amenity.value]
+          : icons["other"];
+
+        gallery.push(
+          <div key={amenity.value} className="col-md-6 col-sm-6 amenities-item">
+            <p>
+              <i className={`fa ${icon}`} aria-hidden="true" />
+              {amenity.label}
+            </p>
+          </div>
+        );
+      }
+      return gallery;
+    }
+  }
+
   autoFill(e) {
     e.preventDefault();
     const checkInTime = new Date();
@@ -153,6 +191,7 @@ class DetailHomnePage extends React.Component {
   }
 
   render() {
+    console.log(this.props.home);
     const {
       id,
       title,
@@ -171,16 +210,21 @@ class DetailHomnePage extends React.Component {
       target
     } = this.props.home;
 
-    const {
-      check_in_date,
-      check_out_date,
-      guests,
-      errors,
-      host_avatar,
-      host_name,
-      host_email,
-      host_phone
-    } = this.state;
+    let host_avatar, host_name, host_email, amenities, otherAmenities;
+
+    if (this.props.home.host) {
+      const host = this.props.home.host;
+
+      amenities = JSON.parse(this.props.home.amenities);
+      otherAmenities = JSON.parse(this.props.home.otherAmenities);
+
+      host_avatar = host.avatar;
+      host_name = host.fullname;
+      host_email = host.email;
+    }
+
+    const { check_in_date, check_out_date, guests, errors } = this.state;
+
     const guestsOptions = this.buildGuestsOptions(guest_availability);
 
     return (
@@ -213,7 +257,9 @@ class DetailHomnePage extends React.Component {
                 </span>
               </div>
             </div>
+
             <hr />
+
             <div className="host-info">
               <div>
                 <div className="avatar">
@@ -225,6 +271,17 @@ class DetailHomnePage extends React.Component {
               </div>
               <div className="jumbotron description">{description}</div>
             </div>
+
+            <hr />
+            <h3>Amenities</h3>
+
+            <div className="amenities-info">
+              <div className="row">{this.buildAmenities(amenities)}</div>
+              {otherAmenities && <h4>Specials:</h4>}
+              <div className="row">{this.buildAmenities(otherAmenities)}</div>
+            </div>
+
+            {/* <hr />
 
             <div>
               <button
@@ -239,8 +296,9 @@ class DetailHomnePage extends React.Component {
               >
                 Delete
               </button>
-            </div>
+            </div> */}
           </div>
+
           <div className="book-panel-base col-md-4 col-sm-12">
             <div className="book-panel">
               <div className="price-base">

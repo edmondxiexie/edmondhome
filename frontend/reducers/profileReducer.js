@@ -16,11 +16,11 @@ export default (state = defaultProfile, action) => {
         profile: profile
       });
       return newState;
-    case userUtil.PUT_USER:
+    case userUtil.PUT_USER_BASIC:
       profile = action.profile;
-      const newProfile = Object.assign({}, state.profile, profile);
+      const newBasicProfile = Object.assign({}, state.profile, profile);
       newState = Object.assign({}, state, {
-        profile: newProfile
+        profile: newBasicProfile
       });
       return newState;
     case userUtil.PUT_USER_AVATAR:

@@ -28,7 +28,7 @@
   z-index: -1;
   object-fit: cover;
   width: 100vw;
-  height: 800px;
+  height: 600px;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   margin-top: -20px;
@@ -95,6 +95,27 @@
   .detail-base .detail-info {
     padding-right: 15px;
     margin-bottom: 30px;
+  }
+}
+
+.amenities-info {
+  padding: 15px;
+
+  h4 {
+    font-weight: 400;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .amenities-item {
+    font-size: 20px;
+    color: var(--color-grey-dark-2);
+    font-weight: 300;
+
+    .fa {
+      width: 20px;
+      margin-right: 20px;
+    }
   }
 }
 

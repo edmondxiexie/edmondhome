@@ -21,7 +21,7 @@ export const getHomesUtil = () => {
 };
 
 export const postHomeUtil = homeData => {
-  console.log("******/homes/new UTIL******");
+  console.log("******/homes UTIL******");
   return axios.post("/api/homes", homeData);
 };
 

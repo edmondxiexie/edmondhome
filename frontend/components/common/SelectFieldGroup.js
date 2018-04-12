@@ -5,6 +5,7 @@ import Select from "react-select";
 
 const SelectFieldGroup = ({
   label,
+  name,
   value,
   options,
   placeholder,
@@ -33,6 +34,7 @@ const SelectFieldGroup = ({
     >
       <label className="control-label">{label}</label>
       <Select
+        name={name}
         value={value}
         options={optionsArr}
         placeholder={placeholder}
@@ -43,7 +45,7 @@ const SelectFieldGroup = ({
         onChange={value => {
           onChange(value);
         }}
-        onBlur={validator}
+        onBlur={e => validator(e, name)}
       />
       {error && <span className="help-block">{error}</span>}
     </div>

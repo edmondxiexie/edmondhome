@@ -1,6 +1,8 @@
 import { connect } from "react-redux";
 import SignUp from "./SignUp";
 import * as authActions from "../../actions/authActions";
+import * as alertActions from "../../actions/alertActions";
+
 const mapStateToProps = state => {
   return {};
 };
@@ -15,6 +17,9 @@ const mapDispatchToProps = dispatch => {
     },
     isUserExists: identifier => {
       return dispatch(authActions.isUserExists(identifier));
+    },
+    addAlert: alert => {
+      return dispatch(alertActions.addAlert(alert));
     }
   };
 };

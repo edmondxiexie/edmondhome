@@ -15,6 +15,11 @@ class ManageHostsPage extends Component {
     this.context.router.push(`/homes/${id}`);
   }
 
+  onRedirectEdit(e, id) {
+    e.stopPropagation();
+    this.context.router.push(`/homes/${id}/edit`);
+  }
+
   buildGallery(homes) {
     let gallery = [];
     for (let home of homes) {
@@ -28,9 +33,7 @@ class ManageHostsPage extends Component {
         price,
         district
       } = home;
-      // if (title.length > 15) {
-      //   title = title.substr(0, 15) + "...";
-      // }
+
       gallery.push(
         <div key={id} className="col-md-4 col-sm-6">
           <GalleryCard
@@ -45,7 +48,10 @@ class ManageHostsPage extends Component {
             handleClick={(e, id) => {
               this.onRedirect(e, id);
             }}
-            showWishlist={false}
+            showEditButton={true}
+            onEditClick={e => {
+              this.onRedirectEdit(e, id);
+            }}
           />
         </div>
       );
