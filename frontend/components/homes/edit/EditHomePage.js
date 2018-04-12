@@ -1,6 +1,7 @@
 import React from "react";
 import Faker from "faker";
 import classnames from "classnames";
+import swal from "sweetalert2";
 
 import TextFieldGroup from "../../common/TextFieldGroup";
 import ImageFieldGroup from "../../common/ImageFieldGroup";
@@ -163,6 +164,41 @@ class EditHomePage extends React.Component {
     }
   }
 
+  onDelete(e) {
+    e.preventDefault();
+    console.log("homeid", this.props.home.id);
+    swal({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      type: "warning",
+      showCancelButton: true,
+
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      confirmButtonClass: "btn btn-danger",
+      cancelButtonClass: "btn btn-default",
+      focusCancel: true,
+      buttonsStyling: false
+    }).then(result => {
+      if (result.value) {
+        this.props.deleteHome(this.props.home.id).then(res => {
+          console.log("res", res);
+          const { success } = res;
+          if (success) {
+            alert.text = "Home deleted successfully.";
+            alert.type = "success";
+            this.props.addAlert(alert);
+            this.context.router.push(`/manage`);
+          } else {
+            alert.text = "Home deleted Failed.";
+            alert.type = "danger";
+            this.props.addAlert(alert);
+          }
+        });
+      }
+    });
+  }
+
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -278,9 +314,19 @@ class EditHomePage extends React.Component {
     } = this.state;
 
     return (
-      <div>
-        <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>
+      <div className="container home-edit-page-base">
+        <button
+          className="btn btn-primary"
+          onClick={e => this.onSubmit(e)}
+          disabled={!valid}
+        >
           Update
+        </button>
+        <button
+          className="btn btn-danger delete-btn"
+          onClick={e => this.onDelete(e)}
+        >
+          Delete
         </button>
         <button
           className="btn btn-warning pull-right"
@@ -462,6 +508,12 @@ class EditHomePage extends React.Component {
           disabled={!valid}
         >
           Update
+        </button>
+        <button
+          className="btn btn-danger delete-btn"
+          onClick={e => this.onDelete(e)}
+        >
+          Delete
         </button>
         <button
           className="btn btn-warning pull-right"

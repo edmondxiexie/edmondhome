@@ -24,6 +24,11 @@ const HomeReducer = (state = defaultHome, action) => {
       home = action.home;
       const newHomeState = Object.assign({}, state, { home: home });
       return newHomeState;
+    case homeUtil.DELETE_HOME:
+      console.log("******/home REDUCER DELETE******");
+      home = action.home;
+      const newDeleteHomeState = Object.assign({}, state, { home: home });
+      return newDeleteHomeState;
     case homeUtil.PUT_HOME:
       console.log("******/home REDUCER PUT******");
       home = action.home;

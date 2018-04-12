@@ -7,6 +7,7 @@ class ManageHostsPage extends Component {
   }
 
   componentWillMount() {
+    window.scrollTo(0, 0);
     this.props.fetchHostHomes(this.props.user.id);
   }
 

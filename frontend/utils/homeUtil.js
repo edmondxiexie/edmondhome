@@ -8,11 +8,17 @@ export const SET_HOMES_CURRENT_PAGE = "SET_HOMES_CURRENT_PAGE";
 export const GET_HOMES_SEARCH = "GET_HOMES_SEARCH";
 export const GET_HOME = "GET_HOME";
 export const PUT_HOME = "PUT_HOME";
+export const DELETE_HOME = "DELETE_HOME";
 
 // for util
 export const getHomeUtil = id => {
-  console.log("******/homes/:id UTIL******");
+  console.log("******/homes/:id GET UTIL******");
   return axios.get(`/api/homes/${id}`);
+};
+
+export const deleteHomeUtil = id => {
+  console.log("******/homes/:id DELETE UTIL******");
+  return axios.delete(`/api/homes/${id}`);
 };
 
 export const getHomesUtil = () => {

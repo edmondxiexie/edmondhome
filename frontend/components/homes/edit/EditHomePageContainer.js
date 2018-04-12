@@ -19,6 +19,9 @@ const mapDispatchToProps = dispatch => {
     fetchHome: id => {
       return dispatch(homeActions.fetchHome(id));
     },
+    deleteHome: id => {
+      return dispatch(homeActions.deleteHome(id));
+    },
     addAlert: alert => {
       return dispatch(alertActions.addAlert(alert));
     }

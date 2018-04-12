@@ -12,6 +12,9 @@ class Root extends React.Component {
         <footer className="container footer">
           <hr />
           <div>&nbsp;&nbsp;© 2018 Copyright: Edmond Home</div>
+          <a href="https://github.com/edmondxiexie/edmondhome">
+            &nbsp;&nbsp;Github Repo
+          </a>
           <br />
           <br />
         </footer>

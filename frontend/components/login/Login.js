@@ -124,6 +124,15 @@ class Login extends React.Component {
               Login
             </button>
             <button
+              type="button"
+              className="btn btn-link"
+              onClick={() => {
+                this.context.router.push("/signup");
+              }}
+            >
+              Create a new account
+            </button>
+            <button
               className="btn btn-warning pull-right"
               onClick={e => this.autoFill(e)}
             >

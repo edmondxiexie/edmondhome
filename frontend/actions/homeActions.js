@@ -54,11 +54,24 @@ export const putHome = home => {
 //**** for home actions *****
 
 export const fetchHome = id => {
-  console.log("******/homes/:id ACTION******");
+  console.log("****** /homes/:id GET ACTION ******");
   return dispatch => {
     return homeUtil.getHomeUtil(id).then(res => {
       const home = res.data;
       dispatch(getHome(home));
+    });
+  };
+};
+
+export const deleteHome = id => {
+  console.log("****** /home/:id DELETE ACTION ******");
+  return dispatch => {
+    return homeUtil.deleteHomeUtil(id).then(res => {
+      dispatch({
+        type: homeUtil.DELETE_HOME,
+        home: {}
+      });
+      return res.data;
     });
   };
 };
