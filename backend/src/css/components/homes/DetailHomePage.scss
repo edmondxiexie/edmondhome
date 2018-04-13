@@ -155,6 +155,33 @@
   font-size: 12px;
 }
 
+.detail-base {
+  .book-panel {
+    .price-summary {
+      margin-top: -10px;
+      margin-bottom: 30px;
+
+      hr {
+        margin: 10px 0;
+      }
+
+      .formula,
+      .cleaning {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 5px;
+        font-weight: 300;
+      }
+
+      .total {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 5px;
+      }
+    }
+  }
+}
+
 /********************************************************/
 /* END - BOOK PANEL */
 /********************************************************/

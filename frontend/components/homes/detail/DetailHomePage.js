@@ -59,6 +59,14 @@ class DetailHomnePage extends React.Component {
   }
 
   onDateChange(e, name) {
+    // if (name === "check_out_date") {
+    //   const days = moment(e).diff(moment(this.state.check_in_date), "days");
+    //   console.log("days", days);
+    //   if (days > 0) {
+    //     e = this.state.check_in_date;
+    //   }
+    // }
+
     this.setState({
       [name]: e
     });
@@ -224,6 +232,12 @@ class DetailHomnePage extends React.Component {
 
     const guestsOptions = this.buildGuestsOptions(guest_availability);
 
+    const days = moment(check_out_date).diff(moment(check_in_date), "days");
+
+    const roomTotal = Number(price) * days;
+    const cleaningFee = 35;
+    const total = roomTotal + cleaningFee;
+
     return (
       <div className="home-detail-page-base">
         {this.props.auth.isAuthenticated && this.buildFavoriteButton()}
@@ -277,23 +291,6 @@ class DetailHomnePage extends React.Component {
               {otherAmenities && <h4>Specials:</h4>}
               <div className="row">{this.buildAmenities(otherAmenities)}</div>
             </div>
-
-            {/* <hr />
-
-            <div>
-              <button
-                className="btn btn-warning"
-                onClick={e => this.onRedirectEdit(e)}
-              >
-                Edit
-              </button>
-              <button
-                className="btn btn-danger"
-                onClick={e => this.onRedirectDelete(e)}
-              >
-                Delete
-              </button>
-            </div> */}
           </div>
 
           <div className="book-panel-base col-md-4 col-sm-12">
@@ -344,7 +341,28 @@ class DetailHomnePage extends React.Component {
                 validator={e => {}}
                 error={errors.guests}
               />
+
               <hr />
+
+              {days > 0 && (
+                <div className="price-summary">
+                  <div className="formula">
+                    <div>{`$${price} x ${days} nights`}</div>
+                    <div>{`$${roomTotal}`}</div>
+                  </div>
+                  <hr />
+                  <div className="cleaning">
+                    <div>Cleaning Fee</div>
+                    <div>{`$${cleaningFee}`}</div>
+                  </div>
+                  <hr />
+                  <div className="total">
+                    <div>Total</div>
+                    <div>{`$${total}`}</div>
+                  </div>
+                </div>
+              )}
+
               <button className="btn btn-success btn-block" onClick={e => {}}>
                 Request to Book
               </button>
