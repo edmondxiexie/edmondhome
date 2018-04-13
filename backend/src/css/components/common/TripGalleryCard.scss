@@ -1,0 +1,79 @@
+.trip-gallery-card {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  margin: 10px 0;
+  display: flex;
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+
+  border-radius: 2px;
+
+  .plane-icon {
+    position: absolute;
+    transform: scale(-1, 1);
+    font-size: 150px;
+    right: -20px;
+    bottom: -50px;
+    color: var(--color-grey-light-3);
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+  }
+
+  img.card-img {
+    flex: 1 1 auto;
+
+    height: 200px;
+    object-fit: cover;
+  }
+
+  div.caption {
+    position: relative;
+    z-index: 10;
+    padding: 10px 20px;
+    flex: 0 0 300px;
+
+    label {
+      font-weight: 500;
+    }
+
+    .district {
+      color: #a61d55;
+      font-size: 22px;
+    }
+
+    .title {
+      font-size: 15px;
+    }
+
+    .stay-date {
+      margin: 20px 15px 25px 10px;
+
+      .stay-date-text {
+        font-size: 18px;
+        font-weight: 400;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+          color: #a61d55;
+        }
+      }
+    }
+
+    .order-info {
+      margin-top: 10px;
+
+      .order-number,
+      .order-date-text {
+        font-size: 10px;
+        color: var(--color-grey-dark-1);
+      }
+    }
+  }
+}

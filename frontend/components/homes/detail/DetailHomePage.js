@@ -146,7 +146,7 @@ class DetailHomnePage extends React.Component {
       "first aid kit": "fa-medkit",
       "laptop friendly workspace": "fa-laptop",
       iron: "fa-sun-o",
-      "hair dryer": "fa-user",
+      "hair dryer": "fa-bullhorn",
       other: "fa-thumbs-o-up"
     };
 

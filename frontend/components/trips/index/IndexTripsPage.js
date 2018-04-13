@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GalleryCard from "../../common/GalleryCard";
+import TripGalleryCard from "../../common/TripGalleryCard";
 
 class IndexTripsPage extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class IndexTripsPage extends Component {
   buildGallery(trips) {
     let gallery = [];
     for (let trip of trips) {
-      let { home, check_in_time, check_out_time } = trip;
+      let { home, check_in_time, check_out_time, created_at } = trip;
       let {
         id,
         title,
@@ -33,8 +34,20 @@ class IndexTripsPage extends Component {
       } = home;
 
       gallery.push(
-        <div key={id} className="col-md-4 col-sm-6">
-          <GalleryCard
+        <div key={id} className="col-md-12 col-sm-12">
+          <TripGalleryCard
+            id={id}
+            title={title}
+            image={image}
+            checkInDate={check_in_time}
+            checkOutDate={check_out_time}
+            orderDate={created_at}
+            district={district}
+            price={price}
+            handleClick={() => {}}
+          />
+
+          {/* <GalleryCard
             propertyType={property_type}
             roomType={room_type}
             price={price}
@@ -46,7 +59,7 @@ class IndexTripsPage extends Component {
             handleClick={(e, id) => {
               this.onRedirect(e, id);
             }}
-          />
+          /> */}
         </div>
       );
     }
@@ -55,6 +68,9 @@ class IndexTripsPage extends Component {
 
   render() {
     const trips = this.props.trips || [];
+
+    console.log("trips", trips);
+
     return (
       <div className="container row">
         <h1 className="page-title">Your trips</h1>
