@@ -2,7 +2,7 @@
   position: relative;
   height: 200px;
   overflow: hidden;
-  margin: 10px 0;
+  margin: 10px 0 20px 0;
   display: flex;
   box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.15);
   transition: all 0.3s;
@@ -16,12 +16,18 @@
     right: -20px;
     bottom: -50px;
     color: var(--color-grey-light-3);
+    transition: all 0.3s;
   }
 
   &:hover {
     cursor: pointer;
     box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.2);
     transform: translateY(-5px);
+
+    .plane-icon {
+      right: -10px;
+      bottom: -30px;
+    }
   }
 
   img.card-img {

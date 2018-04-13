@@ -15,7 +15,8 @@ class TripGalleryCard extends Component {
       checkOutDate,
       orderDate,
       district,
-      price
+      price,
+      handleClick
     } = this.props;
 
     let trimedTitle = title;
@@ -24,11 +25,16 @@ class TripGalleryCard extends Component {
       trimedTitle = title.substr(0, 33) + "...";
     }
 
+    // const today = moment(new Date());
+
+    // const dif = moment(checkOutDate).diff(moment(checkInDate), "days");
+    // console.log("dif", dif);
+
     return (
       <div
         className="trip-gallery-card"
         onClick={e => {
-          handleClick(e, id);
+          handleClick(e);
         }}
       >
         <div className="plane-icon">

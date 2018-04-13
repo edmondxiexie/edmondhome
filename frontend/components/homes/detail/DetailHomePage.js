@@ -3,8 +3,6 @@ import TextFieldGroup from "../../common/TextFieldGroup";
 import OptionFieldGroup from "../../common/OptionFieldGroup";
 import DateFieldGroup from "../../common/DateFieldGroup";
 import Faker from "faker";
-// import DatePicker from "react-datepicker";
-// import "../../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 class DetailHomnePage extends React.Component {
   constructor(props) {

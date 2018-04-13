@@ -1,6 +1,7 @@
 import * as tripUtil from "../utils/tripUtil";
 
 const defaultTrips = Object.freeze({
+  trip: {},
   trips: [],
   tripsCount: null,
   errors: []
@@ -22,6 +23,13 @@ export default (state = defaultTrips, action) => {
         tripsCount: tripsCount
       });
       return newTripsCountState;
+
+    case tripUtil.GET_TRIP:
+      const trip = action.trip;
+      const newTripState = Object.assign({}, state, {
+        trip: trip
+      });
+      return newTripState;
     default:
       return state;
   }

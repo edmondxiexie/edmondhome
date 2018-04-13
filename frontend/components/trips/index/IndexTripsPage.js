@@ -15,15 +15,14 @@ class IndexTripsPage extends Component {
 
   onRedirect(e, id) {
     e.preventDefault();
-    this.context.router.push(`/homes/${id}`);
+    this.context.router.push(`/trips/${id}`);
   }
 
   buildGallery(trips) {
     let gallery = [];
     for (let trip of trips) {
-      let { home, check_in_time, check_out_time, created_at } = trip;
+      let { id, home, check_in_time, check_out_time, created_at } = trip;
       let {
-        id,
         title,
         description,
         image,
@@ -44,22 +43,10 @@ class IndexTripsPage extends Component {
             orderDate={created_at}
             district={district}
             price={price}
-            handleClick={() => {}}
-          />
-
-          {/* <GalleryCard
-            propertyType={property_type}
-            roomType={room_type}
-            price={price}
-            district={district}
-            id={id}
-            title={title}
-            description={description}
-            image={image}
-            handleClick={(e, id) => {
+            handleClick={e => {
               this.onRedirect(e, id);
             }}
-          /> */}
+          />
         </div>
       );
     }
@@ -68,8 +55,6 @@ class IndexTripsPage extends Component {
 
   render() {
     const trips = this.props.trips || [];
-
-    console.log("trips", trips);
 
     return (
       <div className="container row">

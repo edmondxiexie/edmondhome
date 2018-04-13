@@ -249,7 +249,7 @@ class Profile extends React.Component {
       <div>
         {nav.basic === "active" && (
           <div>
-            <div className="panel panel-info">
+            <div className="panel panel-primary">
               <div className="panel-heading">
                 <h3 className="panel-title">Basic Profile</h3>
               </div>
@@ -306,7 +306,7 @@ class Profile extends React.Component {
                 </form>
               </div>
             </div>
-            <div className="panel panel-info">
+            <div className="panel panel-primary">
               <div className="panel-heading">
                 <h3 className="panel-title">Enter Password to Save Changes</h3>
               </div>
@@ -322,7 +322,7 @@ class Profile extends React.Component {
                 />
                 <div className="form-group">
                   <button
-                    className="btn btn-warning pull-left"
+                    className="btn btn-default pull-left"
                     onClick={() => {
                       window.location.reload();
                     }}
@@ -357,7 +357,7 @@ class Profile extends React.Component {
       <div>
         {nav.avatar === "active" && (
           <div>
-            <div className="panel panel-info">
+            <div className="panel panel-primary">
               <div className="panel-heading">
                 <h3 className="panel-title">Profile Photo</h3>
               </div>
@@ -373,7 +373,7 @@ class Profile extends React.Component {
                 />
               </div>
             </div>
-            <div className="panel panel-info">
+            <div className="panel panel-primary">
               <div className="panel-heading">
                 <h3 className="panel-title">Enter Password to Save Changes</h3>
               </div>
@@ -389,7 +389,7 @@ class Profile extends React.Component {
                 />
                 <div className="form-group">
                   <button
-                    className="btn btn-warning pull-left"
+                    className="btn btn-default pull-left"
                     onClick={() => {
                       window.location.reload();
                     }}
@@ -432,7 +432,7 @@ class Profile extends React.Component {
       <div>
         {nav.password === "active" && (
           <div>
-            <div className="panel panel-info">
+            <div className="panel panel-primary">
               <div className="panel-heading">
                 <h3 className="panel-title">Password</h3>
               </div>
@@ -466,7 +466,7 @@ class Profile extends React.Component {
                 />
                 <div className="form-group">
                   <button
-                    className="btn btn-warning pull-left"
+                    className="btn btn-default pull-left"
                     onClick={() => {
                       window.location.reload();
                     }}

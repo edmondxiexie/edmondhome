@@ -48,11 +48,11 @@ router.get("/trip/:trip_id", (req, res) => {
     .fetch({ withRelated: ["home", "home.host"] })
     .then(trip => {
       console.log("******GET api/trips/:guest_id SUCCESS!!******");
-      return res.json(trip);
+      return res.json({ success: true, trip: trip });
     })
     .catch(err => {
       console.log("******GET api/trips/:guest_id FAIL!!******");
-      return res.status(500).json({ error: err });
+      return res.json({ error: err });
     });
 });
 export default router;
