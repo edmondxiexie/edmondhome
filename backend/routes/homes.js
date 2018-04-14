@@ -37,7 +37,6 @@ router.post("/", (req, res) => {
     const amenitiesStr = JSON.stringify(amenities);
     const otherAmenitiesStr = JSON.stringify(otherAmenities);
 
-    console.log(req.body);
     Home.forge(
       {
         title,

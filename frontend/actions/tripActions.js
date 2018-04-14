@@ -54,3 +54,16 @@ export const fetchTripsCount = guestId => {
     });
   };
 };
+
+export const createTrip = tripData => {
+  return dispatch => {
+    return tripUtil.postTripUtil(tripData).then(res => {
+      const trip = res.data.trip;
+      dispatch({
+        type: tripUtil.GET_TRIP,
+        trip
+      });
+      return res.data;
+    });
+  };
+};

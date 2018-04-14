@@ -20,3 +20,8 @@ export const getTripUtil = tripId => {
   console.log("******/trips/trip/:trip_id UTIL******");
   return axios.get(`/api/trips/trip/${tripId}`);
 };
+
+export const postTripUtil = tripData => {
+  console.log("******/trips UTIL******");
+  return axios.post("/api/trips", tripData);
+};

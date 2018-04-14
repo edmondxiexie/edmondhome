@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const Faker = require("faker");
+const shortid = require("shortid");
 
 const USER_NUM = 50;
 const HOME_NUM = USER_NUM * 20;
@@ -93,13 +94,28 @@ function buildTripSeed(knex) {
     dFrom.setDate(dFrom.getDate() - Math.floor(Math.random() * 3 + 1));
     let dTo = new Date();
     dTo.setDate(dTo.getDate() + Math.floor(Math.random() * 3 + 1));
+
+    const base = Faker.random.number({ min: 50, max: 500 });
+    const cleaning_fee = Faker.random.arrayElement([30, 50, 100, 120]);
+    const tax = (base + cleaning_fee) * 0.15;
+    const total = base + cleaning_fee + tax;
+
+    const prices = {
+      base,
+      cleaning_fee,
+      tax,
+      total
+    };
+
     res.push(
       knex("trips").insert({
+        order_id: shortid.generate(),
         check_in_time: dFrom,
         check_out_time: dTo,
         reserved_guests: Faker.random.number({ min: 1, max: 4 }),
         guest_id: Math.floor(Math.random() * USER_NUM + 1),
         home_id: Math.floor(Math.random() * HOME_NUM + 1),
+        prices: JSON.stringify(prices),
         created_at: new Date(),
         updated_at: new Date()
       })

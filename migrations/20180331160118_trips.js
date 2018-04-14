@@ -1,9 +1,12 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("trips", table => {
     table.increments();
+    table.string("order_id").notNullable();
     table.string("check_in_time").notNullable();
     table.string("check_out_time").notNullable();
     table.string("reserved_guests").notNullable();
+    table.text("prices").notNullable();
+
     table.timestamps();
     table
       .integer("home_id")

@@ -29,47 +29,6 @@ class DetailTripsPage extends Component {
     }
   }
 
-  //   onRedirect(e, id) {
-  //     e.preventDefault();
-  //     this.context.router.push(`/homes/${id}`);
-  //   }
-
-  //   buildGallery(trips) {
-  //     let gallery = [];
-  //     for (let trip of trips) {
-  //       let { home, check_in_time, check_out_time, created_at } = trip;
-  //       let {
-  //         id,
-  //         title,
-  //         description,
-  //         image,
-  //         property_type,
-  //         room_type,
-  //         price,
-  //         district
-  //       } = home;
-
-  //       gallery.push(
-  //         <div key={id} className="col-md-12 col-sm-12">
-  //           <TripGalleryCard
-  //             id={id}
-  //             title={title}
-  //             image={image}
-  //             checkInDate={check_in_time}
-  //             checkOutDate={check_out_time}
-  //             orderDate={created_at}
-  //             district={district}
-  //             price={price}
-  //             handleClick={e => {
-  //               this.onRedirect(e, id);
-  //             }}
-  //           />
-  //         </div>
-  //       );
-  //     }
-  //     return gallery;
-  //   }
-
   render() {
     const trip = this.props.trip || {};
     const home = trip.home || {};
@@ -95,6 +54,23 @@ class DetailTripsPage extends Component {
     return (
       <div className="container row">
         <h1 className="page-title">Trip detail</h1>
+
+        {!isEmpty(home) && (
+          <TripGalleryCard
+            id={id}
+            title={title}
+            image={image}
+            checkInDate={check_in_time}
+            checkOutDate={check_out_time}
+            orderDate={created_at}
+            district={district}
+            price={price}
+            handleClick={e => {
+              this.onRedirect(e, id);
+            }}
+          />
+        )}
+
         <div className="detail-trip-page-base">
           <div className="panel panel-default">
             <div className="panel-body">

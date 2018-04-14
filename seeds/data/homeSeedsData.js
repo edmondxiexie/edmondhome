@@ -8,7 +8,8 @@ module.exports = {
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112934/5129896990_af0c2a272e_z.jpg",
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112934/6284634531_00302f345f_z.jpg",
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112934/27731502473_81fb0065e1_z.jpg",
-    "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112934/34601928261_e80211d848_z.jpg"
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112934/34601928261_e80211d848_z.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523665709/d2a84479_original.jpg"
   ],
 
   titles: [
