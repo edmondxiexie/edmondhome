@@ -9,13 +9,16 @@ class NavBar extends React.Component {
       hostHomesCount: "",
       tripsCount: "",
       wishlistCount: "",
-      search: ""
+      search: "",
+      avatar:
+        "http://res.cloudinary.com/dqace5qmb/image/upload/v1523800801/img_261106.png"
     };
   }
 
   componentWillMount() {
     if (this.props.auth.isAuthenticated) {
       const userId = this.props.auth.user.id;
+      this.props.fetchUserProfile(userId);
       this.props.fetchHostHomesCount(userId);
       this.props.fetchTripsCount(userId);
       this.props.fetchWishlistCount(userId);
@@ -24,13 +27,38 @@ class NavBar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.setState({
-        username: nextProps.auth.user.username,
-        hostHomesCount: nextProps.hostHomesCount,
-        tripsCount: nextProps.tripsCount,
-        wishlistCount: nextProps.wishlistCount,
-        search: nextProps.searchStr
-      });
+      if (nextProps.hostHomesCount) {
+        this.setState({
+          hostHomesCount: nextProps.hostHomesCount
+        });
+      }
+
+      if (nextProps.tripsCount) {
+        this.setState({
+          tripsCount: nextProps.tripsCount
+        });
+      }
+
+      if (nextProps.wishlistCount) {
+        this.setState({
+          wishlistCount: nextProps.wishlistCount
+        });
+      }
+
+      if (nextProps.search) {
+        this.setState({
+          search: nextProps.searchStr
+        });
+      }
+
+      console.log("avatar", nextProps);
+
+      if (nextProps.profile) {
+        this.setState({
+          avatar: nextProps.profile.avatar,
+          username: nextProps.profile.username
+        });
+      }
     } else {
       this.setState({ username: "" });
     }
@@ -63,7 +91,14 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { username, hostHomesCount, tripsCount, wishlistCount } = this.state;
+    const {
+      username,
+      hostHomesCount,
+      tripsCount,
+      wishlistCount,
+      avatar
+    } = this.state;
+
     const { isAuthenticated } = this.props.auth;
 
     const guestLink = (
@@ -107,7 +142,10 @@ class NavBar extends React.Component {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {username} <span className="caret" />
+            <span className="avatar">
+              <img src={avatar} />
+            </span>
+            <span className="caret" />
           </a>
           <ul className="dropdown-menu">
             <li>
@@ -129,18 +167,25 @@ class NavBar extends React.Component {
             <li role="separator" className="divider" />
             <li>
               <Link to="/profile">
-                Profile<span className="badge pull-right">
+                {username}
+                <span className="badge pull-right">
                   <i className="fa fa-user" aria-hidden="true" />
                 </span>
               </Link>
             </li>
+            <li role="separator" className="divider" />
+            <li>
+              <a href="#" onClick={e => this.logoutAction(e)}>
+                Logout
+              </a>
+            </li>
           </ul>
         </li>
-        <li>
+        {/* <li>
           <a href="#" onClick={e => this.logoutAction(e)}>
             Logout
           </a>
-        </li>
+        </li> */}
       </ul>
     );
     // debugger

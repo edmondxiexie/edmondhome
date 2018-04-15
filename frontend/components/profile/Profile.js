@@ -39,7 +39,7 @@ class Profile extends React.Component {
 
   componentWillMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.getUserProfile(this.props.auth.user.id);
+      this.props.fetchUserProfile(this.props.auth.user.id);
     }
   }
 

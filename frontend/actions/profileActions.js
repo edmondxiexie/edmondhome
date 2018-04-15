@@ -7,7 +7,7 @@ export const getProfile = profile => {
   };
 };
 
-export const getUserProfile = id => {
+export const fetchUserProfile = id => {
   console.log("******pass user action******");
   return dispatch => {
     return userUtil.getUserProfile(id).then(res => {

@@ -79,7 +79,8 @@ class Login extends React.Component {
           this.props.fetchHostHomesCount(userId);
           this.props.fetchTripsCount(userId);
           this.props.fetchWishlistCount(userId);
-          this.context.router.push("/");
+          this.props.fetchUserProfile(userId);
+          this.context.router.push("/homes");
         },
         err => {
           this.setState({

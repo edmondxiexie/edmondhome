@@ -5,6 +5,7 @@ import * as hostActions from "../../actions/hostActions";
 import * as tripActions from "../../actions/tripActions";
 import * as wishlistActions from "../../actions/wishlistActions";
 import * as homeActions from "../../actions/homeActions";
+import * as profileActions from "../../actions/profileActions";
 
 const mapStateToProps = state => {
   //   debugger;
@@ -13,7 +14,8 @@ const mapStateToProps = state => {
     hostHomesCount: state.host.hostHomesCount,
     tripsCount: state.trips.tripsCount,
     wishlistCount: state.wishlist.wishlistCount,
-    searchStr: state.homes.searchStr
+    searchStr: state.homes.searchStr,
+    profile: state.profile.profile
   };
 };
 
@@ -36,6 +38,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchHomesPage: page => {
       return dispatch(homeActions.fetchHomesPage(page));
+    },
+    fetchUserProfile: id => {
+      return dispatch(profileActions.fetchUserProfile(id));
     }
   };
 };

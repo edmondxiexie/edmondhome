@@ -4,6 +4,8 @@ import * as authActions from "../../actions/authActions";
 import * as hostActions from "../../actions/hostActions";
 import * as tripActions from "../../actions/tripActions";
 import * as wishlistActions from "../../actions/wishlistActions";
+import * as profileActions from "../../actions/profileActions";
+
 const mapStateToProps = state => {
   return {
     auth: state.auth
@@ -26,6 +28,9 @@ const mapDispatchToProps = dispatch => {
     },
     fetchWishlistCount: keeperId => {
       return dispatch(wishlistActions.fetchWishlistCount(keeperId));
+    },
+    fetchUserProfile: id => {
+      return dispatch(profileActions.fetchUserProfile(id));
     }
   };
 };

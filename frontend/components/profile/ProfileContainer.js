@@ -12,8 +12,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUserProfile: id => {
-      return dispatch(profileActions.getUserProfile(id));
+    fetchUserProfile: id => {
+      return dispatch(profileActions.fetchUserProfile(id));
     },
     patchUserProfile: (id, userData, dataType) => {
       return dispatch(profileActions.patchUserProfile(id, userData, dataType));

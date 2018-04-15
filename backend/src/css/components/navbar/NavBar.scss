@@ -6,6 +6,18 @@
   // justify-content: space-between;
   // align-items: center;
 
+  .avatar img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  .dropdown-toggle {
+    padding: 7px 15px 5px 15px;
+  }
+
   .navbar-brand img {
     margin-top: -5px;
     margin-right: 10px;
