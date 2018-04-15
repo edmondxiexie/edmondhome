@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     table.string("check_out_time").notNullable();
     table.string("reserved_guests").notNullable();
     table.text("prices").notNullable();
+    table.text("dates");
 
     table.timestamps();
     table

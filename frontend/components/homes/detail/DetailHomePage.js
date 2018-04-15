@@ -2,14 +2,19 @@ import React from "react";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import OptionFieldGroup from "../../common/OptionFieldGroup";
 import DateFieldGroup from "../../common/DateFieldGroup";
+import DateRangeFieldGroup from "../../common/DateRangeFieldGroup";
+import DateRangePicker from "react-bootstrap-daterangepicker";
+
 import Faker from "faker";
 
 class DetailHomnePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      check_in_date: moment(new Date()).format("MMM DD YYYY h:mm A"),
-      check_out_date: moment(new Date()).format("MMM DD YYYY h:mm A"),
+      checkInDate: moment(new Date()).format("MM/DD/YYYY"),
+      checkOutDate: moment(new Date()).format("MM/DD/YYYY"),
+      check_in_date: moment(new Date()).format("MM/DD/YYYY"),
+      check_out_date: moment(new Date()).format("MM/DD/YYYY"),
       guests: "",
       errors: {},
       host_avatar:
@@ -17,7 +22,14 @@ class DetailHomnePage extends React.Component {
       host_name: "Edmond Xie",
       host_email: "edmond@gmail.com",
       host_phone: "412-111-1111",
-      favorite: null
+      favorite: null,
+      occupiedDates: [
+        "04/08/2018",
+        "04/09/2018",
+        "04/01/2018",
+        "04/06/2018",
+        "04/19/2018"
+      ]
     };
   }
 
@@ -66,6 +78,8 @@ class DetailHomnePage extends React.Component {
     //     e = this.state.check_in_date;
     //   }
     // }
+
+    console.log("date", e);
 
     this.setState({
       [name]: e
@@ -196,6 +210,21 @@ class DetailHomnePage extends React.Component {
     });
   }
 
+  isDateAvailable(date, occupiedDates) {
+    for (let occupiedDate of occupiedDates) {
+      if (date.isSame(moment(occupiedDate))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  handleEvent(event, picker, field) {
+    this.setState({
+      [field]: moment(picker.startDate).format("MM/DD/YYYY")
+    });
+  }
+
   render() {
     const {
       id,
@@ -228,11 +257,20 @@ class DetailHomnePage extends React.Component {
       host_email = host.email;
     }
 
-    const { check_in_date, check_out_date, guests, errors } = this.state;
+    const {
+      check_in_date,
+      check_out_date,
+      guests,
+      errors,
+      checkInDate,
+      checkOutDate,
+      occupiedDates
+    } = this.state;
 
     const guestsOptions = this.buildGuestsOptions(guest_availability);
 
-    const days = moment(check_out_date).diff(moment(check_in_date), "days");
+    // const days = moment(check_out_date).diff(moment(check_in_date), "days");
+    const days = moment(checkOutDate).diff(moment(checkInDate), "days");
 
     const roomTotal = Number(price) * days;
     const cleaningFee = 35;
@@ -327,6 +365,32 @@ class DetailHomnePage extends React.Component {
                 error={errors.check_out_date}
                 onChange={e => {
                   this.onDateChange(e, "check_out_date");
+                }}
+              />
+
+              <DateRangeFieldGroup
+                label="Check In"
+                name="checkInDate"
+                error={errors.checkInDate}
+                date={checkInDate}
+                isInvalidDate={date => {
+                  return this.isDateAvailable(date, occupiedDates);
+                }}
+                onEvent={(event, picker) => {
+                  this.handleEvent(event, picker, "checkInDate");
+                }}
+              />
+
+              <DateRangeFieldGroup
+                label="Check Out"
+                name="checkOutDate"
+                error={errors.checkOutDate}
+                date={checkOutDate}
+                isInvalidDate={date => {
+                  return this.isDateAvailable(date, occupiedDates);
+                }}
+                onEvent={(event, picker) => {
+                  this.handleEvent(event, picker, "checkOutDate");
                 }}
               />
 
