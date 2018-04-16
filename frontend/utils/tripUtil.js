@@ -2,6 +2,7 @@ import axios from "axios";
 
 // for reducer
 export const GET_TRIPS = "GET_TRIPS";
+export const GET_TRIPS_FROM_HOME = "GET_TRIPS_FROM_HOME";
 export const GET_TRIP = "GET_TRIP";
 export const GET_TRIPS_COUNT = "GET_TRIPS_COUNT";
 
@@ -9,6 +10,11 @@ export const GET_TRIPS_COUNT = "GET_TRIPS_COUNT";
 export const getTripsUtil = guestId => {
   console.log("******/trips/:guest_id UTIL******");
   return axios.get(`/api/trips/${guestId}`);
+};
+
+export const getTripsFromHomeUtil = homeId => {
+  console.log("******/trips/home/:home_id UTIL******");
+  return axios.get(`/api/trips/home/${homeId}`);
 };
 
 export const getTripsCountUtil = guestId => {

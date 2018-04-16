@@ -2,6 +2,7 @@ import * as tripUtil from "../utils/tripUtil";
 
 const defaultTrips = Object.freeze({
   trip: {},
+  tripsFromHome: [],
   trips: [],
   tripsCount: null,
   errors: []
@@ -17,6 +18,13 @@ export default (state = defaultTrips, action) => {
         trips: trips
       });
       return newTripsState;
+    case tripUtil.GET_TRIPS_FROM_HOME:
+      console.log("pass GET_TRIPS_FROM_HOME reducer");
+      const tripsFromHome = action.tripsFromHome;
+      const newTripsFromHomeState = Object.assign({}, state, {
+        tripsFromHome: tripsFromHome
+      });
+      return newTripsFromHomeState;
     case tripUtil.GET_TRIPS_COUNT:
       const tripsCount = action.tripsCount;
       const newTripsCountState = Object.assign({}, state, {

@@ -39,6 +39,24 @@ router.get("/:guest_id", (req, res) => {
     });
 });
 
+router.get("/home/:home_id", (req, res) => {
+  console.log("******GET api/home/:home_id PASS!!******");
+  const home_id = req.params.home_id;
+  Trip.query({
+    select: ["*"],
+    where: { home_id: home_id }
+  })
+    .fetchAll()
+    .then(trips => {
+      console.log("******GET api/home/:home_id SUCCESS!!******");
+      return res.json({ success: true, trips });
+    })
+    .catch(err => {
+      console.log("******GET api/home/:home_id FAIL!!******");
+      return res.status(500).json({ error: err });
+    });
+});
+
 router.get("/trip/:trip_id", (req, res) => {
   console.log("******GET api/trip/:trip_id PASS!!******");
   const trip_id = req.params.trip_id;
@@ -64,6 +82,7 @@ router.post("/", (req, res) => {
     check_out_time,
     reserved_guests,
     prices,
+    dates,
     home_id,
     guest_id
   } = req.body;
@@ -71,6 +90,7 @@ router.post("/", (req, res) => {
   const order_id = shortid.generate();
 
   const pricesStr = JSON.stringify(prices);
+  const datesStr = JSON.stringify(dates);
 
   Trip.forge(
     {
@@ -79,6 +99,7 @@ router.post("/", (req, res) => {
       check_out_time,
       reserved_guests,
       prices: pricesStr,
+      dates: datesStr,
       home_id,
       guest_id
     },
@@ -87,7 +108,7 @@ router.post("/", (req, res) => {
     .save()
     .then(trip => {
       console.log("******Add trip SUCCESS!!******");
-      return res.json({ trip });
+      return res.json({ success: true, trip: trip });
     })
     .catch(errors => {
       console.log("******Add trip FAIL!!******");

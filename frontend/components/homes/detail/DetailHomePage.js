@@ -7,6 +7,8 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 
 import StripeCheckout from "react-stripe-checkout";
 import Faker from "faker";
+import { isEmpty } from "lodash";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class DetailHomnePage extends React.Component {
   constructor(props) {
@@ -14,8 +16,6 @@ class DetailHomnePage extends React.Component {
     this.state = {
       checkInDate: moment(new Date()).format("MM/DD/YYYY"),
       checkOutDate: moment(new Date()).format("MM/DD/YYYY"),
-      // check_in_date: moment(new Date()).format("MM/DD/YYYY"),
-      // check_out_date: moment(new Date()).format("MM/DD/YYYY"),
       guests: "",
       errors: {},
       host_avatar:
@@ -25,25 +25,19 @@ class DetailHomnePage extends React.Component {
       host_phone: "412-111-1111",
       favorite: null,
       prices: {},
-      occupiedDates: [
-        "04/08/2018",
-        "04/09/2018",
-        "04/01/2018",
-        "04/06/2018",
-        "04/19/2018"
-      ]
+      occupiedDates: [],
+      valid: false,
+      showPayment: false,
+      home: {}
     };
   }
 
   componentWillMount() {
     window.scrollTo(0, 0);
     this.props.fetchHome(this.props.params.id);
+    this.props.fetchTripsFromHome(this.props.params.id);
     if (this.props.auth.isAuthenticated) {
-      this.props
-        .getFavorite(this.props.auth.user.id, this.props.params.id)
-        .then(() => {
-          this.setState({ favorite: this.props.favorite });
-        });
+      this.props.getFavorite(this.props.auth.user.id, this.props.params.id);
     }
   }
 
@@ -54,6 +48,35 @@ class DetailHomnePage extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.favorite !== null) {
       this.setState({ favorite: nextProps.favorite });
+    }
+
+    if (!isEmpty(nextProps.home)) {
+      const home = nextProps.home;
+      console.log("home", home);
+      this.setState({ home });
+    }
+
+    // if (!isEmpty(nextProps.favorite)) {
+    //   this.setState({ favorite: nextProps.favorite });
+    // }
+
+    if (!isEmpty(nextProps.trips)) {
+      console.log("trips", nextProps.trips);
+
+      const trips = nextProps.trips;
+
+      const occupiedDates = [];
+
+      for (let trip of trips) {
+        if (trip.dates) {
+          const dates = JSON.parse(trip.dates);
+          console.log("dates", dates);
+          occupiedDates.push(...dates);
+        }
+      }
+
+      console.log("occupiedDates", occupiedDates);
+      this.setState({ occupiedDates });
     }
   }
 
@@ -192,6 +215,54 @@ class DetailHomnePage extends React.Component {
     }
   }
 
+  calculatePrices(checkInDate, checkOutDate, price) {
+    const nights = moment(checkOutDate).diff(moment(checkInDate), "days");
+    const base = Number(this.props.home.price) * nights;
+    const cleaningFee = 35;
+    const tax = Number(((base + cleaningFee) * 0.09).toFixed(2));
+    const total = Number(base + tax + cleaningFee);
+
+    const prices = {
+      base,
+      cleaningFee,
+      tax,
+      total
+    };
+
+    return prices;
+  }
+
+  buildPriceSummaryPanel() {
+    const { checkInDate, checkOutDate, prices } = this.state;
+    const { price } = this.props.home;
+
+    const nights = moment(checkOutDate).diff(moment(checkInDate), "days");
+
+    return (
+      <div className="price-summary" key="price-summary">
+        <div className="detail">
+          <div>{`$${price} x ${nights} nights`}</div>
+          <div>{`$${prices.base}`}</div>
+        </div>
+        <hr />
+        <div className="detail">
+          <div>Cleaning Fee</div>
+          <div>{`$${prices.cleaningFee}`}</div>
+        </div>
+        <hr />
+        <div className="detail">
+          <div>Tax</div>
+          <div>{`$${prices.tax}`}</div>
+        </div>
+        <hr />
+        <div className="total">
+          <div>Total</div>
+          <div>{`$${prices.total}`}</div>
+        </div>
+      </div>
+    );
+  }
+
   autoFill(e) {
     e.preventDefault();
     const checkInTime = new Date();
@@ -209,21 +280,28 @@ class DetailHomnePage extends React.Component {
     const checkInDate = moment(checkInTime).format("MM/DD/YYYY");
     const checkOutDate = moment(checkOutTime).format("MM/DD/YYYY");
 
-    const nights = moment(checkOutDate).diff(moment(checkInDate), "days");
+    const prices = this.calculatePrices(
+      checkInDate,
+      checkOutDate,
+      Number(this.props.home.price)
+    );
 
-    const base = Number(this.props.home.price) * nights;
-    const cleaningFee = 35;
-    const total = base + cleaningFee;
+    const valid = moment(checkOutDate).diff(moment(checkInDate), "days") > 0;
 
-    const prices = {
-      base,
-      cleaningFee,
-      total
-    };
+    // const nights = moment(checkOutDate).diff(moment(checkInDate), "days");
 
-    // debugger;
+    // const base = Number(this.props.home.price) * nights;
+    // const cleaningFee = 35;
+    // const total = base + cleaningFee;
+
+    // const prices = {
+    //   base,
+    //   cleaningFee,
+    //   total
+    // };
 
     this.setState({
+      valid,
       checkInDate,
       checkOutDate,
       prices,
@@ -231,8 +309,8 @@ class DetailHomnePage extends React.Component {
     });
   }
 
-  isDateAvailable(date, occupiedDates) {
-    for (let occupiedDate of occupiedDates) {
+  isCheckInDateAvailable(date) {
+    for (let occupiedDate of this.state.occupiedDates) {
       if (date.isSame(moment(occupiedDate))) {
         return true;
       }
@@ -240,57 +318,89 @@ class DetailHomnePage extends React.Component {
     return false;
   }
 
+  isCheckOutDateAvailable(date) {
+    for (let occupiedDate of this.state.occupiedDates) {
+      if (date.isSame(moment(occupiedDate).add(1, "days"))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  onBook(e) {
+    this.setState({ showPayment: true });
+  }
+
+  onCancelPayment(e) {
+    this.setState({ showPayment: false });
+  }
+
   onRedirectToTripDetail() {
-    // debugger;
     const { checkInDate, checkOutDate, guests, prices } = this.state;
     const guest_id = this.props.auth.user.id;
 
-    // const days = moment(checkOutDate).diff(moment(checkInDate), "days");
+    const dates = [];
 
-    // const roomTotal = Number(this.props.home.price) * days;
-    // const cleaningFee = 35;
-    // const total = roomTotal + cleaningFee;
+    let date = moment(checkInDate);
+    while (date.isBefore(checkOutDate)) {
+      dates.push(moment(date).format("MM/DD/YYYY"));
+      date = date.add(1, "days");
+    }
 
     const tripData = {
       check_in_time: checkInDate,
       check_out_time: checkOutDate,
       reserved_guests: guests,
       prices,
+      dates,
       home_id: this.props.home.id,
       guest_id: guest_id
     };
 
-    console.log("tripData", tripData);
-
     this.props.createTrip(tripData).then(res => {
-      console.log("res", res);
       this.context.router.push(`/trips/${res.trip.id}`);
     });
   }
 
-  handleEvent(event, picker, field) {
+  onDatePick(event, picker, field) {
     const date = moment(picker.startDate).format("MM/DD/YYYY");
 
-    if (field === "checkOutDate") {
-      const nights = moment(date).diff(moment(this.state.checkInDate), "days");
+    let checkInDate, checkOutDate;
 
-      const base = Number(this.props.home.price) * nights;
-      const cleaningFee = 35;
-      const total = base + cleaningFee;
-
-      const prices = {
-        base,
-        cleaningFee,
-        total
-      };
-
-      this.setState({
-        prices
-      });
+    if (field === "checkInDate") {
+      checkInDate = date;
+      checkOutDate = this.state.checkOutDate;
+    } else if (field === "checkOutDate") {
+      checkInDate = this.state.checkInDate;
+      checkOutDate = date;
     }
 
+    // if (field === "checkOutDate") {
+    const prices = this.calculatePrices(
+      checkInDate,
+      checkOutDate,
+      Number(this.props.home.price)
+    );
+
+    // const nights = moment(date).diff(moment(this.state.checkInDate), "days");
+    // const base = Number(this.props.home.price) * nights;
+    // const cleaningFee = 35;
+    // const total = base + cleaningFee;
+
+    // const prices = {
+    //   base,
+    //   cleaningFee,
+    //   total
+    // };
+
+    const valid = moment(checkOutDate).diff(moment(checkInDate), "days") > 0;
+
+    // }
+
     this.setState({
-      [field]: date
+      [field]: date,
+      prices,
+      valid
     });
   }
 
@@ -343,8 +453,8 @@ class DetailHomnePage extends React.Component {
     }
 
     const {
-      // check_in_date,
-      // check_out_date,
+      valid,
+      showPayment,
       guests,
       errors,
       checkInDate,
@@ -433,24 +543,6 @@ class DetailHomnePage extends React.Component {
                 </div>
               </div>
               <hr />
-              {/* <DateFieldGroup
-                label="Check In"
-                name="check_in_date"
-                value={check_in_date}
-                error={errors.check_in_date}
-                onChange={e => {
-                  this.onDateChange(e, "check_in_date");
-                }}
-              />
-              <DateFieldGroup
-                label="Check Out"
-                name="check_out_date"
-                value={check_out_date}
-                error={errors.check_out_date}
-                onChange={e => {
-                  this.onDateChange(e, "check_out_date");
-                }}
-              /> */}
 
               <DateRangeFieldGroup
                 label="Check In"
@@ -458,10 +550,10 @@ class DetailHomnePage extends React.Component {
                 error={errors.checkInDate}
                 date={checkInDate}
                 isInvalidDate={date => {
-                  return this.isDateAvailable(date, occupiedDates);
+                  return this.isCheckInDateAvailable(date);
                 }}
                 onEvent={(event, picker) => {
-                  this.handleEvent(event, picker, "checkInDate");
+                  this.onDatePick(event, picker, "checkInDate");
                 }}
               />
 
@@ -471,10 +563,10 @@ class DetailHomnePage extends React.Component {
                 error={errors.checkOutDate}
                 date={checkOutDate}
                 isInvalidDate={date => {
-                  return this.isDateAvailable(date, occupiedDates);
+                  return this.isCheckOutDateAvailable(date);
                 }}
                 onEvent={(event, picker) => {
-                  this.handleEvent(event, picker, "checkOutDate");
+                  this.onDatePick(event, picker, "checkOutDate");
                 }}
               />
 
@@ -492,53 +584,65 @@ class DetailHomnePage extends React.Component {
 
               <hr />
 
-              {days > 0 && (
-                <div className="price-summary">
-                  <div className="formula">
-                    <div>{`$${price} x ${days} nights`}</div>
-                    <div>{`$${roomTotal}`}</div>
-                  </div>
-                  <hr />
-                  <div className="cleaning">
-                    <div>Cleaning Fee</div>
-                    <div>{`$${cleaningFee}`}</div>
-                  </div>
-                  <hr />
-                  <div className="total">
-                    <div>Total</div>
-                    <div>{`$${total}`}</div>
-                  </div>
-                </div>
-              )}
+              <ReactCSSTransitionGroup
+                transitionName="price-animation"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}
+              >
+                {valid && this.buildPriceSummaryPanel()}
+              </ReactCSSTransitionGroup>
 
-              <button
-                className="btn btn-success btn-block"
-                onClick={e => this.onRedirectToTripDetail(e)}
-              >
-                Request to Book
-              </button>
-              <button
-                className="btn btn-warning btn-block"
-                onClick={e => {
-                  this.autoFill(e);
-                }}
-              >
-                Auto Fill
-              </button>
-
-              <br />
-              <StripeCheckout
-                name="EdmondHome Inc."
-                descirption="Coolest home reserve!"
-                panelLabel="Pay"
-                amount={this.state.prices.total * 100}
-                currency="USD"
-                stripeKey="pk_test_A01JTFuyJt2HMw7F2e7N6tj7"
-                email="xiejy36@gmail.com"
-                token={e => this.onSubmitPayment(e)}
-              >
-                <button className="btn btn-primary btn-block">Checkout</button>
-              </StripeCheckout>
+              <div className="btn-group-base">
+                <ReactCSSTransitionGroup
+                  transitionName="book-animation"
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={500}
+                >
+                  {showPayment ? (
+                    <div className="payment-btn-group" key="payment-btn-group">
+                      <StripeCheckout
+                        name="EdmondHome Inc."
+                        descirption="Coolest home reserve!"
+                        panelLabel="Pay"
+                        amount={this.state.prices.total * 100}
+                        currency="USD"
+                        stripeKey="pk_test_A01JTFuyJt2HMw7F2e7N6tj7"
+                        email="xiejy36@gmail.com"
+                        token={e => this.onSubmitPayment(e)}
+                      >
+                        <button className="btn btn-primary btn-block">
+                          Checkout
+                        </button>
+                      </StripeCheckout>
+                      <button
+                        className="btn btn-warning btn-block"
+                        onClick={e => {
+                          this.onCancelPayment(e);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="book-btn-group" key="book-btn-group">
+                      <button
+                        className="btn btn-success btn-block"
+                        onClick={e => this.onBook(e)}
+                      >
+                        Request to Book
+                      </button>
+                      <button
+                        className="btn btn-warning btn-block"
+                        onClick={e => {
+                          this.autoFill(e);
+                        }}
+                      >
+                        Auto Fill
+                      </button>
+                    </div>
+                  )}
+                </ReactCSSTransitionGroup>
+              </div>
             </div>
           </div>
         </div>

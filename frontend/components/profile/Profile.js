@@ -25,7 +25,8 @@ class Profile extends React.Component {
       education: "",
       company: "",
       avatar: "",
-
+      defaultAvatar:
+        "http://res.cloudinary.com/dqace5qmb/image/upload/v1523871369/default-avatar.png",
       errors: {},
       isLoading: false,
       valid: true,
@@ -66,7 +67,7 @@ class Profile extends React.Component {
         education,
         company,
         phone,
-        avatar
+        avatar: avatar || this.state.defaultAvatar
       });
     }
   }

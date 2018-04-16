@@ -88,24 +88,26 @@ class SignUp extends React.Component {
     if (valid) {
       this.setState({ errors: {}, isLoading: true });
       this.props.signup(this.state).then(res => {
-        setTimeout(() => {
-          const { username, password } = this.state;
-          this.props
-            .login({
-              identifier: username,
-              password: password,
-              errors: {},
-              isLoading: false
-            })
-            .then(res => {
-              const alert = {
-                text: "New account created Successfully.",
-                type: "success"
-              };
-              this.props.addAlert(alert);
-              return this.context.router.push("/");
-            });
-        }, 100);
+        // setTimeout(() => {
+        const { username, password } = this.state;
+        this.props
+          .login({
+            identifier: username,
+            password: password,
+            errors: {},
+            isLoading: false
+          })
+          .then(res => {
+            const alert = {
+              text: "New account created Successfully.",
+              type: "success"
+            };
+            this.props.addAlert(alert);
+            setTimeout(() => {
+              return this.context.router.push("/homes");
+            }, 1000);
+          });
+        // }, 500);
       });
     } else {
       this.setState({ errors, valid });

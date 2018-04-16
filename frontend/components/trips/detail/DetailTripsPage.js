@@ -23,7 +23,6 @@ class DetailTripsPage extends Component {
           this.props.addAlert(alert);
           this.context.router.push("/trips");
         }
-        console.log("Trip", this.props.trip);
         this.setState({ trip: this.props.trip });
       });
     }

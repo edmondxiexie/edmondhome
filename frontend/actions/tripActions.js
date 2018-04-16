@@ -8,6 +8,13 @@ export const getTrips = trips => {
   };
 };
 
+export const getTripsFromHome = trips => {
+  return {
+    type: tripUtil.GET_TRIPS_FROM_HOME,
+    tripsFromHome: trips
+  };
+};
+
 export const getTrip = trip => {
   return {
     type: tripUtil.GET_TRIP,
@@ -30,6 +37,16 @@ export const fetchTrips = guestId => {
     return tripUtil.getTripsUtil(guestId).then(res => {
       const trips = res.data;
       dispatch(getTrips(trips));
+    });
+  };
+};
+
+export const fetchTripsFromHome = homeId => {
+  console.log("******/trips/home/:home_id ACTION******");
+  return dispatch => {
+    return tripUtil.getTripsFromHomeUtil(homeId).then(res => {
+      const trips = res.data.trips;
+      dispatch(getTripsFromHome(trips));
     });
   };
 };

@@ -9,7 +9,22 @@ module.exports = {
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112934/6284634531_00302f345f_z.jpg",
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112934/27731502473_81fb0065e1_z.jpg",
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1522112934/34601928261_e80211d848_z.jpg",
-    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523665709/d2a84479_original.jpg"
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523665709/d2a84479_original.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523844839/586ae9e9-6971-49b0-9bb2-3440c2642f0b.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523844841/a9ac997d-f870-4e37-a1ca-28e77def4721.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846441/9a2ed2c2_original.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846441/45809df4-519d-44ae-be1c-9a8061e1bd86.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846441/ac6cd4d9_original.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846441/0aa8f98d-0413-49f4-9291-7c4792f66d14.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846441/54d27a1f-956f-4211-a790-b34ac2c314d0.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846441/4f905b0d-131b-49f1-94ca-fc4433babb0d.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846441/25bcf8d4-449f-4786-8a9a-5d1ed63fae8e.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846441/0c707e33-d0cf-43d8-b354-cf271f574347.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846442/8455a6b9-ae9d-41fc-beda-ddbffbc99a1f.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846442/345d7ac0-e99d-4b36-b403-7e847a1fadec.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846442/4edfe32c-5668-4d7b-9b50-4213f5bc6c61.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846442/a672ce7e-e6ca-478e-8d83-89c879f5c971.jpg",
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1523846442/1a9527fb-fb72-4fca-9ac7-ed84496a3e86.jpg"
   ],
 
   titles: [

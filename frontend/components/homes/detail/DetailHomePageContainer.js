@@ -13,7 +13,8 @@ const mapStateToProps = state => {
   return {
     auth: state.auth,
     home: home,
-    favorite: state.wishlist.favorite
+    favorite: state.wishlist.favorite,
+    trips: state.trips.tripsFromHome
   };
 };
 
@@ -30,6 +31,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWishlist: id => {
       return dispatch(wishlistActions.deleteWishlist(id));
+    },
+    fetchTripsFromHome: homeId => {
+      return dispatch(tripActions.fetchTripsFromHome(homeId));
     },
     createTrip: tripData => {
       return dispatch(tripActions.createTrip(tripData));

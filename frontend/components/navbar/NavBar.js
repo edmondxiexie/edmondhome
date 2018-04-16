@@ -10,8 +10,9 @@ class NavBar extends React.Component {
       tripsCount: "",
       wishlistCount: "",
       search: "",
-      avatar:
-        "http://res.cloudinary.com/dqace5qmb/image/upload/v1523800801/img_261106.png"
+      avatar: "",
+      defaultAvatar:
+        "http://res.cloudinary.com/dqace5qmb/image/upload/v1523871369/default-avatar.png"
     };
   }
 
@@ -27,6 +28,14 @@ class NavBar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
+      if (nextProps.auth.user.username != this.state.username) {
+        const userId = nextProps.auth.user.id;
+        this.props.fetchUserProfile(userId);
+        this.props.fetchHostHomesCount(userId);
+        this.props.fetchTripsCount(userId);
+        this.props.fetchWishlistCount(userId);
+      }
+
       if (nextProps.hostHomesCount) {
         this.setState({
           hostHomesCount: nextProps.hostHomesCount
@@ -53,7 +62,7 @@ class NavBar extends React.Component {
 
       if (nextProps.profile) {
         this.setState({
-          avatar: nextProps.profile.avatar,
+          avatar: nextProps.profile.avatar || this.state.defaultAvatar,
           username: nextProps.profile.username
         });
       }
@@ -180,11 +189,6 @@ class NavBar extends React.Component {
             </li>
           </ul>
         </li>
-        {/* <li>
-          <a href="#" onClick={e => this.logoutAction(e)}>
-            Logout
-          </a>
-        </li> */}
       </ul>
     );
     // debugger
