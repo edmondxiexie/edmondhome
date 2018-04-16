@@ -2,6 +2,8 @@ import { connect } from "react-redux";
 import DetailHomePage from "./DetailHomePage";
 import * as homeActions from "../../../actions/homeActions";
 import * as wishlistActions from "../../../actions/wishlistActions";
+import * as tripActions from "../../../actions/tripActions";
+import * as payActions from "../../../actions/payActions";
 
 const mapStateToProps = state => {
   let home = {};
@@ -28,6 +30,12 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWishlist: id => {
       return dispatch(wishlistActions.deleteWishlist(id));
+    },
+    createTrip: tripData => {
+      return dispatch(tripActions.createTrip(tripData));
+    },
+    checkout: payData => {
+      return dispatch(payActions.checkout(payData));
     }
   };
 };

@@ -17,10 +17,7 @@ class IndexHomePage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchHomesCount().then(() => {
-      let pages = Math.ceil(this.props.homesCount / 12);
-      this.setState({ pages: pages });
-    });
+    this.props.fetchHomesCount();
     this.props.fetchHomesPage(this.state.page).then(() => {
       if (this.props.auth.isAuthenticated) {
         this.props.fetchWishlist(this.props.auth.user.id);
@@ -32,8 +29,14 @@ class IndexHomePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let pages = Math.ceil(nextProps.homesCount / 12);
     const { homes, page, searchStr } = nextProps;
-    this.setState({ homes: homes, page: page, searchStr: searchStr });
+    this.setState({
+      homes: homes,
+      page: page,
+      pages: pages,
+      searchStr: searchStr
+    });
   }
 
   onRedirect(e, id) {

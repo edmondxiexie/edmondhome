@@ -65,9 +65,7 @@ class DetailTripsPage extends Component {
             orderDate={created_at}
             district={district}
             price={price}
-            handleClick={e => {
-              this.onRedirect(e, id);
-            }}
+            handleClick={e => {}}
           />
         )}
 

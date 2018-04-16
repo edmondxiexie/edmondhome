@@ -5,6 +5,7 @@ import DateFieldGroup from "../../common/DateFieldGroup";
 import DateRangeFieldGroup from "../../common/DateRangeFieldGroup";
 import DateRangePicker from "react-bootstrap-daterangepicker";
 
+import StripeCheckout from "react-stripe-checkout";
 import Faker from "faker";
 
 class DetailHomnePage extends React.Component {
@@ -13,8 +14,8 @@ class DetailHomnePage extends React.Component {
     this.state = {
       checkInDate: moment(new Date()).format("MM/DD/YYYY"),
       checkOutDate: moment(new Date()).format("MM/DD/YYYY"),
-      check_in_date: moment(new Date()).format("MM/DD/YYYY"),
-      check_out_date: moment(new Date()).format("MM/DD/YYYY"),
+      // check_in_date: moment(new Date()).format("MM/DD/YYYY"),
+      // check_out_date: moment(new Date()).format("MM/DD/YYYY"),
       guests: "",
       errors: {},
       host_avatar:
@@ -23,6 +24,7 @@ class DetailHomnePage extends React.Component {
       host_email: "edmond@gmail.com",
       host_phone: "412-111-1111",
       favorite: null,
+      prices: {},
       occupiedDates: [
         "04/08/2018",
         "04/09/2018",
@@ -203,9 +205,28 @@ class DetailHomnePage extends React.Component {
     const guestAvailabilityArr = new Array(~~this.props.home.guest_availability)
       .fill()
       .map((v, k) => String(k + 1));
+
+    const checkInDate = moment(checkInTime).format("MM/DD/YYYY");
+    const checkOutDate = moment(checkOutTime).format("MM/DD/YYYY");
+
+    const nights = moment(checkOutDate).diff(moment(checkInDate), "days");
+
+    const base = Number(this.props.home.price) * nights;
+    const cleaningFee = 35;
+    const total = base + cleaningFee;
+
+    const prices = {
+      base,
+      cleaningFee,
+      total
+    };
+
+    // debugger;
+
     this.setState({
-      check_in_date: moment(checkInTime).format("MMM DD YYYY h:mm A"),
-      check_out_date: moment(checkOutTime).format("MMM DD YYYY h:mm A"),
+      checkInDate,
+      checkOutDate,
+      prices,
       guests: Faker.random.arrayElement(guestAvailabilityArr)
     });
   }
@@ -219,10 +240,74 @@ class DetailHomnePage extends React.Component {
     return false;
   }
 
-  handleEvent(event, picker, field) {
-    this.setState({
-      [field]: moment(picker.startDate).format("MM/DD/YYYY")
+  onRedirectToTripDetail() {
+    // debugger;
+    const { checkInDate, checkOutDate, guests, prices } = this.state;
+    const guest_id = this.props.auth.user.id;
+
+    // const days = moment(checkOutDate).diff(moment(checkInDate), "days");
+
+    // const roomTotal = Number(this.props.home.price) * days;
+    // const cleaningFee = 35;
+    // const total = roomTotal + cleaningFee;
+
+    const tripData = {
+      check_in_time: checkInDate,
+      check_out_time: checkOutDate,
+      reserved_guests: guests,
+      prices,
+      home_id: this.props.home.id,
+      guest_id: guest_id
+    };
+
+    console.log("tripData", tripData);
+
+    this.props.createTrip(tripData).then(res => {
+      console.log("res", res);
+      this.context.router.push(`/trips/${res.trip.id}`);
     });
+  }
+
+  handleEvent(event, picker, field) {
+    const date = moment(picker.startDate).format("MM/DD/YYYY");
+
+    if (field === "checkOutDate") {
+      const nights = moment(date).diff(moment(this.state.checkInDate), "days");
+
+      const base = Number(this.props.home.price) * nights;
+      const cleaningFee = 35;
+      const total = base + cleaningFee;
+
+      const prices = {
+        base,
+        cleaningFee,
+        total
+      };
+
+      this.setState({
+        prices
+      });
+    }
+
+    this.setState({
+      [field]: date
+    });
+  }
+
+  onSubmitPayment(e) {
+    if (this.props.auth.isAuthenticated) {
+      const price = this.state.prices.total;
+      const id = e.id;
+      this.props
+        .checkout({
+          price,
+          id
+        })
+        .then(res => {
+          console.log("res", res);
+          this.onRedirectToTripDetail();
+        });
+    }
   }
 
   render() {
@@ -258,8 +343,8 @@ class DetailHomnePage extends React.Component {
     }
 
     const {
-      check_in_date,
-      check_out_date,
+      // check_in_date,
+      // check_out_date,
       guests,
       errors,
       checkInDate,
@@ -269,7 +354,6 @@ class DetailHomnePage extends React.Component {
 
     const guestsOptions = this.buildGuestsOptions(guest_availability);
 
-    // const days = moment(check_out_date).diff(moment(check_in_date), "days");
     const days = moment(checkOutDate).diff(moment(checkInDate), "days");
 
     const roomTotal = Number(price) * days;
@@ -349,7 +433,7 @@ class DetailHomnePage extends React.Component {
                 </div>
               </div>
               <hr />
-              <DateFieldGroup
+              {/* <DateFieldGroup
                 label="Check In"
                 name="check_in_date"
                 value={check_in_date}
@@ -366,7 +450,7 @@ class DetailHomnePage extends React.Component {
                 onChange={e => {
                   this.onDateChange(e, "check_out_date");
                 }}
-              />
+              /> */}
 
               <DateRangeFieldGroup
                 label="Check In"
@@ -427,7 +511,10 @@ class DetailHomnePage extends React.Component {
                 </div>
               )}
 
-              <button className="btn btn-success btn-block" onClick={e => {}}>
+              <button
+                className="btn btn-success btn-block"
+                onClick={e => this.onRedirectToTripDetail(e)}
+              >
                 Request to Book
               </button>
               <button
@@ -438,6 +525,20 @@ class DetailHomnePage extends React.Component {
               >
                 Auto Fill
               </button>
+
+              <br />
+              <StripeCheckout
+                name="EdmondHome Inc."
+                descirption="Coolest home reserve!"
+                panelLabel="Pay"
+                amount={this.state.prices.total * 100}
+                currency="USD"
+                stripeKey="pk_test_A01JTFuyJt2HMw7F2e7N6tj7"
+                email="xiejy36@gmail.com"
+                token={e => this.onSubmitPayment(e)}
+              >
+                <button className="btn btn-primary btn-block">Checkout</button>
+              </StripeCheckout>
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import homes from "./routes/homes";
 import hosts from "./routes/hosts";
 import trips from "./routes/trips";
 import wishlist from "./routes/wishlist";
+import pay from "./routes/pay";
 
 let app = express();
 app.use(bodyParser.json());
@@ -25,6 +26,7 @@ app.use("/api/homes", homes);
 app.use("/api/hosts", hosts);
 app.use("/api/trips", trips);
 app.use("/api/wishlist", wishlist);
+app.use("/api/pay", pay);
 
 // 这里连接了前后端
 const compiler = webpack(webpackConfig);

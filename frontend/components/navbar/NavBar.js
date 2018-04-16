@@ -51,8 +51,6 @@ class NavBar extends React.Component {
         });
       }
 
-      console.log("avatar", nextProps);
-
       if (nextProps.profile) {
         this.setState({
           avatar: nextProps.profile.avatar,
@@ -150,25 +148,26 @@ class NavBar extends React.Component {
           <ul className="dropdown-menu">
             <li>
               <Link to="/manage">
-                Manage Hosts <span className="badge">{hostHomesCount}</span>
+                Manage Hosts
+                <span className="badge">{hostHomesCount}</span>
               </Link>
             </li>
             <li>
               <Link to="/trips">
-                My Trips <span className="badge pull-right">{tripsCount}</span>
+                My Trips <span className="badge">{tripsCount}</span>
               </Link>
             </li>
             <li>
               <Link to="/wishlist">
                 Wishlist
-                <span className="badge pull-right">{wishlistCount}</span>
+                <span className="badge">{wishlistCount}</span>
               </Link>
             </li>
             <li role="separator" className="divider" />
             <li>
               <Link to="/profile">
                 {username}
-                <span className="badge pull-right">
+                <span className="badge">
                   <i className="fa fa-user" aria-hidden="true" />
                 </span>
               </Link>
