@@ -620,101 +620,89 @@ class DetailHomnePage extends React.Component {
               <hr />
 
               <div className="input-field-group-base">
-                <ReactCSSTransitionGroup
-                  transitionName="payment-animation"
-                  transitionEnterTimeout={300}
-                  transitionLeaveTimeout={300}
-                >
-                  {showPayment && (
-                    <div
-                      className="input-payment-group"
-                      key="input-payment-group"
-                    >
-                      <TextFieldGroup
-                        field="checkInDate"
-                        label="Check In"
-                        name="checkInDate"
-                        value={checkInDate}
-                        onChange={e => {}}
-                        validator={e => {}}
-                        error={errors.checkInDate}
-                        disabled
-                      />
+                {showPayment && (
+                  <div
+                    className="input-payment-group"
+                    key="input-payment-group"
+                  >
+                    <TextFieldGroup
+                      field="checkInDate"
+                      label="Check In"
+                      name="checkInDate"
+                      value={checkInDate}
+                      onChange={e => {}}
+                      validator={e => {}}
+                      error={errors.checkInDate}
+                      disabled
+                    />
 
-                      <TextFieldGroup
-                        field="checkOutDate"
-                        label="Check Out"
-                        name="checkOutDate"
-                        value={checkOutDate}
-                        onChange={e => {}}
-                        validator={e => {}}
-                        error={errors.checkOutDate}
-                        disabled
-                      />
+                    <TextFieldGroup
+                      field="checkOutDate"
+                      label="Check Out"
+                      name="checkOutDate"
+                      value={checkOutDate}
+                      onChange={e => {}}
+                      validator={e => {}}
+                      error={errors.checkOutDate}
+                      disabled
+                    />
 
-                      <SelectFieldGroup
-                        label="Guests"
-                        name="guests"
-                        value={guests}
-                        options={guestsOptions}
-                        placeholder="Choose Your Beds Availability"
-                        onChange={value => this.onSelectChange(value, "guests")}
-                        validator={e => this.checkSelectRequired(e, "guests")}
-                        error={errors.guests}
-                        disabled
-                      />
-                    </div>
-                  )}
-                </ReactCSSTransitionGroup>
+                    <SelectFieldGroup
+                      label="Guests"
+                      name="guests"
+                      value={guests}
+                      options={guestsOptions}
+                      placeholder="Choose Your Beds Availability"
+                      onChange={value => this.onSelectChange(value, "guests")}
+                      validator={e => this.checkSelectRequired(e, "guests")}
+                      error={errors.guests}
+                      disabled
+                    />
+                  </div>
+                )}
 
-                <ReactCSSTransitionGroup
-                  transitionName="book-animation"
-                  transitionEnterTimeout={300}
-                  transitionLeaveTimeout={300}
-                >
-                  {!showPayment && (
-                    <div className="input-book-group" key="input-book-group">
-                      <DateRangeFieldGroup
-                        label="Check In"
-                        name="checkInDate"
-                        error={errors.checkInDate}
-                        date={checkInDate}
-                        validator={e => this.checkCheckInDate(e)}
-                        isInvalidDate={date => {
-                          return this.checkCalendar(date, "checkInDate");
-                        }}
-                        onEvent={(event, picker) => {
-                          this.onDatePick(event, picker, "checkInDate");
-                        }}
-                      />
+                {!showPayment && (
+                  <div className="input-book-group" key="input-book-group">
+                    <DateRangeFieldGroup
+                      label="Check In"
+                      name="checkInDate"
+                      error={errors.checkInDate}
+                      date={checkInDate}
+                      validator={e => this.checkCheckInDate(e)}
+                      isInvalidDate={date => {
+                        return this.checkCalendar(date, "checkInDate");
+                      }}
+                      onEvent={(event, picker) => {
+                        this.onDatePick(event, picker, "checkInDate");
+                      }}
+                    />
 
-                      <DateRangeFieldGroup
-                        label="Check Out"
-                        name="checkOutDate"
-                        error={errors.checkOutDate}
-                        date={checkOutDate}
-                        validator={e => this.checkCheckOutDate(e)}
-                        isInvalidDate={date => {
-                          return this.checkCalendar(date, "checkOutDate");
-                        }}
-                        onEvent={(event, picker) => {
-                          this.onDatePick(event, picker, "checkOutDate");
-                        }}
-                      />
+                    <DateRangeFieldGroup
+                      label="Check Out"
+                      name="checkOutDate"
+                      error={errors.checkOutDate}
+                      date={checkOutDate}
+                      validator={e => this.checkCheckOutDate(e)}
+                      isInvalidDate={date => {
+                        return this.checkCalendar(date, "checkOutDate");
+                      }}
+                      onEvent={(event, picker) => {
+                        this.onDatePick(event, picker, "checkOutDate");
+                      }}
+                    />
 
-                      <SelectFieldGroup
-                        label="Guests"
-                        name="guests"
-                        value={guests}
-                        options={guestsOptions}
-                        placeholder="Choose Your Beds Availability"
-                        onChange={value => this.onSelectChange(value, "guests")}
-                        validator={e => this.checkSelectRequired(e, "guests")}
-                        error={errors.guests}
-                      />
-                    </div>
-                  )}
-                </ReactCSSTransitionGroup>
+                    <SelectFieldGroup
+                      label="Guests"
+                      name="guests"
+                      value={guests}
+                      options={guestsOptions}
+                      placeholder="Choose Your Beds Availability"
+                      onChange={value => this.onSelectChange(value, "guests")}
+                      validator={e => this.checkSelectRequired(e, "guests")}
+                      error={errors.guests}
+                    />
+                  </div>
+                )}
               </div>
 
               <hr />

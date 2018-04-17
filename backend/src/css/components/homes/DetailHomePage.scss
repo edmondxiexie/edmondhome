@@ -188,22 +188,9 @@
     }
 
     .input-field-group-base {
-      position: relative;
-      height: 220px;
-      overflow: hidden;
-
-      .input-payment-group,
-      .input-book-group {
-        backface-visibility: hidden;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-      }
-
       .input-payment-group {
         .form-group {
-          margin-bottom: 19px;
+          margin-bottom: 20px;
         }
       }
     }
