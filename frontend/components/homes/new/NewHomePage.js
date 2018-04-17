@@ -102,6 +102,7 @@ class NewHomePage extends React.Component {
 
     if (valid) {
       this.props.createHome(this.state).then(res => {
+        this.props.fetchHostHomesCount(this.props.auth.user.id);
         this.context.router.push(`/homes/${res.data.home.id}`);
       });
     } else {
@@ -157,7 +158,7 @@ class NewHomePage extends React.Component {
         arr[1] = arr[1].substr(0, 2);
         price = arr.join(".");
       }
-      this.setState({ price: price });
+      this.setState({ [e.target.name]: price });
     }
   }
 
@@ -170,7 +171,9 @@ class NewHomePage extends React.Component {
         "http://res.cloudinary.com/dqace5qmb/image/upload/v1522018205/5129896990_526a74d91f_o.jpg",
       host_id: this.props.auth.user.id,
       price: "235",
+      service_fee: "35",
       district: "NEW YORK",
+      address: "8280 Wintheiser Parkways, Apt. 475, Lefflerview, CA 95122",
       property_type: "APARTMENT",
       room_type: "ENTIRE PLACE",
       amenities: [
@@ -207,7 +210,9 @@ class NewHomePage extends React.Component {
       image,
       host_id,
       price,
+      service_fee,
       district,
+      address,
       property_type,
       room_type,
       setup_for_guest,
@@ -224,198 +229,274 @@ class NewHomePage extends React.Component {
     } = this.state;
 
     return (
-      <div>
-        <button className="btn btn-primary" onClick={e => this.onSubmit(e)}>
-          Create
-        </button>
-        <button
-          className="btn btn-warning pull-right"
-          onClick={e => this.autoFill(e)}
-        >
-          Auto Fill
-        </button>
-        <h1>Host your place</h1>
+      <div className="new-home-page-base">
+        <h1 className="page-title">Host your place</h1>
 
-        <TextFieldGroup
-          field="title"
-          label="Home Title"
-          name="title"
-          value={title}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
-          error={errors.title}
-        />
-        <TextFieldGroup
-          field="description"
-          label="Home Description"
-          name="description"
-          value={description}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
-          error={errors.description}
-        />
-        <ImageFieldGroup
-          label="Image"
-          field="image"
-          value={image}
-          onClick={e => this.onOpenImageWidget(e)}
-          error={errors.image}
-        />
-        <TextFieldGroup
-          field="price"
-          label="Home Price"
-          name="price"
-          value={price}
-          onChange={e => this.onUpdatePrice(e)}
-          validator={e => this.checkRequired(e)}
-          error={errors.price}
-        />
+        <div className="panel panel-primary">
+          <div className="panel-heading">
+            <h3 className="panel-title">
+              STEP #1 - What type of your place is?
+            </h3>
+          </div>
+          <div className="panel-body">
+            <SelectFieldGroup
+              label="Property Type"
+              name="property_type"
+              value={property_type}
+              options={propertyTypeOptions}
+              placeholder="Choose Your Property Type"
+              onChange={value => this.onSelectChange(value, "property_type")}
+              validator={e => this.checkSelectReuired(e, "property_type")}
+              error={errors.property_type}
+            />
 
-        <SelectFieldGroup
-          label="District"
-          name="district"
-          value={district}
-          options={districtOptions}
-          placeholder="Choose Your District"
-          onChange={value => this.onSelectChange(value, "district")}
-          validator={e => this.checkSelectReuired(e, "district")}
-          error={errors.district}
-        />
-
-        <SelectFieldGroup
-          label="Property Type"
-          name="property_type"
-          value={property_type}
-          options={propertyTypeOptions}
-          placeholder="Choose Your Property Type"
-          onChange={value => this.onSelectChange(value, "property_type")}
-          validator={e => this.checkSelectReuired(e, "property_type")}
-          error={errors.property_type}
-        />
-
-        <SelectFieldGroup
-          label="Room Type"
-          name="room_type"
-          value={room_type}
-          options={roomTypeOptions}
-          placeholder="Choose Your Room Type"
-          onChange={value => this.onSelectChange(value, "room_type")}
-          validator={e => this.checkSelectReuired(e, "room_type")}
-          error={errors.room_type}
-        />
-
-        <SelectFieldGroup
-          label="Amenities"
-          value={amenities}
-          options={amenitiesOptions}
-          placeholder="Select available amenities"
-          closeOnSelect={false}
-          removeSelected={true}
-          disabled={false}
-          multi={true}
-          onChange={value => this.onAmenitiesChange(value)}
-          validator={e => this.checkRequired(e)}
-          error={errors.amenities}
-        />
-
-        <div
-          className={classnames("form-group", {
-            "has-error": errors.otherAmenities
-          })}
-        >
-          <label className="control-label">Other Amenities</label>
-          <Select.Creatable
-            multi={true}
-            placeholder="Input other Amenities."
-            onChange={value => {
-              this.onOtherAmenitiesChange(value);
-            }}
-            value={otherAmenities}
-            noResultsText="Input other amenities which are not on the list."
-          />
-          {errors.otherAmenities && (
-            <span className="help-block">{errors.otherAmenities}</span>
-          )}
+            <SelectFieldGroup
+              label="Room Type"
+              name="room_type"
+              value={room_type}
+              options={roomTypeOptions}
+              placeholder="Choose Your Room Type"
+              onChange={value => this.onSelectChange(value, "room_type")}
+              validator={e => this.checkSelectReuired(e, "room_type")}
+              error={errors.room_type}
+            />
+          </div>
         </div>
 
-        <SelectFieldGroup
-          label="Setup For Guest"
-          name="setup_for_guest"
-          value={setup_for_guest}
-          options={guestSetupOptions}
-          placeholder="Choose Your Room Type"
-          onChange={value => this.onSelectChange(value, "setup_for_guest")}
-          validator={e => this.checkSelectReuired(e, "setup_for_guest")}
-          error={errors.setup_for_guest}
-        />
+        <div className="panel panel-primary">
+          <div className="panel-heading">
+            <h3 className="panel-title">STEP #2 - How large is your place?</h3>
+          </div>
+          <div className="panel-body">
+            <SelectFieldGroup
+              label="Guest Availability"
+              name="guest_availability"
+              value={guest_availability}
+              options={guestAvailAbilityOptions}
+              placeholder="Choose Your Guest Availability"
+              onChange={value =>
+                this.onSelectChange(value, "guest_availability")
+              }
+              validator={e => this.checkSelectReuired(e, "guest_availability")}
+              error={errors.guest_availability}
+            />
 
-        <SelectFieldGroup
-          label="Guest Availability"
-          name="guest_availability"
-          value={guest_availability}
-          options={guestAvailAbilityOptions}
-          placeholder="Choose Your Guest Availability"
-          onChange={value => this.onSelectChange(value, "guest_availability")}
-          validator={e => this.checkSelectReuired(e, "guest_availability")}
-          error={errors.guest_availability}
-        />
+            <SelectFieldGroup
+              label="Rooms Availability"
+              name="rooms_availability"
+              value={rooms_availability}
+              options={roomAvailAbilityOptions}
+              placeholder="Choose Your Rooms Availability"
+              onChange={value =>
+                this.onSelectChange(value, "rooms_availability")
+              }
+              validator={e => this.checkSelectReuired(e, "rooms_availability")}
+              error={errors.rooms_availability}
+            />
 
-        <SelectFieldGroup
-          label="Rooms Availability"
-          name="rooms_availability"
-          value={rooms_availability}
-          options={roomAvailAbilityOptions}
-          placeholder="Choose Your Rooms Availability"
-          onChange={value => this.onSelectChange(value, "rooms_availability")}
-          validator={e => this.checkSelectReuired(e, "rooms_availability")}
-          error={errors.rooms_availability}
-        />
+            <SelectFieldGroup
+              label="Beds Availability"
+              name="beds_availability"
+              value={beds_availability}
+              options={bedAvailAbilityOptions}
+              placeholder="Choose Your Beds Availability"
+              onChange={value =>
+                this.onSelectChange(value, "beds_availability")
+              }
+              validator={e => this.checkSelectReuired(e, "beds_availability")}
+              error={errors.beds_availability}
+            />
 
-        <SelectFieldGroup
-          label="Beds Availability"
-          name="beds_availability"
-          value={beds_availability}
-          options={bedAvailAbilityOptions}
-          placeholder="Choose Your Beds Availability"
-          onChange={value => this.onSelectChange(value, "beds_availability")}
-          validator={e => this.checkSelectReuired(e, "beds_availability")}
-          error={errors.beds_availability}
-        />
+            <SelectFieldGroup
+              label="Bath Availability"
+              name="bath_availability"
+              value={bath_availability}
+              options={bedAvailAbilityOptions}
+              placeholder="Choose Your Bath Availability"
+              onChange={value =>
+                this.onSelectChange(value, "bath_availability")
+              }
+              validator={e => this.checkSelectReuired(e, "bath_availability")}
+              error={errors.bath_availability}
+            />
+          </div>
+        </div>
 
-        <SelectFieldGroup
-          label="Bath Availability"
-          name="bath_availability"
-          value={bath_availability}
-          options={bedAvailAbilityOptions}
-          placeholder="Choose Your Bath Availability"
-          onChange={value => this.onSelectChange(value, "bath_availability")}
-          validator={e => this.checkSelectReuired(e, "bath_availability")}
-          error={errors.bath_availability}
-        />
+        <div className="panel panel-primary">
+          <div className="panel-heading">
+            <h3 className="panel-title">STEP #3 - Where is your place?</h3>
+          </div>
+          <div className="panel-body">
+            <SelectFieldGroup
+              label="District"
+              name="district"
+              value={district}
+              options={districtOptions}
+              placeholder="Choose Your District"
+              onChange={value => this.onSelectChange(value, "district")}
+              validator={e => this.checkSelectReuired(e, "district")}
+              error={errors.district}
+            />
 
-        <TextFieldGroup
-          field="target"
-          label="Target"
-          name="target"
-          value={target}
-          onChange={e => this.onChange(e)}
-          validator={e => this.checkRequired(e)}
-          error={errors.target}
-        />
+            <TextFieldGroup
+              field="address"
+              label="Address"
+              name="address"
+              value={address}
+              onChange={e => this.onChange(e)}
+              validator={e => this.checkRequired(e)}
+              error={errors.address}
+            />
+          </div>
+        </div>
 
-        <button
-          className="btn btn-primary"
-          onClick={e => this.onSubmit(e)}
-          disabled={!valid}
-        >
-          Create
-        </button>
-        <button
-          className="btn btn-warning pull-right"
-          onClick={e => this.autoFill(e)}
-        >
-          Auto Fill
-        </button>
+        <div className="panel panel-primary">
+          <div className="panel-heading">
+            <h3 className="panel-title">
+              STEP #4 - What are the amenities in your place？
+            </h3>
+          </div>
+          <div className="panel-body">
+            <SelectFieldGroup
+              label="Amenities"
+              value={amenities}
+              options={amenitiesOptions}
+              placeholder="Select available amenities"
+              closeOnSelect={false}
+              removeSelected={true}
+              disabled={false}
+              multi={true}
+              onChange={value => this.onAmenitiesChange(value)}
+              validator={e => this.checkRequired(e)}
+              error={errors.amenities}
+            />
+
+            <div
+              className={classnames("form-group", {
+                "has-error": errors.otherAmenities
+              })}
+            >
+              <label className="control-label">Other Amenities</label>
+              <Select.Creatable
+                multi={true}
+                placeholder="Input other Amenities."
+                onChange={value => {
+                  this.onOtherAmenitiesChange(value);
+                }}
+                value={otherAmenities}
+                noResultsText="Input other amenities which are not on the list."
+              />
+              {errors.otherAmenities && (
+                <span className="help-block">{errors.otherAmenities}</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="panel panel-primary">
+          <div className="panel-heading">
+            <h3 className="panel-title">STEP #5 - Describe your place</h3>
+          </div>
+          <div className="panel-body">
+            <TextFieldGroup
+              field="title"
+              label="Home Title"
+              name="title"
+              value={title}
+              onChange={e => this.onChange(e)}
+              validator={e => this.checkRequired(e)}
+              error={errors.title}
+            />
+            <TextFieldGroup
+              field="description"
+              label="Home Description"
+              name="description"
+              value={description}
+              onChange={e => this.onChange(e)}
+              validator={e => this.checkRequired(e)}
+              error={errors.description}
+            />
+            <TextFieldGroup
+              field="target"
+              label="Target"
+              name="target"
+              value={target}
+              onChange={e => this.onChange(e)}
+              validator={e => this.checkRequired(e)}
+              error={errors.target}
+            />
+          </div>
+        </div>
+
+        <div className="panel panel-primary">
+          <div className="panel-heading">
+            <h3 className="panel-title">
+              STEP #6 - Upload photos about your place
+            </h3>
+          </div>
+          <div className="panel-body">
+            <ImageFieldGroup
+              label="Image"
+              field="image"
+              value={image}
+              onClick={e => this.onOpenImageWidget(e)}
+              error={errors.image}
+            />
+          </div>
+        </div>
+        <div className="panel panel-primary">
+          <div className="panel-heading">
+            <h3 className="panel-title">STEP #7 - Price and service</h3>
+          </div>
+          <div className="panel-body">
+            <TextFieldGroup
+              field="price"
+              label="Price Per Night"
+              name="price"
+              value={price}
+              onChange={e => this.onUpdatePrice(e)}
+              validator={e => this.checkRequired(e)}
+              error={errors.price}
+            />
+
+            <TextFieldGroup
+              field="service_fee"
+              label="Service Fee"
+              name="service_fee"
+              value={service_fee}
+              onChange={e => this.onUpdatePrice(e)}
+              validator={e => this.checkRequired(e)}
+              error={errors.service_fee}
+            />
+
+            <SelectFieldGroup
+              label="Setup For Guest"
+              name="setup_for_guest"
+              value={setup_for_guest}
+              options={guestSetupOptions}
+              placeholder="Choose Your setup type"
+              onChange={value => this.onSelectChange(value, "setup_for_guest")}
+              validator={e => this.checkSelectReuired(e, "setup_for_guest")}
+              error={errors.setup_for_guest}
+            />
+          </div>
+        </div>
+
+        <div className="new-home-btn-group clearfix">
+          <button
+            className="btn btn-primary pull-right"
+            onClick={e => this.onSubmit(e)}
+            disabled={!valid}
+          >
+            Create
+          </button>
+          <button
+            className="btn btn-warning pull-right"
+            onClick={e => this.autoFill(e)}
+          >
+            Auto Fill
+          </button>
+        </div>
       </div>
     );
   }

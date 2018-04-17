@@ -1,0 +1,38 @@
+.slide-enter {
+  opacity: 0.01;
+}
+
+.slide-enter.slide-enter-active {
+  opacity: 1;
+  transition: all 500ms ease-out;
+  animation: slide-enter 500ms ease-out;
+}
+
+.slide-leave {
+  opacity: 1;
+}
+
+.slide-leave.slide-leave-active {
+  opacity: 0.01;
+
+  animation: slide-leave 500ms ease-out;
+  transition: all 500ms ease-out;
+}
+
+@keyframes slide-enter {
+  0% {
+    -webkit-transform: translateY(-40px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+  }
+}
+
+@keyframes slide-leave {
+  0% {
+    -webkit-transform: translateY(0px);
+  }
+  100% {
+    -webkit-transform: translateY(-40px);
+  }
+}

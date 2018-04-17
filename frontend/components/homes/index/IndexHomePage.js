@@ -202,14 +202,6 @@ class IndexHomePage extends React.Component {
       return (
         <div>
           <h1 className="page-title">Homes around the world</h1>
-          {/* <button
-            className="btn btn-primary"
-            onClick={e => {
-              this.textAlert(e);
-            }}
-          >
-            Alert test
-          </button> */}
           <Pagination
             page={page}
             pages={pages}

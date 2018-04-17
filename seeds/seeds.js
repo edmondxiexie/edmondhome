@@ -41,7 +41,12 @@ function buildHomeSeed(knex) {
         image: Faker.random.arrayElement(homeSeedsData.imageUrls),
         host_id: Faker.random.number({ min: 1, max: 50 }),
         price: Faker.random.number({ min: 50, max: 500 }),
+        service_fee: Faker.random.arrayElement(["35", "50", "80", "120"]),
         district: Faker.random.arrayElement(homeSeedsData.districts),
+        address:
+          Faker.address.streetAddress() +
+          ", " +
+          Faker.address.secondaryAddress(),
         property_type: Faker.random.arrayElement(["APARTMENT", "HOUSE"]),
         room_type: Faker.random.arrayElement(homeSeedsData.room_types),
         setup_for_guest: Faker.random.arrayElement(

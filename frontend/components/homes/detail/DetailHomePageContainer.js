@@ -35,6 +35,9 @@ const mapDispatchToProps = dispatch => {
     fetchTripsFromHome: homeId => {
       return dispatch(tripActions.fetchTripsFromHome(homeId));
     },
+    fetchTripsCount: guestId => {
+      return dispatch(tripActions.fetchTripsCount(guestId));
+    },
     createTrip: tripData => {
       return dispatch(tripActions.createTrip(tripData));
     },

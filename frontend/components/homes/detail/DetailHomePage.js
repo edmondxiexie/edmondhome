@@ -1,8 +1,11 @@
 import React from "react";
 import TextFieldGroup from "../../common/TextFieldGroup";
-import OptionFieldGroup from "../../common/OptionFieldGroup";
+import SelectFieldGroup from "../../common/SelectFieldGroup";
+
 import DateFieldGroup from "../../common/DateFieldGroup";
 import DateRangeFieldGroup from "../../common/DateRangeFieldGroup";
+import validateInput from "../../../../backend/common/validations/book";
+
 import DateRangePicker from "react-bootstrap-daterangepicker";
 
 import StripeCheckout from "react-stripe-checkout";
@@ -76,6 +79,33 @@ class DetailHomnePage extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+  }
+
+  onSelectChange(selected, key) {
+    if (selected) {
+      this.setState({ [key]: selected.value });
+    } else {
+      this.setState({ [key]: "" });
+    }
+  }
+
+  checkSelectRequired(e, name) {
+    e.preventDefault();
+
+    const field = name;
+
+    const val = this.state[field];
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    if (val === "") {
+      errors[field] = "This field is required";
+      valid = false;
+    } else {
+      delete errors[field];
+      valid = isEmpty(errors);
+    }
+    this.setState({ errors, valid });
   }
 
   addToWishlist(e, home_id) {
@@ -264,30 +294,130 @@ class DetailHomnePage extends React.Component {
     });
   }
 
-  isCheckInDateAvailable(date) {
-    if (date.isBefore(moment(new Date()))) {
-      return true;
-    }
-
-    for (let occupiedDate of this.state.occupiedDates) {
-      if (date.isSame(moment(occupiedDate))) {
-        return true;
-      }
-    }
-    return false;
+  checkCheckInDate(e) {
+    const checkInDate = e.target.value;
+    this.checkCheckInDateStr(checkInDate);
   }
 
-  isCheckOutDateAvailable(date) {
-    for (let occupiedDate of this.state.occupiedDates) {
-      if (date.isSame(moment(occupiedDate).add(1, "days"))) {
+  checkCheckInDateStr(checkInDate) {
+    const { checkOutDate, occupiedDates, errors } = this.state;
+    let valid = this.state.valid;
+
+    if (occupiedDates.includes(checkInDate)) {
+      errors.checkInDate = "Chosen date unavailable";
+      valid = false;
+    } else {
+      delete errors.checkInDate;
+      valid = isEmpty(errors);
+    }
+
+    if (!errors.checkInDate) {
+      if (moment(checkInDate).isBefore(moment(new Date()))) {
+        errors.checkInDate = "Chosen date unavailable";
+        valid = false;
+      } else {
+        delete errors.checkInDate;
+        valid = isEmpty(errors);
+      }
+    }
+
+    if (!moment(checkOutDate).isAfter(checkInDate)) {
+      errors.checkOutDate = "Check out date should be after check in date";
+      valid = false;
+    } else {
+      delete errors.checkOutDate;
+      valid = isEmpty(errors);
+    }
+
+    this.setState({ errors, valid });
+  }
+
+  checkCheckOutDate(e) {
+    const checkOutDate = e.target.value;
+    this.checkCheckOutDateStr(checkOutDate);
+  }
+
+  checkCheckOutDateStr(checkOutDate) {
+    const { checkInDate, occupiedDates, errors } = this.state;
+    let valid = this.state.valid;
+
+    if (
+      occupiedDates.includes(
+        moment(checkOutDate)
+          .add(-1, "days")
+          .format("MM/DD/YYYY")
+      )
+    ) {
+      errors.checkOutDate = "Chosen date unavailable";
+      valid = false;
+    } else {
+      delete errors.checkOutDate;
+      valid = isEmpty(errors);
+    }
+
+    if (!errors.checkOutDate) {
+      if (!moment(checkOutDate).isAfter(checkInDate)) {
+        errors.checkOutDate = "Check out date should be after check in date";
+        valid = false;
+      } else {
+        delete errors.checkOutDate;
+        valid = isEmpty(errors);
+      }
+    }
+
+    if (!errors.checkOutDate) {
+      let validRange = true;
+      let date = moment(checkInDate);
+      while (date.isBefore(checkOutDate)) {
+        if (occupiedDates.includes(date.format("MM/DD/YYYY"))) {
+          errors.checkOutDate = "Chosen dates range unavailable";
+          valid = false;
+          validRange = false;
+        }
+        date = date.add(1, "days");
+      }
+      if (validRange) {
+        delete errors.checkOutDate;
+        valid = isEmpty(errors);
+      }
+    }
+
+    this.setState({ errors, valid });
+  }
+
+  checkCalendar(date, field) {
+    if (field === "checkInDate") {
+      if (date.isBefore(moment(new Date()))) {
         return true;
+      }
+
+      for (let occupiedDate of this.state.occupiedDates) {
+        if (date.isSame(moment(occupiedDate))) {
+          return true;
+        }
+      }
+    } else {
+      if (date.isBefore(moment(new Date()).add(1, "days"))) {
+        return true;
+      }
+
+      for (let occupiedDate of this.state.occupiedDates) {
+        if (date.isSame(moment(occupiedDate).add(1, "days"))) {
+          return true;
+        }
       }
     }
     return false;
   }
 
   onBook(e) {
-    this.setState({ showPayment: true });
+    const { errors, valid } = validateInput(this.state);
+
+    if (valid) {
+      this.setState({ showPayment: true });
+    } else {
+      this.setState({ errors, valid });
+    }
   }
 
   onCancelPayment(e) {
@@ -317,6 +447,7 @@ class DetailHomnePage extends React.Component {
     };
 
     this.props.createTrip(tripData).then(res => {
+      this.props.fetchTripsCount(this.props.auth.user.id);
       this.context.router.push(`/trips/${res.trip.id}`);
     });
   }
@@ -329,9 +460,11 @@ class DetailHomnePage extends React.Component {
     if (field === "checkInDate") {
       checkInDate = date;
       checkOutDate = this.state.checkOutDate;
+      this.checkCheckInDateStr(checkInDate);
     } else if (field === "checkOutDate") {
       checkInDate = this.state.checkInDate;
       checkOutDate = date;
+      this.checkCheckOutDateStr(checkOutDate);
     }
 
     const prices = this.calculatePrices(
@@ -340,12 +473,9 @@ class DetailHomnePage extends React.Component {
       Number(this.props.home.price)
     );
 
-    const valid = moment(checkOutDate).diff(moment(checkInDate), "days") > 0;
-
     this.setState({
       [field]: date,
-      prices,
-      valid
+      prices
     });
   }
 
@@ -465,7 +595,7 @@ class DetailHomnePage extends React.Component {
 
             <div className="amenities-info">
               <div className="row">{this.buildAmenities(amenities)}</div>
-              {otherAmenities && <h4>Specials:</h4>}
+              {!isEmpty(otherAmenities) && <h4>Specials:</h4>}
               <div className="row">{this.buildAmenities(otherAmenities)}</div>
             </div>
           </div>
@@ -489,43 +619,103 @@ class DetailHomnePage extends React.Component {
               </div>
               <hr />
 
-              <DateRangeFieldGroup
-                label="Check In"
-                name="checkInDate"
-                error={errors.checkInDate}
-                date={checkInDate}
-                isInvalidDate={date => {
-                  return this.isCheckInDateAvailable(date);
-                }}
-                onEvent={(event, picker) => {
-                  this.onDatePick(event, picker, "checkInDate");
-                }}
-              />
+              <div className="input-field-group-base">
+                <ReactCSSTransitionGroup
+                  transitionName="payment-animation"
+                  transitionEnterTimeout={300}
+                  transitionLeaveTimeout={300}
+                >
+                  {showPayment && (
+                    <div
+                      className="input-payment-group"
+                      key="input-payment-group"
+                    >
+                      <TextFieldGroup
+                        field="checkInDate"
+                        label="Check In"
+                        name="checkInDate"
+                        value={checkInDate}
+                        onChange={e => {}}
+                        validator={e => {}}
+                        error={errors.checkInDate}
+                        disabled
+                      />
 
-              <DateRangeFieldGroup
-                label="Check Out"
-                name="checkOutDate"
-                error={errors.checkOutDate}
-                date={checkOutDate}
-                isInvalidDate={date => {
-                  return this.isCheckOutDateAvailable(date);
-                }}
-                onEvent={(event, picker) => {
-                  this.onDatePick(event, picker, "checkOutDate");
-                }}
-              />
+                      <TextFieldGroup
+                        field="checkOutDate"
+                        label="Check Out"
+                        name="checkOutDate"
+                        value={checkOutDate}
+                        onChange={e => {}}
+                        validator={e => {}}
+                        error={errors.checkOutDate}
+                        disabled
+                      />
 
-              <OptionFieldGroup
-                label="Guests"
-                name="guests"
-                options={guestsOptions}
-                value={guests}
-                onChange={e => {
-                  this.onChange(e);
-                }}
-                validator={e => {}}
-                error={errors.guests}
-              />
+                      <SelectFieldGroup
+                        label="Guests"
+                        name="guests"
+                        value={guests}
+                        options={guestsOptions}
+                        placeholder="Choose Your Beds Availability"
+                        onChange={value => this.onSelectChange(value, "guests")}
+                        validator={e => this.checkSelectRequired(e, "guests")}
+                        error={errors.guests}
+                        disabled
+                      />
+                    </div>
+                  )}
+                </ReactCSSTransitionGroup>
+
+                <ReactCSSTransitionGroup
+                  transitionName="book-animation"
+                  transitionEnterTimeout={300}
+                  transitionLeaveTimeout={300}
+                >
+                  {!showPayment && (
+                    <div className="input-book-group" key="input-book-group">
+                      <DateRangeFieldGroup
+                        label="Check In"
+                        name="checkInDate"
+                        error={errors.checkInDate}
+                        date={checkInDate}
+                        validator={e => this.checkCheckInDate(e)}
+                        isInvalidDate={date => {
+                          return this.checkCalendar(date, "checkInDate");
+                        }}
+                        onEvent={(event, picker) => {
+                          this.onDatePick(event, picker, "checkInDate");
+                        }}
+                      />
+
+                      <DateRangeFieldGroup
+                        label="Check Out"
+                        name="checkOutDate"
+                        error={errors.checkOutDate}
+                        date={checkOutDate}
+                        validator={e => this.checkCheckOutDate(e)}
+                        isInvalidDate={date => {
+                          return this.checkCalendar(date, "checkOutDate");
+                        }}
+                        onEvent={(event, picker) => {
+                          this.onDatePick(event, picker, "checkOutDate");
+                        }}
+                      />
+
+                      <SelectFieldGroup
+                        label="Guests"
+                        name="guests"
+                        value={guests}
+                        options={guestsOptions}
+                        placeholder="Choose Your Beds Availability"
+                        onChange={value => this.onSelectChange(value, "guests")}
+                        validator={e => this.checkSelectRequired(e, "guests")}
+                        error={errors.guests}
+                      />
+                    </div>
+                  )}
+                </ReactCSSTransitionGroup>
+              </div>
 
               <hr />
 
@@ -560,7 +750,7 @@ class DetailHomnePage extends React.Component {
                         </button>
                       </StripeCheckout>
                       <button
-                        className="btn btn-warning btn-block"
+                        className="btn  btn-default btn-block"
                         onClick={e => {
                           this.onCancelPayment(e);
                         }}
@@ -581,6 +771,7 @@ class DetailHomnePage extends React.Component {
                       <button
                         className="btn btn-success btn-block"
                         onClick={e => this.onBook(e)}
+                        disabled={!valid}
                       >
                         Request to Book
                       </button>

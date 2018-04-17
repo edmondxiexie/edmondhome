@@ -6,9 +6,11 @@ import { Button } from "react-bootstrap";
 
 const DateRangeFieldGroup = ({
   date,
+  name,
   isInvalidDate,
   error,
   label,
+  validator,
   onEvent
 }) => {
   return (
@@ -28,8 +30,10 @@ const DateRangeFieldGroup = ({
         <div className="input-group">
           <input
             type="text"
+            name={name}
             className="form-control"
             value={date}
+            onBlur={validator}
             onChange={() => {}}
           />
           <span className="input-group-btn">
@@ -39,6 +43,7 @@ const DateRangeFieldGroup = ({
           </span>
         </div>
       </DateRangePicker>
+      {error && <span className="help-block">{error}</span>}
     </div>
   );
 };

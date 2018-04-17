@@ -5,7 +5,9 @@ exports.up = function(knex, Promise) {
     table.text("description").notNullable();
     table.string("image").notNullable();
     table.string("price").notNullable();
+    table.string("service_fee").notNullable();
     table.string("district").notNullable();
+    table.string("address").notNullable();
     table.string("property_type").notNullable();
     table.string("room_type").notNullable();
     table.string("setup_for_guest").notNullable();
