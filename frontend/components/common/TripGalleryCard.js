@@ -16,6 +16,7 @@ class TripGalleryCard extends Component {
       orderDate,
       district,
       price,
+      order_id,
       handleClick
     } = this.props;
 
@@ -60,7 +61,7 @@ class TripGalleryCard extends Component {
             <div className="order-date-text">
               {moment(orderDate).format("MMM DD YYYY h:mm A")}
             </div>
-            <div className="order-number">ORDER # 114-8145845-8255432</div>
+            <div className="order-number">{`ORDER # ${order_id}`}</div>
           </div>
         </div>
       </div>

@@ -21,7 +21,15 @@ class IndexTripsPage extends Component {
   buildGallery(trips) {
     let gallery = [];
     for (let trip of trips) {
-      let { id, home, check_in_time, check_out_time, created_at } = trip;
+      let {
+        id,
+        home,
+        check_in_time,
+        check_out_time,
+        created_at,
+        order_id
+      } = trip;
+      console.log("trip", trip);
       let {
         title,
         description,
@@ -46,6 +54,7 @@ class IndexTripsPage extends Component {
             handleClick={e => {
               this.onRedirect(e, id);
             }}
+            order_id={order_id}
           />
         </div>
       );

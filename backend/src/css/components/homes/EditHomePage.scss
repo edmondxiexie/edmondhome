@@ -1,6 +1,30 @@
 .home-edit-page-base {
-  .delete-btn {
-    margin-left: 10px;
+  margin-bottom: 50px;
+
+  .panel {
+    margin: 30px 15px 30px 15px;
+
+    .panel-heading {
+      .panel-title {
+        text-transform: uppercase;
+      }
+    }
+
+    .panel-body {
+      padding: 30px 30px;
+    }
+  }
+
+  .home-edit-btn-group {
+    margin: 0 15px;
+
+    button.btn {
+      margin-left: 10px;
+
+      &.delete-btn {
+        margin-left: 0;
+      }
+    }
   }
 }
 
