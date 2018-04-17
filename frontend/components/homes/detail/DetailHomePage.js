@@ -26,6 +26,7 @@ class DetailHomnePage extends React.Component {
       favorite: null,
       prices: {},
       occupiedDates: [],
+      editable: true,
       valid: false,
       showPayment: false,
       home: {}
@@ -233,11 +234,11 @@ class DetailHomnePage extends React.Component {
     e.preventDefault();
     const checkInTime = new Date();
     checkInTime.setDate(
-      checkInTime.getDate() - Math.floor(Math.random() * 3 + 1)
+      checkInTime.getDate() + Math.floor(Math.random() * 3 + 1)
     );
     const checkOutTime = new Date();
     checkOutTime.setDate(
-      checkOutTime.getDate() + Math.floor(Math.random() * 3 + 1)
+      checkOutTime.getDate() + Math.floor(Math.random() * 3 + 5)
     );
     const guestAvailabilityArr = new Array(~~this.props.home.guest_availability)
       .fill()
@@ -264,6 +265,10 @@ class DetailHomnePage extends React.Component {
   }
 
   isCheckInDateAvailable(date) {
+    if (date.isBefore(moment(new Date()))) {
+      return true;
+    }
+
     for (let occupiedDate of this.state.occupiedDates) {
       if (date.isSame(moment(occupiedDate))) {
         return true;
