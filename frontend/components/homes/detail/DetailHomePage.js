@@ -52,17 +52,10 @@ class DetailHomnePage extends React.Component {
 
     if (!isEmpty(nextProps.home)) {
       const home = nextProps.home;
-      console.log("home", home);
       this.setState({ home });
     }
 
-    // if (!isEmpty(nextProps.favorite)) {
-    //   this.setState({ favorite: nextProps.favorite });
-    // }
-
     if (!isEmpty(nextProps.trips)) {
-      console.log("trips", nextProps.trips);
-
       const trips = nextProps.trips;
 
       const occupiedDates = [];
@@ -70,44 +63,17 @@ class DetailHomnePage extends React.Component {
       for (let trip of trips) {
         if (trip.dates) {
           const dates = JSON.parse(trip.dates);
-          console.log("dates", dates);
           occupiedDates.push(...dates);
         }
       }
 
-      console.log("occupiedDates", occupiedDates);
       this.setState({ occupiedDates });
     }
-  }
-
-  onRedirectDelete(e) {
-    e.preventDefault();
-  }
-
-  onRedirectEdit(e) {
-    e.preventDefault();
-    this.context.router.push(`/homes/${this.props.params.id}/edit`);
   }
 
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
-    });
-  }
-
-  onDateChange(e, name) {
-    // if (name === "check_out_date") {
-    //   const days = moment(e).diff(moment(this.state.check_in_date), "days");
-    //   console.log("days", days);
-    //   if (days > 0) {
-    //     e = this.state.check_in_date;
-    //   }
-    // }
-
-    console.log("date", e);
-
-    this.setState({
-      [name]: e
     });
   }
 
@@ -288,18 +254,6 @@ class DetailHomnePage extends React.Component {
 
     const valid = moment(checkOutDate).diff(moment(checkInDate), "days") > 0;
 
-    // const nights = moment(checkOutDate).diff(moment(checkInDate), "days");
-
-    // const base = Number(this.props.home.price) * nights;
-    // const cleaningFee = 35;
-    // const total = base + cleaningFee;
-
-    // const prices = {
-    //   base,
-    //   cleaningFee,
-    //   total
-    // };
-
     this.setState({
       valid,
       checkInDate,
@@ -375,27 +329,13 @@ class DetailHomnePage extends React.Component {
       checkOutDate = date;
     }
 
-    // if (field === "checkOutDate") {
     const prices = this.calculatePrices(
       checkInDate,
       checkOutDate,
       Number(this.props.home.price)
     );
 
-    // const nights = moment(date).diff(moment(this.state.checkInDate), "days");
-    // const base = Number(this.props.home.price) * nights;
-    // const cleaningFee = 35;
-    // const total = base + cleaningFee;
-
-    // const prices = {
-    //   base,
-    //   cleaningFee,
-    //   total
-    // };
-
     const valid = moment(checkOutDate).diff(moment(checkInDate), "days") > 0;
-
-    // }
 
     this.setState({
       [field]: date,
@@ -594,11 +534,11 @@ class DetailHomnePage extends React.Component {
 
               <div className="btn-group-base">
                 <ReactCSSTransitionGroup
-                  transitionName="book-animation"
-                  transitionEnterTimeout={500}
-                  transitionLeaveTimeout={500}
+                  transitionName="payment-animation"
+                  transitionEnterTimeout={300}
+                  transitionLeaveTimeout={300}
                 >
-                  {showPayment ? (
+                  {showPayment && (
                     <div className="payment-btn-group" key="payment-btn-group">
                       <StripeCheckout
                         name="EdmondHome Inc."
@@ -623,7 +563,15 @@ class DetailHomnePage extends React.Component {
                         Cancel
                       </button>
                     </div>
-                  ) : (
+                  )}
+                </ReactCSSTransitionGroup>
+
+                <ReactCSSTransitionGroup
+                  transitionName="book-animation"
+                  transitionEnterTimeout={300}
+                  transitionLeaveTimeout={300}
+                >
+                  {!showPayment && (
                     <div className="book-btn-group" key="book-btn-group">
                       <button
                         className="btn btn-success btn-block"

@@ -247,6 +247,29 @@
 
 .book-animation-leave.book-animation-leave-active {
   opacity: 0.01;
+  transform: translateX(-250px);
+  transition: all 300ms ease-in;
+}
+
+// payment
+.payment-animation-enter {
+  opacity: 1;
+  transform: translateX(250px);
+}
+
+.payment-animation-enter.payment-animation-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 300ms ease-in;
+}
+
+.payment-animation-leave {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.payment-animation-leave.payment-animation-leave-active {
+  opacity: 0.01;
   transform: translateX(250px);
   transition: all 300ms ease-in;
 }
