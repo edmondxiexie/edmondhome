@@ -8,6 +8,7 @@
 
 @import "components/wishlist/IndexWishlistPage";
 
+@import "components/footer/Footer";
 @import "components/datetimepicker/datepicker";
 @import "components/datetimepicker/datepicker-addon";
 @import "components/common/GalleryCard";
@@ -21,10 +22,6 @@
 @import "../../../node_modules/react-select/dist/react-select";
 
 @import "../../../node_modules/bootstrap-daterangepicker/daterangepicker.css";
-
-footer {
-  color: #999;
-}
 
 .root-container {
   min-height: calc(100vh - 70px);
