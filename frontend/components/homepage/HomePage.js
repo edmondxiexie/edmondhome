@@ -59,6 +59,21 @@ class HomePage extends React.Component {
         <div className="jumbotron">
           <h1>{`Welcome! ${slogan}`}</h1>
         </div>
+        <div className="story">
+          <div className="story__pictures">Some Picture</div>
+          <div className="story__content">
+            <h3 className="heading-3">Happy Customer</h3>
+            <h2 className="heading-2">
+              &ldquo;The best decision of our lives&rdquo;
+            </h2>
+            <p className="story__text">
+              Asperiores impedit illum sunt consequuntur ipsum repellendus fugit
+              ea. Placeat possimus commodi occaecati deleniti ut. Dolore omnis
+              quasi ea nam at. Placeat minima temporibus dolorum vel.
+            </p>
+            <button className="btn story-btn">Find the best home</button>
+          </div>
+        </div>
 
         {!isEmpty(galleryHomes) && this.buildGalleryBoard(galleryHomes)}
       </div>
