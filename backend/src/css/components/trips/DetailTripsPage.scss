@@ -1,3 +1,9 @@
 .detail-trip-page-base {
   padding: 0 15px;
+
+  .trip-gallery-card {
+    &:hover {
+      cursor: default;
+    }
+  }
 }

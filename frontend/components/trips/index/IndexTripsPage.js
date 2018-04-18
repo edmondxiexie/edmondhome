@@ -29,7 +29,6 @@ class IndexTripsPage extends Component {
         created_at,
         order_id
       } = trip;
-      console.log("trip", trip);
       let {
         title,
         description,

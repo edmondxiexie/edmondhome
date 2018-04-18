@@ -28,6 +28,11 @@ class DetailTripsPage extends Component {
     }
   }
 
+  onRedirect(e, id) {
+    e.preventDefault();
+    this.context.router.push(`/homes/${id}`);
+  }
+
   render() {
     const trip = this.props.trip || {};
     const home = trip.home || {};
@@ -37,7 +42,8 @@ class DetailTripsPage extends Component {
       check_in_time,
       check_out_time,
       created_at,
-      reserved_guests
+      reserved_guests,
+      order_id
     } = trip;
 
     const {
@@ -47,30 +53,31 @@ class DetailTripsPage extends Component {
       property_type,
       room_type,
       price,
-      district
+      district,
+      address
     } = home;
 
     return (
       <div className="container row">
         <h1 className="page-title">Trip detail</h1>
 
-        {!isEmpty(home) && (
-          <TripGalleryCard
-            id={id}
-            title={title}
-            image={image}
-            checkInDate={check_in_time}
-            checkOutDate={check_out_time}
-            orderDate={created_at}
-            district={district}
-            price={price}
-            handleClick={e => {}}
-          />
-        )}
-
         <div className="detail-trip-page-base">
           <div className="panel panel-default">
             <div className="panel-body">
+              {!isEmpty(home) && (
+                <TripGalleryCard
+                  id={id}
+                  title={title}
+                  image={image}
+                  checkInDate={check_in_time}
+                  checkOutDate={check_out_time}
+                  orderDate={created_at}
+                  district={district}
+                  price={price}
+                  handleClick={e => {}}
+                  order_id={order_id}
+                />
+              )}
               <div>
                 <label>Trip No.</label>
                 <p>{id}</p>
@@ -92,9 +99,21 @@ class DetailTripsPage extends Component {
                 <p>{moment(created_at).format("MMM DD YYYY h:mm A")}</p>
               </div>
               <div>
+                <label>Address</label>
+                <p>{address}</p>
+              </div>
+              <div>
                 <label>Guests</label>
                 <p>{reserved_guests}</p>
               </div>
+              <button
+                className="btn btn-primary"
+                onClick={e => {
+                  this.onRedirect(e, home.id);
+                }}
+              >
+                Home Detail
+              </button>
             </div>
           </div>
         </div>

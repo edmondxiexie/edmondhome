@@ -6,9 +6,6 @@ export default function validateInput(data) {
 
   const { checkInDate, checkOutDate, guests, occupiedDates } = data;
 
-  console.log("occupiedDates", occupiedDates);
-  console.log("checkInDate", checkInDate);
-
   if (!moment(checkOutDate).isAfter(checkInDate)) {
     errors.checkOutDate = "Check out date should be after check in date";
   }
@@ -31,7 +28,6 @@ export default function validateInput(data) {
     }
   }
 
-  console.log("errors", errors);
   return {
     errors,
     valid: isEmpty(errors)
