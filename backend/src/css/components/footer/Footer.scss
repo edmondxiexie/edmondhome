@@ -13,7 +13,62 @@
     }
 
     .contact {
+      display: flex;
+      justify-content: space-between;
+
+      .contact-social {
+        label {
+          margin-bottom: 10px;
+        }
+
+        div {
+          margin-bottom: 3px;
+        }
+
+        div:nth-child(2):hover {
+          a {
+            color: #333;
+          }
+        }
+
+        div:nth-child(3):hover {
+          a {
+            color: #007bb5;
+          }
+        }
+
+        div:nth-child(4):hover {
+          a {
+            color: #3b5998;
+          }
+        }
+
+        a {
+          height: 20px;
+          color: #999;
+          cursor: pointer;
+
+          line-height: 20px;
+          vertical-align: middle;
+          transition: all 0.3s;
+          text-decoration: none;
+
+          i {
+            width: 20px;
+            font-size: 20px;
+            text-align: center;
+            margin-right: 10px;
+            vertical-align: middle;
+          }
+
+          span {
+            vertical-align: middle;
+          }
+        }
+      }
+
       .contact-traditional {
+        margin-left: 40px;
         margin-bottom: 10px;
 
         label {
@@ -21,46 +76,28 @@
         }
 
         div {
+          height: 22px;
+          margin-bottom: 3px;
+
+          line-height: 20px;
+          vertical-align: middle;
+          transition: all 0.3s;
+          text-decoration: none;
+
           &:hover {
             color: var(--color-primary);
           }
 
           i {
-            width: 15px;
-            margin-right: 5px;
+            height: 18px;
+            width: 18px;
+            font-size: 18px;
+            text-align: center;
+            margin-right: 10px;
+            vertical-align: middle;
           }
-        }
-      }
-
-      .contact-social {
-        display: flex;
-        justify-content: space-between;
-
-        a {
-          width: 40px;
-          height: 40px;
-          border: solid 1px;
-          color: #999;
-          cursor: pointer;
-
-          font-size: 30px;
-
-          text-align: center;
-          line-height: 40px;
-          vertical-align: middle;
-
-          transition: all 0.3s;
-
-          &:nth-child(1):hover {
-            color: #333;
-          }
-
-          &:nth-child(2):hover {
-            color: #007bb5;
-          }
-
-          &:nth-child(3):hover {
-            color: #3b5998;
+          span {
+            vertical-align: middle;
           }
         }
       }
