@@ -5,6 +5,7 @@ const defaultHome = Object.freeze({
   homesCount: null,
   page: 1,
   homes: null,
+  galleryHomes: null,
   home: null,
   searchStr: "",
   error: []
@@ -61,6 +62,13 @@ const HomeReducer = (state = defaultHome, action) => {
         searchStr: searchStr
       });
       return newHomesSearchState;
+    case homeUtil.GET_GALLERY_HOMES:
+      console.log("******/homes REDUCER GET******");
+      const galleryHomes = action.galleryHomes;
+      const newGalleryHomesState = Object.assign({}, state, {
+        galleryHomes: galleryHomes
+      });
+      return newGalleryHomesState;
     default:
       return state;
   }

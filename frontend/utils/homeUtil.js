@@ -2,6 +2,7 @@ import axios from "axios";
 
 // for reducer
 export const GET_HOMES = "GET_HOMES";
+export const GET_GALLERY_HOMES = "GET_GALLERY_HOMES";
 export const GET_HOMES_PAGE = "GET_HOMES_PAGE";
 export const GET_HOMES_COUNT = "GET_HOMES_COUNT";
 export const SET_HOMES_CURRENT_PAGE = "SET_HOMES_CURRENT_PAGE";
@@ -44,4 +45,9 @@ export const getHomesPageUtil = page => {
 export const getHomesCountUtil = () => {
   console.log("******/homes/count UTIL******");
   return axios.get("/api/homes/count");
+};
+
+export const getGalleryHomesUtil = count => {
+  console.log("******/homes/count/:count UTIL******");
+  return axios.get(`/api/homes/count/${count}`);
 };

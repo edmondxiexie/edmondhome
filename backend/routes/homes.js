@@ -79,6 +79,29 @@ router.post("/", (req, res) => {
   }
 });
 
+// GET api/homes/count/:count
+router.get("/count/:count", (req, res) => {
+  console.log("******GET api/homes/count/:count PASS!!******");
+  const count = req.params.count;
+
+  Home.query({
+    select: ["*"],
+    limit: count
+  })
+    .orderBy("id", "ASC")
+    .fetchAll()
+    .then(homes => {
+      console.log("******Fetch homes/count/:count SUCCESS!!******");
+      return res.json(homes);
+    })
+    .catch(errors => {
+      console.log("******Fetch homes/count/:count FAIL!!******");
+      return res
+        .status(500)
+        .json({ errors: true, message: "errors in GET api/homes" });
+    });
+});
+
 // GET api/homes/count
 router.get("/count", (req, res) => {
   console.log("******GET api/homes/count PASS!!******");

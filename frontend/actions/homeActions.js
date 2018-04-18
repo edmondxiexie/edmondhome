@@ -85,6 +85,18 @@ export const fetchHomes = () => {
   };
 };
 
+export const fetchGalleryHomes = count => {
+  return dispatch => {
+    return homeUtil.getGalleryHomesUtil(count).then(res => {
+      const galleryHomes = res.data;
+      dispatch({
+        type: homeUtil.GET_GALLERY_HOMES,
+        galleryHomes
+      });
+    });
+  };
+};
+
 export const fetchHomesPage = page => {
   return dispatch => {
     return homeUtil.getHomesPageUtil(page).then(res => {

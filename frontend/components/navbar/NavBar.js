@@ -75,6 +75,7 @@ class NavBar extends React.Component {
     e.preventDefault();
     this.props.logout().then(() => {
       this.context.router.push("/");
+      window.location.reload();
     });
   }
 
@@ -212,7 +213,7 @@ class NavBar extends React.Component {
             <span>
               <img src="/img/brand_logo.png" alt="brand_logo" />
             </span>
-            <span>ShareRoof</span>
+            <span>Edmond Book</span>
           </Link>
         </div>
         <form className="navbar-form navbar-left">

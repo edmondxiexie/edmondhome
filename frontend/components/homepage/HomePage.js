@@ -1,5 +1,5 @@
 import React from "react";
-// import "../../../backend/src/css/home.scss";
+import { isEmpty } from "lodash";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -7,6 +7,10 @@ class HomePage extends React.Component {
     this.state = {
       username: this.props.auth.user.username || ""
     };
+  }
+
+  componentWillMount() {
+    this.props.fetchGalleryHomes(14);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -21,11 +25,42 @@ class HomePage extends React.Component {
     }
   }
 
+  buildGalleryBoard(homes) {
+    const gallery = [];
+
+    for (let i = 0; i < 14; i++) {
+      const src = homes[i].image;
+
+      gallery.push(
+        <div
+          className={`gallery__item gallery__item--${i + 1}`}
+          key={`Gallery image ${i + 1}`}
+        >
+          <img
+            src={src}
+            alt={`Gallery image ${i + 1}`}
+            className="gallery__img"
+          />
+        </div>
+      );
+    }
+
+    return <div className="gallery">{gallery}</div>;
+  }
+
+  buildGalleryItem(home) {}
+
   render() {
-    const slogan = this.state.username || "Edmond Home";
+    const { galleryHomes } = this.props;
+
+    const slogan = this.props.profile.fullname || "Edmond Book";
     return (
-      <div className="jumbotron home-page">
-        <h1>{`Welcome! ${slogan}`}</h1>
+      <div className="home-page-base">
+        <div className="jumbotron">
+          <h1>{`Welcome! ${slogan}`}</h1>
+        </div>
+
+        {!isEmpty(galleryHomes) && this.buildGalleryBoard(galleryHomes)}
       </div>
     );
   }
