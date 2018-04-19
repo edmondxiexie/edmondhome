@@ -10,7 +10,11 @@ module.exports = {
   production: {
     client: "postgresql",
     connection: {
-      database: "edmondhome"
+      database: process.env.DATABASE_URL
+    },
+    pool: {
+      max: 1,
+      min: 1
     }
   }
 };
