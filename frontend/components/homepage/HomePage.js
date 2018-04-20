@@ -1,11 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { isEmpty } from "lodash";
+
+import TextFieldGroup from "../common/TextFieldGroup";
+import validateInput from "../../../backend/common/validations/login";
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.auth.user.username || ""
+      username: this.props.auth.user.username || "",
+      identifier: "",
+      password: "",
+      errors: {},
+      isLoading: false,
+      valid: true
     };
   }
 
@@ -23,6 +33,18 @@ class HomePage extends React.Component {
         username: ""
       });
     }
+  }
+
+  autoFill(e) {
+    e.preventDefault();
+    const username = `user_${Math.floor(Math.random() * 50, 1)}`;
+    this.setState({
+      identifier: username,
+      password: "password",
+      errors: {},
+      isLoading: false,
+      valid: true
+    });
   }
 
   buildGalleryBoard(homes) {
@@ -48,17 +70,133 @@ class HomePage extends React.Component {
     return <div className="gallery">{gallery}</div>;
   }
 
-  buildGalleryItem(home) {}
+  checkRequired(e) {
+    e.preventDefault();
+    const field = e.target.name;
+    const val = e.target.value;
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    if (val === "") {
+      errors[field] = "This field is required";
+      valid = false;
+    } else {
+      delete errors[field];
+      valid = isEmpty(errors);
+    }
+    this.setState({ errors, valid });
+  }
+
+  checkUserExists(identifier) {
+    e.preventDefault();
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    this.props.isUserExists(identifier).then(res => {
+      if (!res.data.user) {
+        errors[field] = "There is no user with such username or email";
+        valid = false;
+      } else {
+        errors = {};
+        valid = true;
+      }
+      this.setState({ errors, valid });
+    });
+  }
+
+  onChange(e) {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    const { errors, valid } = validateInput(this.state);
+    if (!valid) {
+      this.setState({ errors, valid });
+    } else {
+      this.props.login(this.state).then(
+        () => {
+          const userId = this.props.auth.user.id;
+          this.context.router.push("/homes");
+        },
+        err => {
+          this.setState({
+            errors: err.response.data.errors,
+            isLoading: false
+          });
+        }
+      );
+    }
+  }
 
   render() {
     const { galleryHomes } = this.props;
+    const { isAuthenticated } = this.props.auth;
+    const { errors, valid } = this.state;
 
-    const slogan = this.props.profile.fullname || "Edmond Book";
+    // const slogan = this.props.profile.fullname || "Edmond Book";
     return (
       <div className="home-page-base">
-        {/* <div className="jumbotron">
-          <h1>{`Welcome! ${slogan}`}</h1>
-        </div> */}
+        <div className="welcome container">
+          <div className="row">
+            <div
+              className={`slogan col-sm-12 ${
+                isAuthenticated ? "col-md-12 isAuthenticated" : "col-md-8"
+              }`}
+            >
+              <h2 className="title">Edmond Book</h2>
+              <h1>Don't Go There, Live There</h1>
+              <p>A New Way to Lodge and Host.</p>
+            </div>
+
+            {!isAuthenticated && (
+              <div className="login-panel col-md-4 col-sm-12">
+                <TextFieldGroup
+                  error={errors.identifier}
+                  label="Username or Email"
+                  onChange={e => this.onChange(e)}
+                  validator={e => this.checkRequired(e)}
+                  value={this.state.identifier}
+                  field="identifier"
+                />
+                <TextFieldGroup
+                  error={errors.password}
+                  label="Password"
+                  onChange={e => this.onChange(e)}
+                  validator={e => this.checkRequired(e)}
+                  value={this.state.password}
+                  field="password"
+                  type="password"
+                />
+                <button
+                  type="button"
+                  className="btn btn-signup"
+                  onClick={() => {
+                    this.context.router.push("/signup");
+                  }}
+                >
+                  Create a new account
+                </button>
+                <hr />
+                <button
+                  className="btn btn-login btn-block"
+                  onClick={e => this.onSubmit(e)}
+                  disabled={!valid}
+                >
+                  Login
+                </button>
+                <button
+                  className="btn btn-autofill btn-block"
+                  onClick={e => this.autoFill(e)}
+                >
+                  Auto Fill
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
         <div className="story">
           <div className="story__pictures">
             <img
@@ -91,5 +229,14 @@ class HomePage extends React.Component {
     );
   }
 }
+
+HomePage.propTypes = {
+  login: PropTypes.func.isRequired,
+  isUserExists: PropTypes.func.isRequired
+};
+
+HomePage.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default HomePage;
