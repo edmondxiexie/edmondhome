@@ -2,16 +2,46 @@
   .story {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(1, 500px);
+    grid-template-rows: repeat(1, 1fr);
     margin-bottom: 50px;
 
     &__pictures {
-      background-color: var(--color-grey-light-1);
+      background-color: var(--color-primary);
       grid-row: 1 / span 4;
       grid-column: 1 / span 4;
+      background-image: linear-gradient(rgba(#a61d55, 0.5), rgba(#a61d55, 0.5)),
+        url("https://res.cloudinary.com/dqace5qmb/image/upload/v1524196530/back.jpg");
+
+      display: grid;
+
+      grid-template-rows: repeat(6, 1fr);
+      grid-template-columns: repeat(6, 1fr);
+      align-items: center;
+    }
+
+    &__img--1 {
+      width: 100%;
+      grid-row: 2 / 6;
+      grid-column: 2 / 6;
+      box-shadow: 0 2px 5px rgba(#000, 0.1);
+    }
+
+    &__img--2 {
+      width: 115%;
+      grid-row: 4 / 6;
+      grid-column: 4 / 7;
+      box-shadow: 0 2px 5px rgba(#000, 0.2);
+
+      z-index: 20;
     }
 
     &__content {
+      display: grid;
+      align-content: center;
+      justify-items: start;
+
+      padding: 60px 8vw;
+
       grid-row: 1 / span 1;
       grid-column: 5 / span 4;
 
@@ -19,6 +49,7 @@
         font-size: 40px;
         font-style: italic;
         line-height: 1;
+        margin-bottom: 20px;
       }
 
       h3.heading-3 {
@@ -38,7 +69,7 @@
         border-radius: 0;
         font-size: 15px;
         text-transform: uppercase;
-        padding: 18px 30px;
+        padding: 15px 30px;
         cursor: pointer;
         transition: all 0.2s;
 
@@ -47,11 +78,17 @@
         }
       }
     }
+
+    &__text {
+      font-size: 15px;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
   }
 
   .gallery {
     background-color: var(--color-grey-light-1);
-    grid-column: full-start / full-end;
+    // grid-column: full-start / full-end;
 
     display: grid;
     grid-template-columns: repeat(8, 1fr);
