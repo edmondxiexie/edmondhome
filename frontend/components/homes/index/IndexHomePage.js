@@ -200,7 +200,7 @@ class IndexHomePage extends React.Component {
     const wishlist = this.props.wishlist || [];
     if (this.state.searchStr === "") {
       return (
-        <div>
+        <div className="container">
           <h1 className="page-title">Homes around the world</h1>
           <Pagination
             page={page}

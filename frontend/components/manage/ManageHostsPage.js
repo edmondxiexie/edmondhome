@@ -63,9 +63,11 @@ class ManageHostsPage extends Component {
   render() {
     let hostHomes = this.props.hostHomes || [];
     return (
-      <div className="container row">
-        <h1 className="page-title">Manage your homes</h1>
-        {this.buildGallery(hostHomes)}
+      <div className="container">
+        <div className="row">
+          <h1 className="page-title">Manage your homes</h1>
+          {this.buildGallery(hostHomes)}
+        </div>
       </div>
     );
   }

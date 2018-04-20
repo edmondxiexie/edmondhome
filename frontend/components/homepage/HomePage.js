@@ -56,9 +56,9 @@ class HomePage extends React.Component {
     const slogan = this.props.profile.fullname || "Edmond Book";
     return (
       <div className="home-page-base">
-        <div className="jumbotron">
+        {/* <div className="jumbotron">
           <h1>{`Welcome! ${slogan}`}</h1>
-        </div>
+        </div> */}
         <div className="story">
           <div className="story__pictures">
             <img
@@ -75,14 +75,14 @@ class HomePage extends React.Component {
           <div className="story__content">
             <h3 className="heading-3">Happy Customer</h3>
             <h2 className="heading-2">
-              &ldquo;The best decision of our lives&rdquo;
+              &ldquo;The best travel experience of our lives&rdquo;
             </h2>
             <p className="story__text">
               Asperiores impedit illum sunt consequuntur ipsum repellendus fugit
               ea. Placeat possimus commodi occaecati deleniti ut. Dolore omnis
               quasi ea nam at. Placeat minima temporibus dolorum vel.
             </p>
-            <button className="btn story-btn">Find the best home</button>
+            <button className="btn story-btn">Explore Next Trip</button>
           </div>
         </div>
 

@@ -514,7 +514,7 @@ class Profile extends React.Component {
     } = this.state;
 
     return (
-      <div>
+      <div className="container">
         <h1 className="page-title">Personal Profile</h1>
 
         <div className="container row profile-edit-page">

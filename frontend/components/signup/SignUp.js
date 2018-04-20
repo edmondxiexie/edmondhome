@@ -118,70 +118,72 @@ class SignUp extends React.Component {
     const { errors, valid } = this.state;
 
     return (
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <form>
-            <h1>Please Sign Up!</h1>
-            <TextFieldGroup
-              error={errors.username}
-              label="Username"
-              onChange={e => this.onChange(e)}
-              validator={e => this.checkUserExists(e)}
-              value={this.state.username}
-              field="username"
-            />
-            <TextFieldGroup
-              error={errors.email}
-              label="Email"
-              onChange={e => this.onChange(e)}
-              validator={e => this.checkUserExists(e)}
-              value={this.state.email}
-              field="email"
-            />
-            <TextFieldGroup
-              error={errors.password}
-              label="Password"
-              onChange={e => this.onChange(e)}
-              validator={e => this.checkRequired(e)}
-              value={this.state.password}
-              field="password"
-              type="password"
-            />
-            <TextFieldGroup
-              error={errors.passwordConfirm}
-              label="Password Confirm"
-              onChange={e => this.onChange(e)}
-              validator={e => this.checkRequired(e)}
-              value={this.state.passwordConfirm}
-              field="passwordConfirm"
-              type="password"
-            />
-            <OptionFieldGroup
-              label="Timezone"
-              name="timezone"
-              value={this.state.timezone}
-              options={timezones}
-              onChange={e => this.onChange(e)}
-              validator={e => this.checkRequired(e)}
-              error={errors.timezone}
-            />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 col-md-offset-3">
+            <form>
+              <h1>Please Sign Up!</h1>
+              <TextFieldGroup
+                error={errors.username}
+                label="Username"
+                onChange={e => this.onChange(e)}
+                validator={e => this.checkUserExists(e)}
+                value={this.state.username}
+                field="username"
+              />
+              <TextFieldGroup
+                error={errors.email}
+                label="Email"
+                onChange={e => this.onChange(e)}
+                validator={e => this.checkUserExists(e)}
+                value={this.state.email}
+                field="email"
+              />
+              <TextFieldGroup
+                error={errors.password}
+                label="Password"
+                onChange={e => this.onChange(e)}
+                validator={e => this.checkRequired(e)}
+                value={this.state.password}
+                field="password"
+                type="password"
+              />
+              <TextFieldGroup
+                error={errors.passwordConfirm}
+                label="Password Confirm"
+                onChange={e => this.onChange(e)}
+                validator={e => this.checkRequired(e)}
+                value={this.state.passwordConfirm}
+                field="passwordConfirm"
+                type="password"
+              />
+              <OptionFieldGroup
+                label="Timezone"
+                name="timezone"
+                value={this.state.timezone}
+                options={timezones}
+                onChange={e => this.onChange(e)}
+                validator={e => this.checkRequired(e)}
+                error={errors.timezone}
+              />
 
-            <div className="form-group">
-              <button
-                className="btn btn-primary"
-                onClick={e => this.onSubmit(e)}
-                disabled={!valid}
-              >
-                Sign Up
-              </button>
-              <button
-                className="btn btn-warning pull-right"
-                onClick={e => this.autoFill(e)}
-              >
-                Auto Fill
-              </button>
-            </div>
-          </form>
+              <div className="form-group">
+                <button
+                  className="btn btn-primary"
+                  onClick={e => this.onSubmit(e)}
+                  disabled={!valid}
+                >
+                  Sign Up
+                </button>
+                <button
+                  className="btn btn-warning pull-right"
+                  onClick={e => this.autoFill(e)}
+                >
+                  Auto Fill
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );

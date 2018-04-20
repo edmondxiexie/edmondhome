@@ -96,50 +96,52 @@ class Login extends React.Component {
     const { errors, valid } = this.state;
 
     return (
-      <div className="row">
-        <div className="col-md-6 col-md-offset-3">
-          <form>
-            <h1>Please Login!</h1>
-            <TextFieldGroup
-              error={errors.identifier}
-              label="Identifier"
-              onChange={e => this.onChange(e)}
-              validator={e => this.checkRequired(e)}
-              value={this.state.identifier}
-              field="identifier"
-            />
-            <TextFieldGroup
-              error={errors.password}
-              label="Password"
-              onChange={e => this.onChange(e)}
-              validator={e => this.checkRequired(e)}
-              value={this.state.password}
-              field="password"
-              type="password"
-            />
-            <button
-              className="btn btn-primary"
-              onClick={e => this.onSubmit(e)}
-              disabled={!valid}
-            >
-              Login
-            </button>
-            <button
-              type="button"
-              className="btn btn-link"
-              onClick={() => {
-                this.context.router.push("/signup");
-              }}
-            >
-              Create a new account
-            </button>
-            <button
-              className="btn btn-warning pull-right"
-              onClick={e => this.autoFill(e)}
-            >
-              Auto Fill
-            </button>
-          </form>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 col-md-offset-3">
+            <form>
+              <h1>Please Login!</h1>
+              <TextFieldGroup
+                error={errors.identifier}
+                label="Identifier"
+                onChange={e => this.onChange(e)}
+                validator={e => this.checkRequired(e)}
+                value={this.state.identifier}
+                field="identifier"
+              />
+              <TextFieldGroup
+                error={errors.password}
+                label="Password"
+                onChange={e => this.onChange(e)}
+                validator={e => this.checkRequired(e)}
+                value={this.state.password}
+                field="password"
+                type="password"
+              />
+              <button
+                className="btn btn-primary"
+                onClick={e => this.onSubmit(e)}
+                disabled={!valid}
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                className="btn btn-link"
+                onClick={() => {
+                  this.context.router.push("/signup");
+                }}
+              >
+                Create a new account
+              </button>
+              <button
+                className="btn btn-warning pull-right"
+                onClick={e => this.autoFill(e)}
+              >
+                Auto Fill
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     );

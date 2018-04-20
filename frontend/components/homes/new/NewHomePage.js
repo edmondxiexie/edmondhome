@@ -231,7 +231,7 @@ class NewHomePage extends React.Component {
     } = this.state;
 
     return (
-      <div className="new-home-page-base">
+      <div className="container new-home-page-base">
         <h1 className="page-title">Host your place</h1>
 
         <div className="panel panel-primary">

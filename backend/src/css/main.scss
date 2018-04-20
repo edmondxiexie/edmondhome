@@ -28,6 +28,10 @@
 .root-container {
   min-height: calc(100vh - 70px);
   padding-top: 70px;
+
+  @media only screen and (max-width: 767px) {
+    padding-top: 160px;
+  }
 }
 
 .clearfix::after {

@@ -2,21 +2,27 @@
   .story {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(1, 1fr);
+    grid-template-rows: repeat(1, 0.8fr);
     margin-bottom: 50px;
+
+    background-color: var(--color-grey-light-3);
 
     &__pictures {
       background-color: var(--color-primary);
       grid-row: 1 / span 4;
       grid-column: 1 / span 4;
-      background-image: linear-gradient(rgba(#a61d55, 0.5), rgba(#a61d55, 0.5)),
+      background-image: linear-gradient(rgba(#a61d55, 0.6), rgba(#a61d55, 0.6)),
         url("https://res.cloudinary.com/dqace5qmb/image/upload/v1524196530/back.jpg");
-
+      background-size: cover;
       display: grid;
 
       grid-template-rows: repeat(6, 1fr);
       grid-template-columns: repeat(6, 1fr);
       align-items: center;
+
+      @media only screen and (max-width: 767px) {
+        grid-column: 1 / -1;
+      }
     }
 
     &__img--1 {
@@ -40,16 +46,17 @@
       align-content: center;
       justify-items: start;
 
-      padding: 60px 8vw;
+      padding: 60px 10vw;
 
       grid-row: 1 / span 1;
       grid-column: 5 / span 4;
+      // background-color: var(--color-grey-light-1);
 
       h2.heading-2 {
         font-size: 40px;
         font-style: italic;
         line-height: 1;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
       }
 
       h3.heading-3 {
@@ -57,10 +64,6 @@
         color: var(--color-primary);
         text-transform: uppercase;
       }
-
-      background-color: var(--color-grey-light-1);
-
-      padding: 60px 80px;
 
       .story-btn {
         background-color: var(--color-primary);
@@ -72,22 +75,28 @@
         padding: 15px 30px;
         cursor: pointer;
         transition: all 0.2s;
+        margin-left: auto;
+        margin-right: 0;
 
         &:hover {
           background-color: var(--color-primary-dark);
         }
+      }
+
+      @media only screen and (max-width: 767px) {
+        grid-column: 1 / -1;
       }
     }
 
     &__text {
       font-size: 15px;
       font-style: italic;
-      margin-bottom: 20px;
+      margin-bottom: 60px;
     }
   }
 
   .gallery {
-    background-color: var(--color-grey-light-1);
+    background-color: var(--color-grey-light-3);
     // grid-column: full-start / full-end;
 
     display: grid;
@@ -96,7 +105,7 @@
     grid-gap: 15px;
     padding: 15px;
 
-    margin-bottom: 30px;
+    // margin-bottom: 30px;
 
     &__item {
       &--1 {

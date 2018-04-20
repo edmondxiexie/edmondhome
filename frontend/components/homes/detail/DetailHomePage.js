@@ -546,7 +546,7 @@ class DetailHomnePage extends React.Component {
     const total = roomTotal + cleaningFee;
 
     return (
-      <div className="home-detail-page-base">
+      <div className="container home-detail-page-base">
         {this.props.auth.isAuthenticated && this.buildFavoriteButton()}
 
         <img src={image} className="img-cover" />

@@ -58,62 +58,64 @@ class DetailTripsPage extends Component {
     } = home;
 
     return (
-      <div className="container row">
-        <h1 className="page-title">Trip detail</h1>
+      <div className="container">
+        <div className="row">
+          <h1 className="page-title">Trip detail</h1>
 
-        <div className="detail-trip-page-base">
-          <div className="panel panel-default">
-            <div className="panel-body">
-              {!isEmpty(home) && (
-                <TripGalleryCard
-                  id={id}
-                  title={title}
-                  image={image}
-                  checkInDate={check_in_time}
-                  checkOutDate={check_out_time}
-                  orderDate={created_at}
-                  district={district}
-                  price={price}
-                  handleClick={e => {}}
-                  order_id={order_id}
-                />
-              )}
-              <div>
-                <label>Trip No.</label>
-                <p>{id}</p>
+          <div className="detail-trip-page-base">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                {!isEmpty(home) && (
+                  <TripGalleryCard
+                    id={id}
+                    title={title}
+                    image={image}
+                    checkInDate={check_in_time}
+                    checkOutDate={check_out_time}
+                    orderDate={created_at}
+                    district={district}
+                    price={price}
+                    handleClick={e => {}}
+                    order_id={order_id}
+                  />
+                )}
+                <div>
+                  <label>Trip No.</label>
+                  <p>{id}</p>
+                </div>
+                <div>
+                  <label>Check In Date</label>
+                  <p>{moment(check_in_time).format("MMM DD YYYY")}</p>
+                </div>
+                <div>
+                  <label>Check Out Date</label>
+                  <p>{moment(check_out_time).format("MMM DD YYYY")}</p>
+                </div>
+                <div>
+                  <label>Total</label>
+                  <p>$334</p>
+                </div>
+                <div>
+                  <label>Order Placed</label>
+                  <p>{moment(created_at).format("MMM DD YYYY h:mm A")}</p>
+                </div>
+                <div>
+                  <label>Address</label>
+                  <p>{address}</p>
+                </div>
+                <div>
+                  <label>Guests</label>
+                  <p>{reserved_guests}</p>
+                </div>
+                <button
+                  className="btn btn-primary"
+                  onClick={e => {
+                    this.onRedirect(e, home.id);
+                  }}
+                >
+                  Home Detail
+                </button>
               </div>
-              <div>
-                <label>Check In Date</label>
-                <p>{moment(check_in_time).format("MMM DD YYYY")}</p>
-              </div>
-              <div>
-                <label>Check Out Date</label>
-                <p>{moment(check_out_time).format("MMM DD YYYY")}</p>
-              </div>
-              <div>
-                <label>Total</label>
-                <p>$334</p>
-              </div>
-              <div>
-                <label>Order Placed</label>
-                <p>{moment(created_at).format("MMM DD YYYY h:mm A")}</p>
-              </div>
-              <div>
-                <label>Address</label>
-                <p>{address}</p>
-              </div>
-              <div>
-                <label>Guests</label>
-                <p>{reserved_guests}</p>
-              </div>
-              <button
-                className="btn btn-primary"
-                onClick={e => {
-                  this.onRedirect(e, home.id);
-                }}
-              >
-                Home Detail
-              </button>
             </div>
           </div>
         </div>

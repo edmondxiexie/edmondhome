@@ -324,7 +324,7 @@ class EditHomePage extends React.Component {
     } = this.state;
 
     return (
-      <div className="home-edit-page-base">
+      <div className="container home-edit-page-base">
         <h1 className="page-title">Edit your place</h1>
 
         <div className="panel panel-primary">

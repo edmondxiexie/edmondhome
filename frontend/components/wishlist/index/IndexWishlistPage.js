@@ -53,7 +53,6 @@ class IndexWishlistPage extends Component {
 
       gallery.push(
         <div key={id} className="col-md-4 col-sm-6">
-          <h1>{id}</h1>
           <GalleryCard
             propertyType={property_type}
             roomType={room_type}
@@ -80,15 +79,17 @@ class IndexWishlistPage extends Component {
   render() {
     const wishlist = this.props.wishlist || [];
     return (
-      <div className="container row">
-        <h1 className="page-title">Your wishlist</h1>
-        <ReactCSSTransitionGroup
-          transitionName="slide"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-        >
-          {this.buildGallery(wishlist)}
-        </ReactCSSTransitionGroup>
+      <div className="container">
+        <div className="row">
+          <h1 className="page-title">Your wishlist</h1>
+          <ReactCSSTransitionGroup
+            transitionName="slide"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+          >
+            {this.buildGallery(wishlist)}
+          </ReactCSSTransitionGroup>
+        </div>
       </div>
     );
   }
