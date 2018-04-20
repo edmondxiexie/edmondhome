@@ -138,62 +138,65 @@ class HomePage extends React.Component {
     // const slogan = this.props.profile.fullname || "Edmond Book";
     return (
       <div className="home-page-base">
-        <div className="welcome container">
-          <div className="row">
-            <div
-              className={`slogan col-sm-12 ${
-                isAuthenticated ? "col-md-12 isAuthenticated" : "col-md-8"
-              }`}
-            >
-              <h2 className="title">Edmond Book</h2>
-              <h1>Don't Go There, Live There</h1>
-              <p>A New Way to Lodge and Host.</p>
-            </div>
-
-            {!isAuthenticated && (
-              <div className="login-panel col-md-4 col-sm-12">
-                <TextFieldGroup
-                  error={errors.identifier}
-                  label="Username or Email"
-                  onChange={e => this.onChange(e)}
-                  validator={e => this.checkRequired(e)}
-                  value={this.state.identifier}
-                  field="identifier"
-                />
-                <TextFieldGroup
-                  error={errors.password}
-                  label="Password"
-                  onChange={e => this.onChange(e)}
-                  validator={e => this.checkRequired(e)}
-                  value={this.state.password}
-                  field="password"
-                  type="password"
-                />
-                <button
-                  type="button"
-                  className="btn btn-signup"
-                  onClick={() => {
-                    this.context.router.push("/signup");
-                  }}
-                >
-                  Create a new account
-                </button>
-                <hr />
-                <button
-                  className="btn btn-login btn-block"
-                  onClick={e => this.onSubmit(e)}
-                  disabled={!valid}
-                >
-                  Login
-                </button>
-                <button
-                  className="btn btn-autofill btn-block"
-                  onClick={e => this.autoFill(e)}
-                >
-                  Auto Fill
-                </button>
+        <div className="welcome">
+          <div className="background-wrapper" />
+          <div className="container">
+            <div className="row">
+              <div
+                className={`slogan col-sm-12 ${
+                  isAuthenticated ? "col-md-12 isAuthenticated" : "col-md-8"
+                }`}
+              >
+                <h2 className="title">Edmond Book</h2>
+                <h1>Don't Go There, Live There</h1>
+                <p>A New Way to Lodge and Host.</p>
               </div>
-            )}
+
+              {!isAuthenticated && (
+                <div className="login-panel col-md-4 col-sm-12">
+                  <TextFieldGroup
+                    error={errors.identifier}
+                    label="Username or Email"
+                    onChange={e => this.onChange(e)}
+                    validator={e => this.checkRequired(e)}
+                    value={this.state.identifier}
+                    field="identifier"
+                  />
+                  <TextFieldGroup
+                    error={errors.password}
+                    label="Password"
+                    onChange={e => this.onChange(e)}
+                    validator={e => this.checkRequired(e)}
+                    value={this.state.password}
+                    field="password"
+                    type="password"
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-signup"
+                    onClick={() => {
+                      this.context.router.push("/signup");
+                    }}
+                  >
+                    Create a new account
+                  </button>
+                  <hr />
+                  <button
+                    className="btn btn-login btn-block"
+                    onClick={e => this.onSubmit(e)}
+                    disabled={!valid}
+                  >
+                    Login
+                  </button>
+                  <button
+                    className="btn btn-autofill btn-block"
+                    onClick={e => this.autoFill(e)}
+                  >
+                    Auto Fill
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

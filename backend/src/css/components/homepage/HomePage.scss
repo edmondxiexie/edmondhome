@@ -2,6 +2,22 @@
   .welcome {
     padding: 50px 50px;
     margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+
+    .background-wrapper {
+      position: absolute;
+      height: 700px;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background-image: url("http://res.cloudinary.com/dqace5qmb/image/upload/c_scale,w_2522/v1524230091/travel-background.png");
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+      opacity: 0.1;
+
+      background-size: cover;
+    }
 
     .slogan {
       align-items: center;
@@ -50,6 +66,7 @@
       transition: all 0.2s;
       width: 300px;
       margin-right: 0;
+      background-color: #fff;
 
       @media only screen and (max-width: 991px) {
         width: 100%;
@@ -155,6 +172,12 @@
       grid-column: 2 / 6;
       box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.5);
 
+      transition: all 2s;
+
+      &:hover {
+        transform: translate(-20px, -30px);
+      }
+
       @media only screen and (max-width: 767px) {
         grid-row: 1 / -1;
         grid-column: 1 / 5;
@@ -165,10 +188,15 @@
       width: 115%;
       grid-row: 4 / 6;
       grid-column: 4 / 7;
-      // box-shadow: 0 2px 5px rgba(#000, 0.2);
       box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.6);
 
       z-index: 20;
+
+      transition: all 2s;
+
+      &:hover {
+        transform: translate(20px, 10px);
+      }
 
       @media only screen and (max-width: 767px) {
         width: 100%;

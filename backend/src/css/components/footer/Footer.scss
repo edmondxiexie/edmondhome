@@ -1,6 +1,6 @@
 .footer-base {
   color: #999;
-  padding: 15px 0 15px 0;
+  padding: 30px 0 30px 0;
 
   background-color: #f8f8f8;
 
@@ -10,11 +10,15 @@
   .footer-content {
     display: flex;
     justify-content: space-between;
-    padding: 0 15px 0 15px;
+    padding: 0 30px 0 30px;
 
     .copyright {
-      div a {
-        color: var(--color-primary);
+      div {
+        margin-bottom: 20px;
+
+        a {
+          color: var(--color-primary);
+        }
       }
     }
 
