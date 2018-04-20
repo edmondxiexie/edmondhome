@@ -10,6 +10,13 @@ class IndexTripsPage extends Component {
   componentWillMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.fetchTrips(this.props.auth.user.id);
+    } else {
+      const alert = {
+        text: "You must log in first.",
+        type: "danger"
+      };
+      this.props.addAlert(alert);
+      this.context.router.push("/login");
     }
   }
 

@@ -220,7 +220,97 @@ class HomePage extends React.Component {
               ea. Placeat possimus commodi occaecati deleniti ut. Dolore omnis
               quasi ea nam at. Placeat minima temporibus dolorum vel.
             </p>
-            <button className="btn story-btn">Explore Next Trip</button>
+            <button
+              className="btn story-btn"
+              onClick={e => {
+                window.scrollTo(0, 0);
+                this.context.router.push("/homes");
+              }}
+            >
+              Explore
+            </button>
+          </div>
+        </div>
+
+        <div className="introduction container">
+          <div className="row">
+            <div className="introduction-panel-base col-md-4 col-sm-12">
+              <div className="introduction-panel">
+                <div className="icon">
+                  <i className="fa fa-handshake-o" aria-hidden="true" />
+                </div>
+                <h3>Easy to Book</h3>
+                <p>
+                  Asperiores impedit illum sunt consequuntur ipsum repellendus
+                  fugit ea. Placeat possimus commodi occaecati deleniti ut.
+                  Dolore omnis quasi ea nam at. Placeat minima temporibus
+                  dolorum vel.
+                </p>
+                <div className="btn-wrapper">
+                  <button
+                    className="btn btn-intro"
+                    onClick={e => {
+                      window.scrollTo(0, 0);
+                      this.context.router.push("/homes");
+                    }}
+                  >
+                    Book Next Home
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="introduction-panel-base col-md-4 col-sm-12">
+              <div className="introduction-panel ">
+                <div className="icon">
+                  <i className="fa fa-map-signs" aria-hidden="true" />
+                </div>
+                <h3>Easy to Host</h3>
+                <p>
+                  Asperiores impedit illum sunt consequuntur ipsum repellendus
+                  fugit ea. Placeat possimus commodi occaecati deleniti ut.
+                  Dolore omnis quasi ea nam at. Placeat minima temporibus
+                  dolorum vel.
+                </p>
+                <div className="btn-wrapper">
+                  <button
+                    className="btn btn-intro"
+                    onClick={e => {
+                      window.scrollTo(0, 0);
+                      this.context.router.push("/homes/new");
+                    }}
+                  >
+                    Host Your Home
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="introduction-panel-base col-md-4 col-sm-12">
+              <div className="introduction-panel">
+                <div className="icon">
+                  <i className="fa fa-calendar" aria-hidden="true" />
+                </div>
+                <h3>Easy to Plan</h3>
+                <p>
+                  Asperiores impedit illum sunt consequuntur ipsum repellendus
+                  fugit ea. Placeat possimus commodi occaecati deleniti ut.
+                  Dolore omnis quasi ea nam at. Placeat minima temporibus
+                  dolorum vel.
+                </p>
+                <div className="btn-wrapper">
+                  <button
+                    className="btn btn-intro"
+                    onClick={e => {
+                      window.scrollTo(0, 0);
+                      this.context.router.push("/trips");
+                    }}
+                  >
+                    Plan Next trip
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

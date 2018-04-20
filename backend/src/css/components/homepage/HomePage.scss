@@ -1,6 +1,7 @@
 .home-page-base {
   .welcome {
     padding: 50px 50px;
+    margin-bottom: 50px;
 
     .slogan {
       align-items: center;
@@ -207,7 +208,7 @@
         border-radius: 0;
         font-size: 15px;
         text-transform: uppercase;
-        padding: 15px 30px;
+        padding: 15px 60px;
         cursor: pointer;
         transition: all 0.2s;
         margin-left: auto;
@@ -227,6 +228,96 @@
       font-size: 15px;
       font-style: italic;
       margin-bottom: 60px;
+    }
+  }
+
+  .introduction {
+    padding: 50px 50px;
+    margin-bottom: 50px;
+
+    .introduction-panel-base {
+      padding: 0 20px;
+
+      @media only screen and (max-width: 991px) {
+        padding: 0;
+        margin-bottom: 20px;
+      }
+
+      .introduction-panel {
+        padding: 40px 24px;
+        border: 1px solid #e4e4e4;
+        transition: all 0.2s;
+
+        @media only screen and (max-width: 991px) {
+          width: 100%;
+        }
+
+        &:hover {
+          box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .icon {
+          text-align: center;
+          font-size: 60px;
+          margin-bottom: 20px;
+
+          i {
+            background: linear-gradient(
+              to right,
+              #e0b12f,
+              var(--color-primary)
+            );
+
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+          }
+        }
+
+        h3 {
+          text-align: center;
+          text-transform: uppercase;
+          color: #777;
+
+          margin-top: 0;
+          margin-bottom: 30px;
+        }
+
+        p {
+          text-align: center;
+          color: #777;
+
+          font-size: 15px;
+          font-style: italic;
+          padding: 0 30px;
+          margin-bottom: 50px;
+        }
+
+        .btn-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .btn-intro {
+            margin-left: 0;
+            margin-right: 0;
+            border-radius: 0;
+            font-size: 15px;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-transform: uppercase;
+
+            background-color: var(--color-primary);
+            color: #fff;
+            border: none;
+            padding: 10px 30px;
+
+            &:hover {
+              background-color: var(--color-primary-dark);
+            }
+          }
+        }
+      }
     }
   }
 
