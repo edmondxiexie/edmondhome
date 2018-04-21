@@ -6,11 +6,13 @@ import DateFieldGroup from "../../common/DateFieldGroup";
 import DateRangeFieldGroup from "../../common/DateRangeFieldGroup";
 import validateInput from "../../../../backend/common/validations/book";
 
+import Loader from "../../common/Loader";
+
 import DateRangePicker from "react-bootstrap-daterangepicker";
 
 import StripeCheckout from "react-stripe-checkout";
 import Faker from "faker";
-import { isEmpty } from "lodash";
+import { isEmpty, isEqual } from "lodash";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class DetailHomnePage extends React.Component {
@@ -32,7 +34,8 @@ class DetailHomnePage extends React.Component {
       editable: true,
       valid: false,
       showPayment: false,
-      home: {}
+      home: {},
+      isLoading: true
     };
   }
 
@@ -46,20 +49,20 @@ class DetailHomnePage extends React.Component {
   }
 
   componentDidMount() {
-    $("#date-time-wrapper input").attr("disabled", "disabled");
+    setTimeout(() => this.setState({ isLoading: false }), 1000); // simulates an async action, and hides the spinner
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.favorite !== null) {
+    if (!isEqual(this.state.favorite, nextProps.favorite)) {
       this.setState({ favorite: nextProps.favorite });
     }
 
-    if (!isEmpty(nextProps.home)) {
+    if (!isEqual(this.state.home, nextProps.home)) {
       const home = nextProps.home;
       this.setState({ home });
     }
 
-    if (!isEmpty(nextProps.trips)) {
+    if (!isEqual(this.state.trips, nextProps.trips)) {
       const trips = nextProps.trips;
 
       const occupiedDates = [];
@@ -507,6 +510,10 @@ class DetailHomnePage extends React.Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
+
     const {
       id,
       title,

@@ -2,6 +2,7 @@ import React from "react";
 
 import GalleryCard from "../../common/GalleryCard";
 import Pagination from "../../common/Pagination";
+import Loader from "../../common/Loader";
 
 class IndexHomePage extends React.Component {
   constructor(props) {
@@ -23,9 +24,10 @@ class IndexHomePage extends React.Component {
         this.props.fetchWishlist(this.props.auth.user.id);
       }
     });
-    setTimeout(() => {
-      this.setState({ isLoading: false });
-    }, 1000);
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 1000); // simulates an async action, and hides the spinner
   }
 
   componentWillReceiveProps(nextProps) {
@@ -280,11 +282,10 @@ class IndexHomePage extends React.Component {
   }
 
   render() {
-    // if (this.state.homes.length === 0) {
-    //   return <div>Loading...</div>;
-    // } else {
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
     return this.buildIndexHomesPage();
-    // }
   }
 }
 
