@@ -1,10 +1,6 @@
 .navbar {
   border-radius: 0;
 
-  // &.sticky-top {
-  //   position: sticky;
-  // }
-
   .avatar img {
     width: 35px;
     height: 35px;
@@ -24,10 +20,43 @@
     padding: 7px 15px 5px 15px;
   }
 
-  .navbar-brand img {
-    margin-top: -5px;
-    margin-right: 10px;
-    width: 30px;
+  .navbar-brand {
+    span:nth-child(2) {
+      color: var(--color-primary);
+
+      transition: all 0.2s;
+
+      &:hover {
+        color: var(--color-primary-dark);
+      }
+    }
+
+    img {
+      margin-top: -5px;
+      margin-right: 10px;
+      width: 30px;
+    }
+  }
+
+  .search-bar {
+    .search-btn {
+      margin-left: 5px;
+    }
+  }
+
+  .navbar-collapse {
+    &.collapse.in,
+    &.collapsing {
+      .search-bar {
+        margin-top: 0;
+        border-top: none;
+
+        .search-btn {
+          margin-left: 0;
+          width: 100%;
+        }
+      }
+    }
   }
 
   .search {

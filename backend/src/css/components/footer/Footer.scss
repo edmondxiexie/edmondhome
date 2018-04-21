@@ -12,6 +12,10 @@
     justify-content: space-between;
     padding: 0 30px 0 30px;
 
+    @media only screen and (max-width: 767px) {
+      flex-direction: column;
+    }
+
     .copyright {
       div {
         margin-bottom: 20px;
@@ -25,6 +29,10 @@
     .contact {
       display: flex;
       justify-content: space-between;
+
+      @media only screen and (max-width: 767px) {
+        flex-direction: column;
+      }
 
       .contact-social {
         label {
@@ -80,6 +88,12 @@
       .contact-traditional {
         margin-left: 40px;
         margin-bottom: 10px;
+
+        @media only screen and (max-width: 767px) {
+          margin-top: 10px;
+          margin-left: 0;
+          margin-bottom: 0;
+        }
 
         label {
           margin-bottom: 10px;

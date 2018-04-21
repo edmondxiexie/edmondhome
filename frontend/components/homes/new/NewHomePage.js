@@ -142,10 +142,14 @@ class NewHomePage extends React.Component {
         upload_preset: "edmondhome",
         theme: "minimal"
       },
-      (errors, response) => {
-        if (!errors) {
+      (err, response) => {
+        if (!err) {
           console.log("******Upload Image Successful!!******");
-          this.setState({ image: response[0].secure_url });
+
+          const errors = this.state.errors;
+          delete errors.image;
+          const valid = isEmpty(errors);
+          this.setState({ image: response[0].secure_url, errors, valid });
         }
       }
     );

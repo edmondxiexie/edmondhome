@@ -192,54 +192,55 @@ class NavBar extends React.Component {
         </li>
       </ul>
     );
-    // debugger
+
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
-        {/* <div className="container-fluid"> */}
-        <div className="navbar-header">
-          <button
-            type="button"
-            className="navbar-toggle collapsed"
-            data-toggle="collapse"
-            data-target="#navbar-collapse"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar" />
-            <span className="icon-bar" />
-            <span className="icon-bar" />
-          </button>
-          <Link to="/" className="navbar-brand">
-            <span>
-              <img src="/img/brand_logo.png" alt="brand_logo" />
-            </span>
-            <span>Edmond Book</span>
-          </Link>
-        </div>
-        <form className="navbar-form navbar-left">
-          <div className="form-group">
-            <input
-              className="form-control"
-              type="text"
-              name="search"
-              value={this.state.search}
-              placeholder="Search"
-              onChange={e => {
-                this.onSearchChange(e);
-              }}
-            />
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <button
+              type="button"
+              className="navbar-toggle collapsed"
+              data-toggle="collapse"
+              data-target="#navbar-collapse"
+              aria-expanded="false"
+            >
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+            </button>
+            <Link to="/" className="navbar-brand">
+              <span>
+                <img src="/img/brand_logo.png" alt="brand_logo" />
+              </span>
+              <span>Edmond Book</span>
+            </Link>
           </div>
-          <button
-            className="btn btn-default"
-            onClick={e => {
-              this.onSearchSubmit(e);
-            }}
-          >
-            Submit
-          </button>
-        </form>
-        <div className="collapse navbar-collapse" id="navbar-collapse">
-          {isAuthenticated ? userLink : guestLink}
+          <div className="collapse navbar-collapse" id="navbar-collapse">
+            <form className="navbar-form navbar-left search-bar">
+              <div className="form-group">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="search"
+                  value={this.state.search}
+                  placeholder="Search"
+                  onChange={e => {
+                    this.onSearchChange(e);
+                  }}
+                />
+              </div>
+              <button
+                className="btn btn-default search-btn"
+                onClick={e => {
+                  this.onSearchSubmit(e);
+                }}
+              >
+                Submit
+              </button>
+            </form>
+            {isAuthenticated ? userLink : guestLink}
+          </div>
         </div>
       </nav>
     );
