@@ -413,6 +413,17 @@ class DetailHomnePage extends React.Component {
   onBook(e) {
     const { errors, valid } = validateInput(this.state);
 
+    if (!this.props.auth.isAuthenticated) {
+      const alert = {
+        text: "You must log in first.",
+        type: "danger"
+      };
+      this.props.addAlert(alert);
+      window.scrollTo(0, 0);
+      this.context.router.push("/login");
+      return;
+    }
+
     if (valid) {
       this.setState({ showPayment: true });
     } else {

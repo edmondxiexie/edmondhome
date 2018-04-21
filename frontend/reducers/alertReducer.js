@@ -12,7 +12,9 @@ export default (state = [], action) => {
       return addArray;
     case alertActions.DELETE_ALERT:
       const copyArray = state.slice();
-      return copyArray.filter(alert => alert.id !== action.id);
+      const deleteArray = copyArray.filter(alert => alert.id !== action.id);
+      console.log("deleteArray", deleteArray);
+      return deleteArray;
     default:
       return state;
   }

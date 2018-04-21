@@ -4,6 +4,7 @@ import * as homeActions from "../../../actions/homeActions";
 import * as wishlistActions from "../../../actions/wishlistActions";
 import * as tripActions from "../../../actions/tripActions";
 import * as payActions from "../../../actions/payActions";
+import * as alertActions from "../../../actions/alertActions";
 
 const mapStateToProps = state => {
   let home = {};
@@ -43,6 +44,9 @@ const mapDispatchToProps = dispatch => {
     },
     checkout: payData => {
       return dispatch(payActions.checkout(payData));
+    },
+    addAlert: alert => {
+      return dispatch(alertActions.addAlert(alert));
     }
   };
 };
