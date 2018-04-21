@@ -28,7 +28,7 @@ class NewHomePage extends React.Component {
       title: "",
       description: "",
       image: "",
-      host_id: "",
+      host_id: this.props.auth.user.id,
       price: "",
       service_fee: "",
       district: "",
@@ -210,7 +210,6 @@ class NewHomePage extends React.Component {
       title,
       description,
       image,
-      host_id,
       price,
       service_fee,
       district,
@@ -369,7 +368,7 @@ class NewHomePage extends React.Component {
               disabled={false}
               multi={true}
               onChange={value => this.onAmenitiesChange(value)}
-              validator={e => this.checkRequired(e)}
+              validator={() => {}}
               error={errors.amenities}
             />
 
