@@ -52,12 +52,20 @@ class HomePage extends React.Component {
 
     for (let i = 0; i < 14; i++) {
       const src = homes[i].image;
+      const home_id = homes[i].id;
 
       gallery.push(
         <div
           className={`gallery__item gallery__item--${i + 1}`}
           key={`Gallery image ${i + 1}`}
+          onClick={() => {
+            this.context.router.push(`/homes/${home_id}`);
+          }}
         >
+          <div className="gallery__text">
+            <i className="fa fa-map-o" aria-hidden="true" />
+            <div>detail</div>
+          </div>
           <img
             src={src}
             alt={`Gallery image ${i + 1}`}

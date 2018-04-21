@@ -87,7 +87,7 @@ class GalleryCard extends Component {
             <i className="fa fa-star" />
             <i className="fa fa-star" />
             <i className="fa fa-star" />
-            <i className="fa fa-star-half" />
+            <i className="fa fa-star-half-o" />
             <span>4.5</span>
           </div>
         </div>
