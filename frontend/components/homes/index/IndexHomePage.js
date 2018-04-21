@@ -254,7 +254,7 @@ class IndexHomePage extends React.Component {
     } else {
       if (homes.length) {
         return (
-          <div>
+          <div className="container">
             <h1 className="page-title">{`Here is the search result for '${
               this.state.searchStr
             }'`}</h1>

@@ -57,6 +57,12 @@
         }
       }
     }
+
+    &.collapse:not(.in) {
+      ul.dropdown-menu {
+        width: 200px;
+      }
+    }
   }
 
   .search {

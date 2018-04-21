@@ -514,7 +514,9 @@ class DetailHomnePage extends React.Component {
       image,
       host_id,
       price,
+      service_fee,
       district,
+      address,
       property_type,
       room_type,
       setup_for_guest,
@@ -602,6 +604,14 @@ class DetailHomnePage extends React.Component {
             </div>
 
             <hr />
+            <h3>Address</h3>
+            <div className="address-text">
+              <span>
+                <i className="fa fa-map-marker" />
+              </span>
+              {address}
+            </div>
+
             <h3>Amenities</h3>
 
             <div className="amenities-info">

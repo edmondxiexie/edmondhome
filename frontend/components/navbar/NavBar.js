@@ -89,7 +89,8 @@ class NavBar extends React.Component {
     const keywordsStr = this.state.search.trim();
 
     this.props.fetchHomesByKeywords(keywordsStr);
-    console.log("Search", keywordsStr);
+    window.scrollTo(0, 0);
+    this.context.router.push("/homes");
   }
 
   onRedirectToHomes(e) {
@@ -209,7 +210,13 @@ class NavBar extends React.Component {
               <span className="icon-bar" />
               <span className="icon-bar" />
             </button>
-            <Link to="/" className="navbar-brand">
+            <Link
+              to="/"
+              className="navbar-brand"
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
               <span>
                 <img src="/img/brand_logo.png" alt="brand_logo" />
               </span>
