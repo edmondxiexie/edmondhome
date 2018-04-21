@@ -265,12 +265,14 @@ class IndexHomePage extends React.Component {
         );
       } else {
         return (
-          <div className="jumbotron">
-            <h1 className="page-title">
-              {`Sorry we don't find the search result for '${
-                this.state.searchStr
-              }'`}
-            </h1>
+          <div className="container">
+            <div className="jumbotron no-result">
+              <h1 className="page-title">
+                {`Sorry we don't find the search result for '${
+                  this.state.searchStr
+                }'`}
+              </h1>
+            </div>
           </div>
         );
       }
@@ -278,11 +280,11 @@ class IndexHomePage extends React.Component {
   }
 
   render() {
-    if (this.state.homes.length === 0) {
-      return <div>Loading...</div>;
-    } else {
-      return this.buildIndexHomesPage();
-    }
+    // if (this.state.homes.length === 0) {
+    //   return <div>Loading...</div>;
+    // } else {
+    return this.buildIndexHomesPage();
+    // }
   }
 }
 

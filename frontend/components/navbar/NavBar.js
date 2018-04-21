@@ -88,6 +88,12 @@ class NavBar extends React.Component {
     e.preventDefault();
     const keywordsStr = this.state.search.trim();
 
+    if (keywordsStr === "") {
+      this.context.router.push("/homes");
+      window.location.reload();
+      return;
+    }
+
     this.props.fetchHomesByKeywords(keywordsStr);
     window.scrollTo(0, 0);
     this.context.router.push("/homes");
