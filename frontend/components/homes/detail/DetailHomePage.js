@@ -13,6 +13,7 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 import StripeCheckout from "react-stripe-checkout";
 import Faker from "faker";
 import { isEmpty, isEqual } from "lodash";
+import ReactTooltip from "react-tooltip";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class DetailHomnePage extends React.Component {
@@ -752,7 +753,7 @@ class DetailHomnePage extends React.Component {
                   {showPayment && (
                     <div className="payment-btn-group" key="payment-btn-group">
                       <StripeCheckout
-                        name="EdmondHome Inc."
+                        name="Edmond Inc."
                         descirption="Coolest home reserve!"
                         panelLabel="Pay"
                         amount={this.state.prices.total * 100}
@@ -761,9 +762,25 @@ class DetailHomnePage extends React.Component {
                         email="xiejy36@gmail.com"
                         token={e => this.onSubmitPayment(e)}
                       >
-                        <button className="btn btn-primary btn-block">
+                        <button
+                          data-tip="React-tooltip"
+                          data-for="checkout-tip"
+                          className="btn btn-primary btn-block"
+                        >
                           Checkout
                         </button>
+                        <ReactTooltip
+                          id="checkout-tip"
+                          type="warning"
+                          effect="solid"
+                        >
+                          <h4>You can use this card for demo</h4>
+                          <ul>
+                            <li>Card: 4242 4242 4242 4242</li>
+                            <li>MM/YY: 2/22</li>
+                            <li>CVC: 222</li>
+                          </ul>
+                        </ReactTooltip>
                       </StripeCheckout>
                       <button
                         className="btn  btn-default btn-block"

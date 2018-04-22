@@ -19,6 +19,7 @@ import amenitiesOptions from "../asset/amenities/amenities";
 
 import isEmpty from "lodash/isEmpty";
 import validateInput from "../../../../backend/common/validations/home";
+import Loader from "../../common/Loader";
 
 import Select from "react-select";
 
@@ -46,7 +47,7 @@ class EditHomePage extends React.Component {
       otherAmenities: [],
 
       errors: {},
-      isLoading: false,
+      isLoading: true,
       valid: true
     };
   }
@@ -62,6 +63,10 @@ class EditHomePage extends React.Component {
     } else {
       this.props.fetchHome(this.props.params.id);
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
   }
 
   componentWillReceiveProps(nextProps) {
@@ -172,7 +177,6 @@ class EditHomePage extends React.Component {
 
   onDelete(e) {
     e.preventDefault();
-    console.log("homeid", this.props.home.id);
     swal({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -188,7 +192,6 @@ class EditHomePage extends React.Component {
     }).then(result => {
       if (result.value) {
         this.props.deleteHome(this.props.home.id).then(res => {
-          console.log("res", res);
           const { success } = res;
           if (success) {
             alert.text = "Home deleted successfully.";
@@ -237,7 +240,6 @@ class EditHomePage extends React.Component {
       },
       (errors, response) => {
         if (!errors) {
-          console.log("******Upload Image Successful!!******");
           this.setState({ image: response[0].secure_url });
         }
       }
@@ -293,12 +295,16 @@ class EditHomePage extends React.Component {
       bath_availability: "1",
       target: "Travel",
       errors: {},
-      isLoading: false,
       valid: true
     });
   }
 
   render() {
+    console.log("isLoading", this.state.isLoading);
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
+
     const {
       title,
       description,
@@ -319,7 +325,6 @@ class EditHomePage extends React.Component {
       amenities,
       otherAmenities,
       errors,
-      isLoading,
       valid
     } = this.state;
 
@@ -422,14 +427,14 @@ class EditHomePage extends React.Component {
             <h3 className="panel-title">STEP #3 - Where is your place?</h3>
           </div>
           <div className="panel-body">
-            <SelectFieldGroup
+            <TextFieldGroup
+              field="district"
               label="District"
               name="district"
               value={district}
-              options={districtOptions}
-              placeholder="Choose Your District"
-              onChange={value => this.onSelectChange(value, "district")}
-              validator={e => this.checkSelectReuired(e, "district")}
+              onChange={e => this.onChange(e)}
+              placeholder="Input Your District. eg, New York. "
+              validator={e => this.checkRequired(e)}
               error={errors.district}
             />
 

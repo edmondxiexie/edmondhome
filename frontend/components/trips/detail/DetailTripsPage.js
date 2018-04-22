@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import GalleryCard from "../../common/GalleryCard";
 import TripGalleryCard from "../../common/TripGalleryCard";
+import Loader from "../../common/Loader";
+
 import isEmpty from "lodash/isEmpty";
 
 class DetailTripsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trip: {}
+      trip: {},
+      isLoading: true
     };
   }
 
@@ -28,12 +31,20 @@ class DetailTripsPage extends Component {
     }
   }
 
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
+  }
+
   onRedirect(e, id) {
     e.preventDefault();
     this.context.router.push(`/homes/${id}`);
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
+
     const trip = this.props.trip || {};
     const home = trip.home || {};
 

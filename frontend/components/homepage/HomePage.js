@@ -200,7 +200,7 @@ class HomePage extends React.Component {
                     className="btn btn-autofill btn-block"
                     onClick={e => this.autoFill(e)}
                   >
-                    Auto Fill
+                    Demo
                   </button>
                 </div>
               )}

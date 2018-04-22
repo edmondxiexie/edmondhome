@@ -1,16 +1,24 @@
 import React, { Component } from "react";
 import GalleryCard from "../../common/GalleryCard";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import Loader from "../../common/Loader";
 
 class IndexWishlistPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoading: true
+    };
   }
 
   componentWillMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.fetchWishlist(this.props.auth.user.id);
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
   }
 
   addToWishlist(e, home_id) {
@@ -77,6 +85,10 @@ class IndexWishlistPage extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
+
     const wishlist = this.props.wishlist || [];
     return (
       <div className="container">

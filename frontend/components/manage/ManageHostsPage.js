@@ -1,14 +1,22 @@
 import React, { Component } from "react";
 import GalleryCard from "../common/GalleryCard";
+import Loader from "../common/Loader";
 
 class ManageHostsPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoading: true
+    };
   }
 
   componentWillMount() {
     window.scrollTo(0, 0);
     this.props.fetchHostHomes(this.props.user.id);
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
   }
 
   onRedirect(e, id) {
@@ -61,6 +69,10 @@ class ManageHostsPage extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
+
     let hostHomes = this.props.hostHomes || [];
     return (
       <div className="container">

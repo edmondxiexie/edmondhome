@@ -38,7 +38,7 @@ class Pagination extends Component {
                 onFirstPage(e);
               }}
             >
-              First Page
+              <i className="fa fa-angle-double-left" aria-hidden="true" />
             </a>
           </li>
           <li className="page-item">
@@ -49,7 +49,9 @@ class Pagination extends Component {
                 onPreviousPage(e);
               }}
             >
-              <span aria-hidden="true">&laquo;</span>
+              <span aria-hidden="true">
+                <i className="fa fa-angle-left" aria-hidden="true" />
+              </span>
               <span className="sr-only">Previous</span>
             </a>
           </li>
@@ -70,7 +72,9 @@ class Pagination extends Component {
                 onNextPage(e);
               }}
             >
-              <span aria-hidden="true">&raquo;</span>
+              <span aria-hidden="true">
+                <i className="fa fa-angle-right" aria-hidden="true" />
+              </span>
               <span className="sr-only">Next</span>
             </a>
           </li>
@@ -81,7 +85,7 @@ class Pagination extends Component {
                 onLastPage(e);
               }}
             >
-              Last Page
+              <i className="fa fa-angle-double-right" aria-hidden="true" />
             </a>
           </li>
         </ul>

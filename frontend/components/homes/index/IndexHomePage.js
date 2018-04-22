@@ -27,7 +27,7 @@ class IndexHomePage extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ isLoading: false }), 1000); // simulates an async action, and hides the spinner
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
   }
 
   componentWillReceiveProps(nextProps) {
@@ -204,28 +204,6 @@ class IndexHomePage extends React.Component {
       return (
         <div className="container">
           <h1 className="page-title">Homes around the world</h1>
-          <Pagination
-            page={page}
-            pages={pages}
-            onChangePage={e => {
-              this.onChangePage(e);
-            }}
-            onKeyDown={e => {
-              this.onChangePagePress(e);
-            }}
-            onNextPage={e => {
-              this.onNextPage(e);
-            }}
-            onPreviousPage={e => {
-              this.onPreviousPage(e);
-            }}
-            onFirstPage={e => {
-              this.onFirstPage(e);
-            }}
-            onLastPage={e => {
-              this.onLastPage(e);
-            }}
-          />
           <div className="container row">
             {this.buildGallery(homes, wishlist)}
           </div>
@@ -257,9 +235,19 @@ class IndexHomePage extends React.Component {
       if (homes.length) {
         return (
           <div className="container">
-            <h1 className="page-title">{`Here is the search result for '${
-              this.state.searchStr
-            }'`}</h1>
+            <div className="search-header">
+              <h1 className="page-title">{`Here is the search result for '${
+                this.state.searchStr
+              }'`}</h1>
+              <button
+                className="btn btn-primary back-btn"
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                Back To Gallery
+              </button>
+            </div>
             <div className="container row">
               {this.buildGallery(homes, wishlist)}
             </div>
@@ -285,6 +273,7 @@ class IndexHomePage extends React.Component {
     if (this.state.isLoading) {
       return <Loader />;
     }
+
     return this.buildIndexHomesPage();
   }
 }

@@ -18,6 +18,7 @@ import amenitiesOptions from "../asset/amenities/amenities";
 
 import isEmpty from "lodash/isEmpty";
 import validateInput from "../../../../backend/common/validations/home";
+import Loader from "../../common/Loader";
 
 import Select from "react-select";
 
@@ -45,7 +46,7 @@ class NewHomePage extends React.Component {
       otherAmenities: [],
 
       errors: {},
-      isLoading: false,
+      isLoading: true,
       valid: true
     };
   }
@@ -59,6 +60,10 @@ class NewHomePage extends React.Component {
       this.props.addAlert(alert);
       this.context.router.push("/login");
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
   }
 
   checkSelectReuired(e, name) {
@@ -204,12 +209,15 @@ class NewHomePage extends React.Component {
       bath_availability: "1",
       target: "Travel",
       errors: {},
-      isLoading: false,
       valid: true
     });
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
+
     const {
       title,
       description,
@@ -229,7 +237,6 @@ class NewHomePage extends React.Component {
       amenities,
       otherAmenities,
       errors,
-      isLoading,
       valid
     } = this.state;
 
@@ -332,14 +339,14 @@ class NewHomePage extends React.Component {
             <h3 className="panel-title">STEP #3 - Where is your place?</h3>
           </div>
           <div className="panel-body">
-            <SelectFieldGroup
+            <TextFieldGroup
+              field="district"
               label="District"
               name="district"
               value={district}
-              options={districtOptions}
-              placeholder="Choose Your District"
-              onChange={value => this.onSelectChange(value, "district")}
-              validator={e => this.checkSelectReuired(e, "district")}
+              onChange={e => this.onChange(e)}
+              placeholder="Input Your District. eg, New York. "
+              validator={e => this.checkRequired(e)}
               error={errors.district}
             />
 
@@ -349,6 +356,7 @@ class NewHomePage extends React.Component {
               name="address"
               value={address}
               onChange={e => this.onChange(e)}
+              placeholder="Input Your Address."
               validator={e => this.checkRequired(e)}
               error={errors.address}
             />

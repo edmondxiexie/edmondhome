@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import GalleryCard from "../../common/GalleryCard";
 import TripGalleryCard from "../../common/TripGalleryCard";
+import Loader from "../../common/Loader";
 
 class IndexTripsPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoading: true
+    };
   }
 
   componentWillMount() {
@@ -18,6 +22,10 @@ class IndexTripsPage extends Component {
       this.props.addAlert(alert);
       this.context.router.push("/login");
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
   }
 
   onRedirect(e, id) {
@@ -69,6 +77,10 @@ class IndexTripsPage extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
+
     const trips = this.props.trips || [];
 
     return (

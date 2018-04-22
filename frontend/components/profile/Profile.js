@@ -7,6 +7,7 @@ import validateInput from "../../../backend/common/validations/profile";
 import TextFieldGroup from "../common/TextFieldGroup";
 import OptionFieldGroup from "../common/OptionFieldGroup";
 import ImageFieldGroup from "../common/ImageFieldGroup";
+import Loader from "../common/Loader";
 
 import isEmpty from "lodash/isEmpty";
 
@@ -28,7 +29,7 @@ class Profile extends React.Component {
       defaultAvatar:
         "http://res.cloudinary.com/dqace5qmb/image/upload/v1523871369/default-avatar.png",
       errors: {},
-      isLoading: false,
+      isLoading: true,
       valid: true,
       nav: {
         basic: "active",
@@ -42,6 +43,10 @@ class Profile extends React.Component {
     if (this.props.auth.isAuthenticated) {
       this.props.fetchUserProfile(this.props.auth.user.id);
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
   }
 
   componentWillReceiveProps(nextProps) {
@@ -94,7 +99,6 @@ class Profile extends React.Component {
     this.setState({
       password: "password",
       errors: {},
-      isLoading: false,
       valid: true
     });
   }
@@ -106,7 +110,6 @@ class Profile extends React.Component {
       newPassword: "password",
       newPasswordConfirm: "password",
       errors: {},
-      isLoading: false,
       valid: true
     });
   }
@@ -425,7 +428,6 @@ class Profile extends React.Component {
       newPassword,
       newPasswordConfirm,
       errors,
-      isLoading,
       valid,
       nav
     } = this.state;
@@ -497,6 +499,10 @@ class Profile extends React.Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <Loader />;
+    }
+
     const {
       email,
       username,
@@ -507,7 +513,6 @@ class Profile extends React.Component {
       education,
       company,
       errors,
-      isLoading,
       valid,
       nav,
       avatar
@@ -541,7 +546,9 @@ class Profile extends React.Component {
                   Avatar
                 </a>
               </li>
-              <li className={nav.password}>
+
+              {/* Disable password change temporarily */}
+              {/* <li className={nav.password}>
                 <a
                   onClick={e => {
                     this.onChangeNav(e, "password");
@@ -549,7 +556,7 @@ class Profile extends React.Component {
                 >
                   Change Password
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
