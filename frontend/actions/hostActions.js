@@ -18,7 +18,6 @@ export const getHostHomesCount = hostHomesCount => {
 // for host actions
 
 export const fetchHostHomes = hostID => {
-  console.log("******/host/:host_id ACTION******");
   return dispatch => {
     return hostUtil.getHostHomesUtil(hostID).then(res => {
       const hostHomes = res.data;
@@ -28,7 +27,6 @@ export const fetchHostHomes = hostID => {
 };
 
 export const fetchHostHomesCount = hostId => {
-  console.log("******/host/:host_id/count ACTION******");
   return dispatch => {
     return hostUtil.getHostHomesCountUtil(hostId).then(res => {
       const hostHomesCount = res.data;

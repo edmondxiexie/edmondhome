@@ -12,14 +12,12 @@ export default (state = defaultTrips, action) => {
   Object.freeze(state);
   switch (action.type) {
     case tripUtil.GET_TRIPS:
-      console.log("pass GET_TRIPS reducer");
       const trips = action.trips;
       const newTripsState = Object.assign({}, state, {
         trips: trips
       });
       return newTripsState;
     case tripUtil.GET_TRIPS_FROM_HOME:
-      console.log("pass GET_TRIPS_FROM_HOME reducer");
       const tripsFromHome = action.tripsFromHome;
       const newTripsFromHomeState = Object.assign({}, state, {
         tripsFromHome: tripsFromHome

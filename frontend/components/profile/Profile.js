@@ -85,7 +85,6 @@ class Profile extends React.Component {
       },
       (errors, response) => {
         if (!errors) {
-          console.log("******Upload Image Successful!!******");
           this.setState({ avatar: response[0].secure_url });
         }
       }

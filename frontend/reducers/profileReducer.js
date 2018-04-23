@@ -10,7 +10,6 @@ export default (state = defaultProfile, action) => {
   let profile, newState;
   switch (action.type) {
     case userUtil.GET_USER_PROFILE:
-      console.log("pass GET_USER_PROFILE reducer");
       profile = action.profile;
       newState = Object.assign({}, state, {
         profile: profile

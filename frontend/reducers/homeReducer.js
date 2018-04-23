@@ -16,34 +16,28 @@ const HomeReducer = (state = defaultHome, action) => {
   let homes, home, homesCount, page;
   switch (action.type) {
     case homeUtil.GET_HOMES:
-      console.log("******/homes REDUCER GET******");
       homes = action.homes;
       const newHomesState = Object.assign({}, state, { homes: homes });
       return newHomesState;
     case homeUtil.GET_HOME:
-      console.log("******/home REDUCER GET******");
       home = action.home;
       const newHomeState = Object.assign({}, state, { home: home });
       return newHomeState;
     case homeUtil.DELETE_HOME:
-      console.log("******/home REDUCER DELETE******");
       home = action.home;
       const newDeleteHomeState = Object.assign({}, state, { home: home });
       return newDeleteHomeState;
     case homeUtil.PUT_HOME:
-      console.log("******/home REDUCER PUT******");
       home = action.home;
       const newPutHomeState = Object.assign({}, state, { home: home });
       return newPutHomeState;
     case homeUtil.GET_HOMES_COUNT:
-      console.log("******/home REDUCER GET******");
       homesCount = action.homesCount;
       const newHomesCountState = Object.assign({}, state, {
         homesCount: homesCount
       });
       return newHomesCountState;
     case homeUtil.GET_HOMES_PAGE:
-      console.log("******/home REDUCER GET******");
       homes = action.homes;
       const newHomesPageState = Object.assign({}, state, {
         homes: homes,
@@ -63,7 +57,6 @@ const HomeReducer = (state = defaultHome, action) => {
       });
       return newHomesSearchState;
     case homeUtil.GET_GALLERY_HOMES:
-      console.log("******/homes REDUCER GET******");
       const galleryHomes = action.galleryHomes;
       const newGalleryHomesState = Object.assign({}, state, {
         galleryHomes: galleryHomes

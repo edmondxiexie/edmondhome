@@ -533,7 +533,6 @@ class DetailHomnePage extends React.Component {
           id
         })
         .then(res => {
-          console.log("res", res);
           this.onRedirectToTripDetail();
         });
     }

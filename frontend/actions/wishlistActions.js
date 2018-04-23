@@ -15,7 +15,6 @@ export const getWishlistCount = wishlistCount => {
 };
 
 export const fetchWishlist = keeperId => {
-  console.log("******/wishlist/:keeper_id ACTION******");
   return dispatch => {
     return wishlistUtil.getWishlistUtil(keeperId).then(res => {
       const wishlist = res.data;
@@ -25,7 +24,6 @@ export const fetchWishlist = keeperId => {
 };
 
 export const fetchWishlistCount = keeperId => {
-  console.log("******/wishlist/:keeper_id/count ACTION******");
   return dispatch => {
     return wishlistUtil.getWishlistCountUtil(keeperId).then(res => {
       const wishlistCount = res.data;

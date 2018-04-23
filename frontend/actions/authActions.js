@@ -9,14 +9,12 @@ export const setCurrentUser = user => {
 };
 
 export const signup = userData => {
-  console.log("******/signup ACTION******");
   return dispatch => {
     return authUtil.signupUtil(userData);
   };
 };
 
 export const login = userData => {
-  console.log("******/login ACTION******");
   return dispatch => {
     return authUtil.loginUtil(userData).then(res => {
       const token = res.data.token;
@@ -29,7 +27,6 @@ export const login = userData => {
 };
 
 export const logout = () => {
-  console.log("******/logout ACTION******");
   return dispatch => {
     return authUtil.logoutUtil().then(() => {
       // localStorage.removeItem("jwtToken");
@@ -41,7 +38,6 @@ export const logout = () => {
 };
 
 export const isUserExists = identifier => {
-  console.log("******pass auth action******");
   return dispatch => {
     return authUtil.isUserExistsUtil(identifier);
   };

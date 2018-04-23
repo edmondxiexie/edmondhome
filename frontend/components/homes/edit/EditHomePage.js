@@ -300,7 +300,6 @@ class EditHomePage extends React.Component {
   }
 
   render() {
-    console.log("isLoading", this.state.isLoading);
     if (this.state.isLoading) {
       return <Loader />;
     }

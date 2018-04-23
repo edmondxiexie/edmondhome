@@ -4,7 +4,6 @@ import shortid from "shortid";
 export default (state = [], action) => {
   switch (action.type) {
     case alertActions.ADD_ALERT:
-      console.log("pass ADD_ALERT reducer");
       const addArray = state.slice();
       let newAlert = action.alert;
       newAlert["id"] = shortid.generate();

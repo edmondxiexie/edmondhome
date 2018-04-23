@@ -3,12 +3,10 @@ import axios from "axios";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 export const signupUtil = userData => {
-  console.log("******/signup UTIL******");
   return axios.post("/api/auth/signup", userData);
 };
 
 export const loginUtil = userData => {
-  console.log("******/login UTIL******");
   return axios.post("/api/auth/login", userData);
 };
 
@@ -29,6 +27,5 @@ export const setAuthorizationToken = token => {
 };
 
 export const isUserExistsUtil = identifier => {
-  console.log("******pass auth util******");
   return axios.get(`/api/auth/${identifier}`);
 };

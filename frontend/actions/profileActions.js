@@ -8,7 +8,6 @@ export const getProfile = profile => {
 };
 
 export const fetchUserProfile = id => {
-  console.log("******pass user action******");
   return dispatch => {
     return userUtil.getUserProfile(id).then(res => {
       const profile = res.data;
@@ -42,29 +41,3 @@ export const patchUserProfile = (id, userData, dataType) => {
     });
   };
 };
-
-// export const patchUserAvatarProfile = (id, userData) => {
-//   return dispatch => {
-//     return userUtil.putUserAvatarUtil(id, userData).then(res => {
-//       const profile = res.data.user;
-//       dispatch({
-//         type: userUtil.PUT_USER_AVATAR,
-//         profile: profile
-//       });
-//       return res.data;
-//     });
-//   };
-// };
-
-// export const patchUserPasswordProfile = (id, userData) => {
-//   return dispatch => {
-//     return userUtil.putUserPasswordUtil(id, userData).then(res => {
-//       const profile = res.data.user;
-//       dispatch({
-//         type: userUtil.PUT_USER_PASSWORD,
-//         profile: profile
-//       });
-//       return res.data;
-//     });
-//   };
-// };

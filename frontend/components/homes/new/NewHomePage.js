@@ -149,8 +149,6 @@ class NewHomePage extends React.Component {
       },
       (err, response) => {
         if (!err) {
-          console.log("******Upload Image Successful!!******");
-
           const errors = this.state.errors;
           delete errors.image;
           const valid = isEmpty(errors);

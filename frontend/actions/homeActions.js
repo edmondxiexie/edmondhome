@@ -54,7 +54,6 @@ export const putHome = home => {
 //**** for home actions *****
 
 export const fetchHome = id => {
-  console.log("****** /homes/:id GET ACTION ******");
   return dispatch => {
     return homeUtil.getHomeUtil(id).then(res => {
       const home = res.data;
@@ -64,7 +63,6 @@ export const fetchHome = id => {
 };
 
 export const deleteHome = id => {
-  console.log("****** /home/:id DELETE ACTION ******");
   return dispatch => {
     return homeUtil.deleteHomeUtil(id).then(res => {
       dispatch({
@@ -123,7 +121,6 @@ export const createHome = homeData => {
 };
 
 export const patchHome = (id, homeData) => {
-  console.log("******/home/:id/edit ACTION PUT******");
   return dispatch => {
     return homeUtil.putHomeUtil(id, homeData).then(res => {
       const home = res.data.home;

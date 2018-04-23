@@ -32,7 +32,6 @@ export const getTripsCount = tripsCount => {
 // For trip actions
 
 export const fetchTrips = guestId => {
-  console.log("******/trips/:guest_id ACTION******");
   return dispatch => {
     return tripUtil.getTripsUtil(guestId).then(res => {
       const trips = res.data;
@@ -42,7 +41,6 @@ export const fetchTrips = guestId => {
 };
 
 export const fetchTripsFromHome = homeId => {
-  console.log("******/trips/home/:home_id ACTION******");
   return dispatch => {
     return tripUtil.getTripsFromHomeUtil(homeId).then(res => {
       const trips = res.data.trips;
@@ -52,7 +50,6 @@ export const fetchTripsFromHome = homeId => {
 };
 
 export const fetchTrip = tripId => {
-  console.log("******/trips/trip/:trip_id ACTION******");
   return dispatch => {
     return tripUtil.getTripUtil(tripId).then(res => {
       const trip = res.data.trip;
@@ -63,7 +60,6 @@ export const fetchTrip = tripId => {
 };
 
 export const fetchTripsCount = guestId => {
-  console.log("******/trips/:guest_id/count ACTION******");
   return dispatch => {
     return tripUtil.getTripsCountUtil(guestId).then(res => {
       const tripsCount = res.data;
