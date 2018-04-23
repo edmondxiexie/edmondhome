@@ -26,6 +26,11 @@ const TextFieldGroup = ({
         className="form-control"
         disabled={disabled}
         placeholder={placeholder}
+        onKeyPress={e => {
+          if (e.key === "Enter") {
+            validator(e);
+          }
+        }}
       />
       {error && <span className="help-block">{error}</span>}
     </div>

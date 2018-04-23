@@ -8,6 +8,9 @@ import jwtSecret from "../config/jwtSecret";
 
 const router = express.Router();
 
+const DEFAULT_USER_AVATAR =
+  "http://res.cloudinary.com/dqace5qmb/image/upload/v1523871369/default-avatar.png";
+
 // check and validate user in the database
 // :signup helper
 const validateInput = (data, commonValidations) => {
@@ -47,6 +50,7 @@ router.post("/signup", (req, res) => {
       User.forge(
         {
           username,
+          avatar: DEFAULT_USER_AVATAR,
           timezone,
           email,
           password_digest

@@ -10,9 +10,7 @@ class NavBar extends React.Component {
       tripsCount: "",
       wishlistCount: "",
       search: "",
-      avatar: "",
-      defaultAvatar:
-        "http://res.cloudinary.com/dqace5qmb/image/upload/v1523871369/default-avatar.png"
+      avatar: ""
     };
   }
 
@@ -62,7 +60,7 @@ class NavBar extends React.Component {
 
       if (nextProps.profile) {
         this.setState({
-          avatar: nextProps.profile.avatar || this.state.defaultAvatar,
+          avatar: nextProps.profile.avatar,
           username: nextProps.profile.username
         });
       }

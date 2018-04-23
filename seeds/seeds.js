@@ -3,9 +3,9 @@ const Faker = require("faker");
 const shortid = require("shortid");
 
 const USER_NUM = 50;
-const HOME_NUM = USER_NUM * 20;
-const TRIP_NUM = USER_NUM * 20;
-const WISHLIST_NUM = USER_NUM * 10;
+const HOME_NUM = USER_NUM * 3;
+const TRIP_NUM = USER_NUM * 5;
+const WISHLIST_NUM = USER_NUM * 20;
 
 const userSeedsData = require("./data/userSeedsData");
 const homeSeedsData = require("./data/homeSeedsData");
@@ -34,20 +34,22 @@ function randomPick(options) {
 function buildHomeSeed(knex) {
   let res = [];
   for (let i = 1; i <= HOME_NUM; i++) {
+    const home = Faker.random.arrayElement(homeSeedsData.homes);
+
     res.push(
       knex("homes").insert({
-        title: Faker.random.arrayElement(homeSeedsData.titles),
+        title: home.title,
         description: Faker.lorem.paragraph(),
-        image: Faker.random.arrayElement(homeSeedsData.imageUrls),
+        image: home.image,
         host_id: Faker.random.number({ min: 1, max: 50 }),
         price: Faker.random.number({ min: 50, max: 500 }),
         service_fee: Faker.random.arrayElement(["35", "50", "80", "120"]),
-        district: Faker.random.arrayElement(homeSeedsData.districts),
+        district: home.district,
         address:
           Faker.address.streetAddress() +
           ", " +
           Faker.address.secondaryAddress(),
-        property_type: Faker.random.arrayElement(["APARTMENT", "HOUSE"]),
+        property_type: home.property_type,
         room_type: Faker.random.arrayElement(homeSeedsData.room_types),
         setup_for_guest: Faker.random.arrayElement(
           homeSeedsData.setup_for_guest
@@ -96,18 +98,18 @@ function buildTripSeed(knex) {
   let res = [];
   for (let i = 1; i <= TRIP_NUM; i++) {
     let dFrom = new Date();
-    dFrom.setDate(dFrom.getDate() - Math.floor(Math.random() * 3 + 1));
+    dFrom.setDate(dFrom.getDate() + Math.floor(Math.random() * 3 + 1 + 4 * i));
     let dTo = new Date();
-    dTo.setDate(dTo.getDate() + Math.floor(Math.random() * 3 + 1));
+    dTo.setDate(dTo.getDate() + Math.floor(Math.random() * 3 + 3 + 4 * i));
 
     const base = Faker.random.number({ min: 50, max: 500 });
-    const cleaning_fee = Faker.random.arrayElement([30, 50, 100, 120]);
-    const tax = (base + cleaning_fee) * 0.15;
-    const total = base + cleaning_fee + tax;
+    const service_fee = Faker.random.arrayElement([30, 50, 100, 120]);
+    const tax = (base + service_fee) * 0.15;
+    const total = base + service_fee + tax;
 
     const prices = {
       base,
-      cleaning_fee,
+      service_fee,
       tax,
       total
     };

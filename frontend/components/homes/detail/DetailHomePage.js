@@ -24,8 +24,6 @@ class DetailHomnePage extends React.Component {
       checkOutDate: moment(new Date()).format("MM/DD/YYYY"),
       guests: "",
       errors: {},
-      host_avatar:
-        "http://res.cloudinary.com/dqace5qmb/image/upload/v1522312537/avatar.jpg",
       host_name: "Edmond Xie",
       host_email: "edmond@gmail.com",
       host_phone: "412-111-1111",

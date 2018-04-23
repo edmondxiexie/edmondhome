@@ -7,6 +7,7 @@ import validateInput from "../../../backend/common/validations/signup";
 import TextFieldGroup from "../common/TextFieldGroup";
 import OptionFieldGroup from "../common/OptionFieldGroup";
 import isEmpty from "lodash/isEmpty";
+import shortid from "shortid";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -25,9 +26,11 @@ class SignUp extends React.Component {
 
   autoFill(e) {
     e.preventDefault();
+    const username = `user_${shortid.generate()}`;
+
     this.setState({
-      username: "edmond",
-      email: "edmondxie@gmail.com",
+      username,
+      email: `${username}@gmail.com`,
       password: "password",
       passwordConfirm: "password",
       timezone: "Pacific/Honolulu",
@@ -83,34 +86,58 @@ class SignUp extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const { errors, valid } = validateInput(this.state);
+    let { errors, valid } = validateInput(this.state);
 
-    if (valid) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.signup(this.state).then(res => {
-        // setTimeout(() => {
-        const { username, password } = this.state;
-        this.props
-          .login({
-            identifier: username,
-            password: password,
-            errors: {},
-            isLoading: false
-          })
-          .then(res => {
-            const alert = {
-              text: "New account created Successfully.",
-              type: "success"
-            };
-            this.props.addAlert(alert);
-            setTimeout(() => {
-              return this.context.router.push("/homes");
-            }, 1000);
+    const { username, email } = this.state;
+
+    if (!("username" in errors)) {
+      this.props.isUserExists(username).then(res => {
+        if (res.data.user) {
+          errors.username = `There is user with such username`;
+          valid = false;
+        } else {
+          delete errors.username;
+          valid = isEmpty(errors);
+        }
+
+        if (!("email" in errors)) {
+          this.props.isUserExists(email).then(res => {
+            if (res.data.user) {
+              errors.email = `There is user with such email`;
+              valid = false;
+            } else {
+              delete errors.email;
+              valid = isEmpty(errors);
+            }
+
+            if (valid) {
+              this.setState({ errors: {}, isLoading: true });
+              this.props.signup(this.state).then(res => {
+                const { username, password } = this.state;
+                this.props
+                  .login({
+                    identifier: username,
+                    password: password,
+                    errors: {},
+                    isLoading: false
+                  })
+                  .then(res => {
+                    const alert = {
+                      text: "New account created Successfully.",
+                      type: "success"
+                    };
+                    this.props.addAlert(alert);
+                    setTimeout(() => {
+                      return this.context.router.push("/homes");
+                    }, 1000);
+                  });
+              });
+            } else {
+              this.setState({ errors, valid });
+            }
           });
-        // }, 500);
+        }
       });
-    } else {
-      this.setState({ errors, valid });
     }
   }
 
