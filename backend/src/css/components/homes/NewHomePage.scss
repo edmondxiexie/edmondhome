@@ -1,6 +1,17 @@
 .new-home-page-base {
   margin-bottom: 50px;
 
+  .page-title-header {
+    position: relative;
+
+    .autofill-btn {
+      position: absolute;
+
+      top: 20px;
+      right: 15px;
+    }
+  }
+
   .panel {
     margin: 30px 15px 30px 15px;
 

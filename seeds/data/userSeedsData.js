@@ -6,6 +6,26 @@ module.exports = {
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1523257080/avatar-user-boy-389cd1eb1d503149-512x512.png",
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1523257080/avatar-user-teacher-312a499a08079a12-512x512.png",
     "http://res.cloudinary.com/dqace5qmb/image/upload/v1523257080/avatar-user-older-oldman-35243ea673999fc1-512x512.png",
-    "http://res.cloudinary.com/dqace5qmb/image/upload/v1522312537/avatar.jpg"
+    "http://res.cloudinary.com/dqace5qmb/image/upload/v1522312537/avatar.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470799/51.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470799/8.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470799/31.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470799/63.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470799/93.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470799/85.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470799/59.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/78.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/83.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/69.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/77.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/32.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/94.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/3.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/78_1.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/32_1.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/54.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/92.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/68.jpg",
+    "https://res.cloudinary.com/dqace5qmb/image/upload/v1524470798/34.jpg"
   ]
 };

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
 import validateInput from "../../../backend/common/validations/login";
 import isEmpty from "lodash/isEmpty";
+import ReactTooltip from "react-tooltip";
 
 class Login extends React.Component {
   constructor(props) {
@@ -138,9 +139,18 @@ class Login extends React.Component {
                 <button
                   className="btn btn-warning pull-right"
                   onClick={e => this.autoFill(e)}
+                  data-tip="React-tooltip"
+                  data-for="login-page-autofill-tip"
                 >
                   Auto Fill
                 </button>
+                <ReactTooltip
+                  id="login-page-autofill-tip"
+                  type="dark"
+                  effect="solid"
+                >
+                  Auto fill account for Demo
+                </ReactTooltip>
               </form>
             </div>
           </div>

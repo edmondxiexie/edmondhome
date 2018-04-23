@@ -21,6 +21,7 @@ import validateInput from "../../../../backend/common/validations/home";
 import Loader from "../../common/Loader";
 
 import Select from "react-select";
+import ReactTooltip from "react-tooltip";
 
 class NewHomePage extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ class NewHomePage extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
+    setTimeout(() => this.setState({ isLoading: false }), 1000); // simulates an async action, and hides the spinner
   }
 
   checkSelectReuired(e, name) {
@@ -181,7 +182,7 @@ class NewHomePage extends React.Component {
       host_id: this.props.auth.user.id,
       price: "235",
       service_fee: "35",
-      district: "NEW YORK",
+      district: "SAN JOSE",
       address: "8280 Wintheiser Parkways, Apt. 475, Lefflerview, CA 95122",
       property_type: "APARTMENT",
       room_type: "ENTIRE PLACE",
@@ -240,7 +241,27 @@ class NewHomePage extends React.Component {
 
     return (
       <div className="container new-home-page-base">
-        <h1 className="page-title">Host your place</h1>
+        <div className="page-title-header">
+          <h1 className="page-title">Host your place</h1>
+          <button
+            className="btn btn-warning autofill-btn"
+            onClick={e => {
+              this.autoFill(e);
+            }}
+            data-tip="React-tooltip"
+            data-for="new-home-autofill-tip-top"
+          >
+            Auto Fill
+          </button>
+          <ReactTooltip
+            id="new-home-autofill-tip-top"
+            type="dark"
+            effect="solid"
+            place="left"
+          >
+            Auto fill data for Demo
+          </ReactTooltip>
+        </div>
 
         <div className="panel panel-primary">
           <div className="panel-heading">
@@ -504,9 +525,18 @@ class NewHomePage extends React.Component {
           <button
             className="btn btn-warning pull-right"
             onClick={e => this.autoFill(e)}
+            data-tip="React-tooltip"
+            data-for="new-home-autofill-tip-bot"
           >
             Auto Fill
           </button>
+          <ReactTooltip
+            id="new-home-autofill-tip-bot"
+            type="dark"
+            effect="solid"
+          >
+            Auto fill data for Demo
+          </ReactTooltip>
         </div>
       </div>
     );

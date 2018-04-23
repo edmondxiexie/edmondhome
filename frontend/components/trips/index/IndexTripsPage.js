@@ -25,7 +25,7 @@ class IndexTripsPage extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
+    setTimeout(() => this.setState({ isLoading: false }), 1000); // simulates an async action, and hides the spinner
   }
 
   onRedirect(e, id) {

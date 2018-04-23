@@ -10,6 +10,7 @@ import ImageFieldGroup from "../common/ImageFieldGroup";
 import Loader from "../common/Loader";
 
 import isEmpty from "lodash/isEmpty";
+import ReactTooltip from "react-tooltip";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -40,11 +41,18 @@ class Profile extends React.Component {
   componentWillMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.fetchUserProfile(this.props.auth.user.id);
+    } else {
+      const alert = {
+        text: "You must log in first.",
+        type: "danger"
+      };
+      this.props.addAlert(alert);
+      this.context.router.push("/login");
     }
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
+    setTimeout(() => this.setState({ isLoading: false }), 1000); // simulates an async action, and hides the spinner
   }
 
   componentWillReceiveProps(nextProps) {
@@ -340,9 +348,18 @@ class Profile extends React.Component {
                   <button
                     className="btn btn-warning pull-right"
                     onClick={e => this.autoFillPassword(e)}
+                    data-tip="React-tooltip"
+                    data-for="profile-password-autofill-tip"
                   >
                     Auto Fill
                   </button>
+                  <ReactTooltip
+                    id="profile-password-autofill-tip"
+                    type="dark"
+                    effect="solid"
+                  >
+                    Auto fill password for Demo
+                  </ReactTooltip>
                 </div>
               </div>
             </div>
@@ -407,9 +424,18 @@ class Profile extends React.Component {
                   <button
                     className="btn btn-warning pull-right"
                     onClick={e => this.autoFillPassword(e)}
+                    data-tip="React-tooltip"
+                    data-for="profile-password-autofill-tip"
                   >
                     Auto Fill
                   </button>
+                  <ReactTooltip
+                    id="profile-password-autofill-tip"
+                    type="dark"
+                    effect="solid"
+                  >
+                    Auto fill password for Demo
+                  </ReactTooltip>
                 </div>
               </div>
             </div>
@@ -567,5 +593,9 @@ class Profile extends React.Component {
     );
   }
 }
+
+Profile.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default Profile;

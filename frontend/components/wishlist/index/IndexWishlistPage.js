@@ -18,7 +18,7 @@ class IndexWishlistPage extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ isLoading: false }), 1500); // simulates an async action, and hides the spinner
+    setTimeout(() => this.setState({ isLoading: false }), 1000); // simulates an async action, and hides the spinner
   }
 
   addToWishlist(e, home_id) {
@@ -28,6 +28,11 @@ class IndexWishlistPage extends Component {
       keeper_id: this.props.auth.user.id
     };
     this.props.addWishlist(wishData).then(res => {
+      const alert = {
+        text: "Successfully added to wishlist",
+        type: "success"
+      };
+      this.props.addAlert(alert);
       this.props.fetchWishlist(this.props.auth.user.id);
     });
   }
@@ -35,6 +40,11 @@ class IndexWishlistPage extends Component {
   deleteFromWishlist(e, id) {
     e.stopPropagation();
     this.props.deleteWishlist(id).then(res => {
+      const alert = {
+        text: "Successfully removed from wishlist",
+        type: "success"
+      };
+      this.props.addAlert(alert);
       this.props.fetchWishlist(this.props.auth.user.id);
     });
   }

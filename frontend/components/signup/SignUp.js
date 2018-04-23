@@ -8,6 +8,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import OptionFieldGroup from "../common/OptionFieldGroup";
 import isEmpty from "lodash/isEmpty";
 import shortid from "shortid";
+import ReactTooltip from "react-tooltip";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -206,9 +207,18 @@ class SignUp extends React.Component {
                   <button
                     className="btn btn-warning pull-right"
                     onClick={e => this.autoFill(e)}
+                    data-tip="React-tooltip"
+                    data-for="signup-page-autofill-tip"
                   >
                     Auto Fill
                   </button>
+                  <ReactTooltip
+                    id="signup-page-autofill-tip"
+                    type="dark"
+                    effect="solid"
+                  >
+                    Auto fill data for Demo
+                  </ReactTooltip>
                 </div>
               </form>
             </div>

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import IndexWishlistPage from "./IndexWishlistPage";
 import * as wishlistActions from "../../../actions/wishlistActions";
+import * as alertActions from "../../../actions/alertActions";
 
 const mapStateToProps = state => {
   return {
@@ -19,6 +20,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWishlist: id => {
       return dispatch(wishlistActions.deleteWishlist(id));
+    },
+    addAlert: alert => {
+      return dispatch(alertActions.addAlert(alert));
     }
   };
 };

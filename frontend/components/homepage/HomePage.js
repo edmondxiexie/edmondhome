@@ -5,6 +5,7 @@ import { isEmpty } from "lodash";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import validateInput from "../../../backend/common/validations/login";
+import ReactTooltip from "react-tooltip";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -199,9 +200,19 @@ class HomePage extends React.Component {
                   <button
                     className="btn btn-autofill btn-block"
                     onClick={e => this.autoFill(e)}
+                    data-tip="React-tooltip"
+                    data-for="homepage-login-autofill-tip"
                   >
                     Demo
                   </button>
+                  <ReactTooltip
+                    id="homepage-login-autofill-tip"
+                    type="dark"
+                    effect="solid"
+                    place="left"
+                  >
+                    Auto fill account for Demo
+                  </ReactTooltip>
                 </div>
               )}
             </div>

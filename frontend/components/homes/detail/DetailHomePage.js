@@ -117,6 +117,11 @@ class DetailHomnePage extends React.Component {
       keeper_id: this.props.auth.user.id
     };
     this.props.addWishlist(wishData).then(() => {
+      const alert = {
+        text: "Successfully added to wishlist",
+        type: "success"
+      };
+      this.props.addAlert(alert);
       this.props.getFavorite(this.props.auth.user.id, this.props.params.id);
     });
   }
@@ -124,6 +129,11 @@ class DetailHomnePage extends React.Component {
   deleteFromWishlist(e, id) {
     e.stopPropagation();
     this.props.deleteWishlist(id).then(() => {
+      const alert = {
+        text: "Successfully removed from wishlist",
+        type: "success"
+      };
+      this.props.addAlert(alert);
       this.setState({ favorite: null });
     });
   }
@@ -563,7 +573,12 @@ class DetailHomnePage extends React.Component {
       target
     } = this.props.home;
 
-    let host_avatar, host_name, host_email, amenities, otherAmenities;
+    let host_avatar,
+      host_name,
+      host_username,
+      host_email,
+      amenities,
+      otherAmenities;
 
     if (this.props.home.host) {
       const host = this.props.home.host;
@@ -573,6 +588,7 @@ class DetailHomnePage extends React.Component {
 
       host_avatar = host.avatar;
       host_name = host.fullname;
+      host_username = host.username;
       host_email = host.email;
     }
 
@@ -627,7 +643,7 @@ class DetailHomnePage extends React.Component {
                   <img src={host_avatar} />
                 </div>
                 <div>
-                  <h3>{`Hosted by ${host_name}`}</h3>
+                  <h3>{`Hosted by ${host_name || host_username}`}</h3>
                 </div>
               </div>
               <div className="jumbotron description">{description}</div>
@@ -793,7 +809,7 @@ class DetailHomnePage extends React.Component {
                         </button>
                         <ReactTooltip
                           id="checkout-tip"
-                          type="warning"
+                          type="dark"
                           effect="solid"
                         >
                           <h4>You can use this card for demo</h4>
