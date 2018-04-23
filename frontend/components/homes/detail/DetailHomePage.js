@@ -563,8 +563,6 @@ class DetailHomnePage extends React.Component {
       target
     } = this.props.home;
 
-    console.log("home", this.props.home);
-
     let host_avatar, host_name, host_email, amenities, otherAmenities;
 
     if (this.props.home.host) {
