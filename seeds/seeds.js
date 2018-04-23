@@ -104,8 +104,8 @@ function buildTripSeed(knex) {
 
     const base = Faker.random.number({ min: 50, max: 500 });
     const service_fee = Faker.random.arrayElement([30, 50, 100, 120]);
-    const tax = (base + service_fee) * 0.15;
-    const total = base + service_fee + tax;
+    const tax = Number(((base + service_fee) * 0.09).toFixed(2));
+    const total = Number(base + service_fee + tax);
 
     const prices = {
       base,
