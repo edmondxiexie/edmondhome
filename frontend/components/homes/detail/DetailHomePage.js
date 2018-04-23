@@ -216,16 +216,16 @@ class DetailHomnePage extends React.Component {
     }
   }
 
-  calculatePrices(checkInDate, checkOutDate, price) {
+  calculatePrices(checkInDate, checkOutDate) {
     const nights = moment(checkOutDate).diff(moment(checkInDate), "days");
     const base = Number(this.props.home.price) * nights;
-    const cleaningFee = 35;
-    const tax = Number(((base + cleaningFee) * 0.09).toFixed(2));
-    const total = Number(base + tax + cleaningFee);
+    const serviceFee = Number(this.props.home.service_fee);
+    const tax = Number(((base + serviceFee) * 0.09).toFixed(2));
+    const total = Number(base + tax + serviceFee);
 
     const prices = {
       base,
-      cleaningFee,
+      serviceFee,
       tax,
       total
     };
@@ -247,8 +247,8 @@ class DetailHomnePage extends React.Component {
         </div>
         <hr />
         <div className="detail">
-          <div>Cleaning Fee</div>
-          <div>{`$${prices.cleaningFee}`}</div>
+          <div>Service Fee</div>
+          <div>{`$${prices.serviceFee}`}</div>
         </div>
         <hr />
         <div className="detail">
@@ -266,28 +266,63 @@ class DetailHomnePage extends React.Component {
 
   autoFill(e) {
     e.preventDefault();
-    const checkInTime = new Date();
-    checkInTime.setDate(
-      checkInTime.getDate() + Math.floor(Math.random() * 3 + 1)
-    );
-    const checkOutTime = new Date();
-    checkOutTime.setDate(
-      checkOutTime.getDate() + Math.floor(Math.random() * 3 + 5)
-    );
+
+    const { occupiedDates } = this.state;
+    let valid = true;
+
+    let checkInDate = moment(new Date())
+      .add(1, "days")
+      .format("MM/DD/YYYY");
+    let checkOutDate = moment(new Date())
+      .add(1, "days")
+      .format("MM/DD/YYYY");
+
+    while (true) {
+      let curDate = moment(checkInDate).format("MM/DD/YYYY");
+
+      while (occupiedDates.includes(curDate)) {
+        curDate = moment(curDate)
+          .add(1, "days")
+          .format("MM/DD/YYYY");
+      }
+
+      checkInDate = curDate;
+
+      valid = true;
+
+      for (let i = 0; i < 3; i++) {
+        curDate = moment(curDate)
+          .add(1, "days")
+          .format("MM/DD/YYYY");
+
+        if (
+          occupiedDates.includes(
+            moment(curDate)
+              .add(-1, "days")
+              .format("MM/DD/YYYY")
+          )
+        ) {
+          valid = false;
+        }
+
+        if (!valid) {
+          break;
+        }
+      }
+
+      if (valid) {
+        checkOutDate = curDate;
+        break;
+      } else {
+        checkInDate = curDate;
+      }
+    }
+
     const guestAvailabilityArr = new Array(~~this.props.home.guest_availability)
       .fill()
       .map((v, k) => String(k + 1));
 
-    const checkInDate = moment(checkInTime).format("MM/DD/YYYY");
-    const checkOutDate = moment(checkOutTime).format("MM/DD/YYYY");
-
-    const prices = this.calculatePrices(
-      checkInDate,
-      checkOutDate,
-      Number(this.props.home.price)
-    );
-
-    const valid = moment(checkOutDate).diff(moment(checkInDate), "days") > 0;
+    const prices = this.calculatePrices(checkInDate, checkOutDate);
 
     this.setState({
       valid,
@@ -482,11 +517,7 @@ class DetailHomnePage extends React.Component {
       this.checkCheckOutDateStr(checkOutDate);
     }
 
-    const prices = this.calculatePrices(
-      checkInDate,
-      checkOutDate,
-      Number(this.props.home.price)
-    );
+    const prices = this.calculatePrices(checkInDate, checkOutDate);
 
     this.setState({
       [field]: date,
@@ -535,6 +566,8 @@ class DetailHomnePage extends React.Component {
       target
     } = this.props.home;
 
+    console.log("home", this.props.home);
+
     let host_avatar, host_name, host_email, amenities, otherAmenities;
 
     if (this.props.home.host) {
@@ -559,12 +592,6 @@ class DetailHomnePage extends React.Component {
     } = this.state;
 
     const guestsOptions = this.buildGuestsOptions(guest_availability);
-
-    const days = moment(checkOutDate).diff(moment(checkInDate), "days");
-
-    const roomTotal = Number(price) * days;
-    const cleaningFee = 35;
-    const total = roomTotal + cleaningFee;
 
     return (
       <div className="container home-detail-page-base">

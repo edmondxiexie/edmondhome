@@ -1,6 +1,20 @@
 .navbar {
   border-radius: 0;
 
+  &::after {
+    background: linear-gradient(
+      to right,
+      var(--color-primary),
+      var(--color-secondary)
+    );
+    content: "";
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    height: 3px;
+    left: 0;
+  }
+
   .avatar img {
     width: 35px;
     height: 35px;
