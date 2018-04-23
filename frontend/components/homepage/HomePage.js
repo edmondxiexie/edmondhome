@@ -38,9 +38,9 @@ class HomePage extends React.Component {
 
   autoFill(e) {
     e.preventDefault();
-    const username = `user_${Math.floor(Math.random() * 50, 1)}`;
+    const username = `user_${Math.floor(Math.random() * 50, 1) + 1}`;
     this.setState({
-      identifier: username,
+      identifier: "demo",
       password: "password",
       errors: {},
       isLoading: false,

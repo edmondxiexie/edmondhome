@@ -50,6 +50,15 @@ class IndexHomePage extends React.Component {
     this.props.fetchHomesPage(newPage);
   }
 
+  setLoader(delay) {
+    this.setState({
+      isLoading: true
+    });
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, delay);
+  }
+
   onChangePage(e) {
     e.preventDefault();
     let page = e.target.value;
@@ -76,6 +85,7 @@ class IndexHomePage extends React.Component {
       this.fetchNewPage(page);
       localStorage.setItem("indexHomePage", page);
       window.scrollTo(0, 0);
+      this.setLoader(1000);
     }
   }
 
@@ -90,6 +100,7 @@ class IndexHomePage extends React.Component {
     this.fetchNewPage(newPage);
     localStorage.setItem("indexHomePage", newPage);
     window.scrollTo(0, 0);
+    this.setLoader(1000);
   }
 
   onPreviousPage(e) {
@@ -100,6 +111,7 @@ class IndexHomePage extends React.Component {
     this.fetchNewPage(newPage);
     localStorage.setItem("indexHomePage", newPage);
     window.scrollTo(0, 0);
+    this.setLoader(1000);
   }
 
   onFirstPage(e) {
@@ -108,6 +120,7 @@ class IndexHomePage extends React.Component {
     this.fetchNewPage(1);
     localStorage.setItem("indexHomePage", 1);
     window.scrollTo(0, 0);
+    this.setLoader(1000);
   }
 
   onLastPage(e) {
@@ -117,6 +130,7 @@ class IndexHomePage extends React.Component {
     this.fetchNewPage(pages);
     localStorage.setItem("indexHomePage", pages);
     window.scrollTo(0, 0);
+    this.setLoader(1000);
   }
 
   addToWishlist(e, home_id) {

@@ -440,15 +440,18 @@
         grid-column: 8 / span 1;
       }
 
-      &:hover .gallery__text {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-        cursor: pointer;
-      }
+      &:hover {
+        .gallery__text {
+          opacity: 1;
+          transform: translate(-50%, -50%);
+          cursor: pointer;
+        }
 
-      &:hover .gallery__img {
-        transform: scale(1.01);
-        filter: blur(3px) brightness(80%);
+        .gallery__img {
+          transform: scale(1.01);
+          filter: blur(3px) brightness(80%);
+          -webkit-filter: blur(3px) brightness(80%);
+        }
       }
     }
 
