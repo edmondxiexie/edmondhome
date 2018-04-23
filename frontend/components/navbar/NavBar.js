@@ -235,7 +235,7 @@ class NavBar extends React.Component {
                   type="text"
                   name="search"
                   value={this.state.search}
-                  placeholder="Search"
+                  placeholder="e.g. New York"
                   onChange={e => {
                     this.onSearchChange(e);
                   }}
@@ -247,7 +247,7 @@ class NavBar extends React.Component {
                   this.onSearchSubmit(e);
                 }}
               >
-                Submit
+                Search
               </button>
             </form>
             {isAuthenticated ? userLink : guestLink}
