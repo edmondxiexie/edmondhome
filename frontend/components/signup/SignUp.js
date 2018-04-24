@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import timezones from "./timezone/timezone";
+import timezoneOptions from "./timezone/timezone";
 import map from "lodash/map";
 import classnames from "classnames";
 import validateInput from "../../../backend/common/validations/signup";
 import TextFieldGroup from "../common/TextFieldGroup";
 import OptionFieldGroup from "../common/OptionFieldGroup";
+import SelectFieldGroup from "../common/SelectFieldGroup";
+
 import isEmpty from "lodash/isEmpty";
 import shortid from "shortid";
 import ReactTooltip from "react-tooltip";
@@ -85,6 +87,33 @@ class SignUp extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  onSelectChange(selected, key) {
+    if (selected) {
+      this.setState({ [key]: selected.value });
+    } else {
+      this.setState({ [key]: "" });
+    }
+  }
+
+  checkSelectReuired(e, name) {
+    e.preventDefault();
+
+    const field = name;
+
+    const val = this.state[field];
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    if (val === "") {
+      errors[field] = "This field is required";
+      valid = false;
+    } else {
+      delete errors[field];
+      valid = isEmpty(errors);
+    }
+    this.setState({ errors, valid });
+  }
+
   onSubmit(e) {
     e.preventDefault();
     let { errors, valid } = validateInput(this.state);
@@ -140,10 +169,20 @@ class SignUp extends React.Component {
         }
       });
     }
+
+    this.setState({ errors, valid });
   }
 
   render() {
-    const { errors, valid } = this.state;
+    const {
+      errors,
+      valid,
+      username,
+      email,
+      password,
+      passwordConfirm,
+      timezone
+    } = this.state;
 
     return (
       <div className="signup-base">
@@ -157,7 +196,7 @@ class SignUp extends React.Component {
                   label="Username"
                   onChange={e => this.onChange(e)}
                   validator={e => this.checkUserExists(e)}
-                  value={this.state.username}
+                  value={username}
                   field="username"
                 />
                 <TextFieldGroup
@@ -165,7 +204,7 @@ class SignUp extends React.Component {
                   label="Email"
                   onChange={e => this.onChange(e)}
                   validator={e => this.checkUserExists(e)}
-                  value={this.state.email}
+                  value={email}
                   field="email"
                 />
                 <TextFieldGroup
@@ -173,7 +212,7 @@ class SignUp extends React.Component {
                   label="Password"
                   onChange={e => this.onChange(e)}
                   validator={e => this.checkRequired(e)}
-                  value={this.state.password}
+                  value={password}
                   field="password"
                   type="password"
                 />
@@ -182,17 +221,19 @@ class SignUp extends React.Component {
                   label="Password Confirm"
                   onChange={e => this.onChange(e)}
                   validator={e => this.checkRequired(e)}
-                  value={this.state.passwordConfirm}
+                  value={passwordConfirm}
                   field="passwordConfirm"
                   type="password"
                 />
-                <OptionFieldGroup
+
+                <SelectFieldGroup
                   label="Timezone"
                   name="timezone"
-                  value={this.state.timezone}
-                  options={timezones}
-                  onChange={e => this.onChange(e)}
-                  validator={e => this.checkRequired(e)}
+                  value={timezone}
+                  options={timezoneOptions}
+                  placeholder="Choose Your Time Zone"
+                  onChange={value => this.onSelectChange(value, "timezone")}
+                  validator={e => this.checkSelectReuired(e, "timezone")}
                   error={errors.timezone}
                 />
 

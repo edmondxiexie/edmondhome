@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import timezones from "../signup/timezone/timezone";
+import timezoneOptions from "../signup/timezone/timezone";
 import map from "lodash/map";
 import classnames from "classnames";
 import validateInput from "../../../backend/common/validations/profile";
 import TextFieldGroup from "../common/TextFieldGroup";
-import OptionFieldGroup from "../common/OptionFieldGroup";
+import SelectFieldGroup from "../common/SelectFieldGroup";
+
 import ImageFieldGroup from "../common/ImageFieldGroup";
 import Loader from "../common/Loader";
 
@@ -158,6 +159,33 @@ class Profile extends React.Component {
     }
   }
 
+  onSelectChange(selected, key) {
+    if (selected) {
+      this.setState({ [key]: selected.value });
+    } else {
+      this.setState({ [key]: "" });
+    }
+  }
+
+  checkSelectReuired(e, name) {
+    e.preventDefault();
+
+    const field = name;
+
+    const val = this.state[field];
+    let errors = this.state.errors;
+    let valid = this.state.valid;
+
+    if (val === "") {
+      errors[field] = "This field is required";
+      valid = false;
+    } else {
+      delete errors[field];
+      valid = isEmpty(errors);
+    }
+    this.setState({ errors, valid });
+  }
+
   onChange(e) {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
@@ -303,13 +331,14 @@ class Profile extends React.Component {
                     value={company}
                     field="company"
                   />
-                  <OptionFieldGroup
+                  <SelectFieldGroup
                     label="Timezone"
                     name="timezone"
                     value={timezone}
-                    options={timezones}
-                    onChange={e => this.onChange(e)}
-                    validator={e => this.checkRequired(e)}
+                    options={timezoneOptions}
+                    placeholder="Choose Your Time Zone"
+                    onChange={value => this.onSelectChange(value, "timezone")}
+                    validator={e => this.checkSelectReuired(e, "timezone")}
                     error={errors.timezone}
                   />
                 </form>
