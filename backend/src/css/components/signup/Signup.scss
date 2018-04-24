@@ -1,3 +1,23 @@
 .signup-base {
   margin-top: 30px;
+  margin-bottom: 30px;
+
+  .signin-link {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+
+    .btn.btn-link {
+      display: inline-block;
+      text-decoration: underline;
+      margin-bottom: 5px;
+    }
+  }
+
+  @media only screen and (max-width: 575px) {
+    .btn:not(.btn-link) {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
 }

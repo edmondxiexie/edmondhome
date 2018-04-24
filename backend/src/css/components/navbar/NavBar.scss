@@ -64,6 +64,16 @@
       }
     }
 
+    @media only screen and (max-width: 767px) {
+      padding-right: 15px;
+
+      .form-group {
+        input {
+          width: 100%;
+        }
+      }
+    }
+
     .search-btn {
       margin-left: 5px;
       color: #777;

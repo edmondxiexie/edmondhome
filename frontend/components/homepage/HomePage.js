@@ -180,7 +180,19 @@ class HomePage extends React.Component {
                     field="password"
                     type="password"
                   />
-                  <button
+                  <div className="signup-link">
+                    Don't have an account?
+                    <button
+                      type="button"
+                      className="btn btn-link"
+                      onClick={() => {
+                        this.context.router.push("/signup");
+                      }}
+                    >
+                      Sign up
+                    </button>
+                  </div>
+                  {/* <button
                     type="button"
                     className="btn btn-signup"
                     onClick={() => {
@@ -188,7 +200,7 @@ class HomePage extends React.Component {
                     }}
                   >
                     Create a new account
-                  </button>
+                  </button> */}
                   <hr />
                   <button
                     className="btn btn-login btn-block"

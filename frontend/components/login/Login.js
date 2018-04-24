@@ -105,7 +105,7 @@ class Login extends React.Component {
                 <h1>Please Login!</h1>
                 <TextFieldGroup
                   error={errors.identifier}
-                  label="Identifier"
+                  label="Username or Email"
                   onChange={e => this.onChange(e)}
                   validator={e => this.checkRequired(e)}
                   value={this.state.identifier}
@@ -120,21 +120,24 @@ class Login extends React.Component {
                   field="password"
                   type="password"
                 />
+                <div className="signup-link">
+                  Don't have an account?
+                  <button
+                    type="button"
+                    className="btn btn-link"
+                    onClick={() => {
+                      this.context.router.push("/signup");
+                    }}
+                  >
+                    Sign up
+                  </button>
+                </div>
                 <button
                   className="btn btn-primary"
                   onClick={e => this.onSubmit(e)}
                   disabled={!valid}
                 >
                   Login
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-link"
-                  onClick={() => {
-                    this.context.router.push("/signup");
-                  }}
-                >
-                  Create a new account
                 </button>
                 <button
                   className="btn btn-warning pull-right"

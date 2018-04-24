@@ -236,31 +236,40 @@ class SignUp extends React.Component {
                   validator={e => this.checkSelectReuired(e, "timezone")}
                   error={errors.timezone}
                 />
-
-                <div className="form-group">
+                <div className="signin-link">
+                  Already have an account?
                   <button
-                    className="btn btn-primary"
-                    onClick={e => this.onSubmit(e)}
-                    disabled={!valid}
+                    type="button"
+                    className="btn btn-link"
+                    onClick={() => {
+                      this.context.router.push("/login");
+                    }}
                   >
-                    Sign Up
+                    Sign in
                   </button>
-                  <button
-                    className="btn btn-warning pull-right"
-                    onClick={e => this.autoFill(e)}
-                    data-tip="React-tooltip"
-                    data-for="signup-page-autofill-tip"
-                  >
-                    Auto Fill
-                  </button>
-                  <ReactTooltip
-                    id="signup-page-autofill-tip"
-                    type="dark"
-                    effect="solid"
-                  >
-                    Auto fill data for Demo
-                  </ReactTooltip>
                 </div>
+                <button
+                  className="btn btn-primary"
+                  onClick={e => this.onSubmit(e)}
+                  disabled={!valid}
+                >
+                  Sign Up
+                </button>
+                <button
+                  className="btn btn-warning pull-right"
+                  onClick={e => this.autoFill(e)}
+                  data-tip="React-tooltip"
+                  data-for="signup-page-autofill-tip"
+                >
+                  Auto Fill
+                </button>
+                <ReactTooltip
+                  id="signup-page-autofill-tip"
+                  type="dark"
+                  effect="solid"
+                >
+                  Auto fill data for Demo
+                </ReactTooltip>
               </form>
             </div>
           </div>
