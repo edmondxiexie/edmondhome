@@ -54,8 +54,33 @@
   }
 
   .search-bar {
+    @media only screen and (max-width: 991px) {
+      padding-right: 0;
+
+      .form-group {
+        input {
+          width: 160px;
+        }
+      }
+    }
+
     .search-btn {
       margin-left: 5px;
+      color: #777;
+
+      i {
+        display: none;
+      }
+
+      @media only screen and (max-width: 991px) {
+        span {
+          display: none;
+        }
+
+        i {
+          display: inline;
+        }
+      }
     }
   }
 

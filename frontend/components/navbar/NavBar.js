@@ -247,7 +247,8 @@ class NavBar extends React.Component {
                   this.onSearchSubmit(e);
                 }}
               >
-                Search
+                <span>Search</span>
+                <i className="fa fa-search" aria-hidden="true" />
               </button>
             </form>
             {isAuthenticated ? userLink : guestLink}
