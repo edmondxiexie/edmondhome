@@ -1,14 +1,18 @@
 .home-page-base {
   .welcome {
-    padding: 50px 50px;
+    padding: 160px 50px;
     margin-top: 50px;
     margin-bottom: 50px;
     position: relative;
     overflow: hidden;
 
+    @media only screen and (max-width: 991px) {
+      padding: 0px 50px 20px 50px;
+    }
+
     .background-wrapper {
       position: absolute;
-      height: 700px;
+      height: 800px;
       width: 100%;
       top: 0;
       left: 0;
