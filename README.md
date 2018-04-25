@@ -26,4 +26,4 @@ Node.js, Express, React, Redux, Sass, Webpack, Knex.js, Bookshelf
 
 On the homepage, from the navigation bar on the top, user can sign up or sign in account. A "Demo" account is provided. The logo on the top left can always redirect the user back to the homepage. The "Homes" button will lead users to browse all the homes which they can book. The "Host your place" button will lead users to the page where they can host their own homes.
 
-![image of homepage](https://res.cloudinary.com/dqace5qmb/image/upload/v1524632394/edmondbook-docs/Screen_Shot_2018-04-24_at_9.58.23_PM.png)
+![image of homepage](docs/img/homepage-navbar-signup.png)
