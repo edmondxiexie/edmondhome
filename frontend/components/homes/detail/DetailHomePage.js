@@ -229,7 +229,7 @@ class DetailHomnePage extends React.Component {
     const base = Number(this.props.home.price) * nights;
     const serviceFee = Number(this.props.home.service_fee);
     const tax = Number(((base + serviceFee) * 0.09).toFixed(2));
-    const total = Number(base + tax + serviceFee);
+    const total = Number((base + tax + serviceFee).toFixed(2));
 
     const prices = {
       base,

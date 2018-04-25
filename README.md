@@ -1,6 +1,6 @@
 # Edmondbook
 
-[Live][edmondbook]
+[http://www.edmondbook.com][edmondbook]
 
 [edmondbook]: http://www.edmondbook.com
 
@@ -44,4 +44,10 @@ All the detail information of each home is shown on the individual home detail p
 
 ![image of home detail page](docs/img/home-detail.gif)
 
-User can book a place by chooing the check in date and check out date on the booking panel to the right.
+User can book a place by chooing the check in date and check out date on the booking panel to the right. A "Auto Fill" button for demo is provided.
+
+![image of home detail page](docs/img/booking-panel.gif)
+
+User can also host their own place with all the required information, such as location, price, description, and so on. The uploaded pictures will be stored with a url from cloudinary, which can provided customized size of image, improving the image loading performance in different pages. User can enter this page by clicking "Host your place" button on the navigation bar.
+
+![image of home detail page](docs/img/home-new.gif)
