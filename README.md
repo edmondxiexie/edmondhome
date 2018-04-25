@@ -1,8 +1,6 @@
 # Edmondbook
 
-[http://www.edmondbook.com][edmondbook]
-
-[edmondbook]: http://www.edmondbook.com
+Live: [http://www.edmondbook.com](http://www.edmondbook.com)
 
 Edmondbook is a web application inspired by Airbnb.
 
@@ -20,7 +18,14 @@ Sass is used to implement the style designing across the website.
 
 ### Tech Stack Links
 
-Node.js, Express, React, Redux, Sass, Webpack, Knex.js, Bookshelf
+* [Node.js](https://nodejs.org/en/)
+* [Express](https://expressjs.com/)
+* [React](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
+* [Sass](https://sass-lang.com/)
+* [Webpack](https://webpack.js.org/)
+* [Knex.js](http://knexjs.org/)
+* [Bookshelf.js](http://bookshelfjs.org/)
 
 ## Features & Implementation
 
@@ -42,39 +47,47 @@ This page will show all the events from the database, supported with a search fu
 
 All the detail information of each home is shown on the individual home detail page. The information includes the home image, title, location, property type, host information, amenities, and so on.
 
-![image of home detail page](docs/img/home-detail.gif)
+<div style="text-align:center">
+<img src="docs/img/home-detail.gif" alt="image of home detail page" style="width: 500px;"/>
+</div>
 
 User can book a place by chooing the check in date and check out date on the booking panel to the right. A "Auto Fill" button for demo is provided.
 
-![image of home detail page](docs/img/booking-panel.gif)
+<div style="text-align:center">
+<img src="docs/img/booking-panel.gif" alt="image of booking panel" style="width: 300px;"/>
+</div>
 
 User can also host their own place with all the required information, such as location, price, description, and so on. The uploaded pictures will be stored with a url from cloudinary, which can provided customized size of image, improving the image loading performance in different pages. User can enter this page by clicking "Host your place" button on the navigation bar.
 
-![image of home detail page](docs/img/home-new.gif)
+<div style="text-align:center">
+<img src="docs/img/home-new.gif" alt="image of hosting home page" style="width: 500px;"/>
+</div>
 
 ### Manage hosts
 
 In the "Manage Hosts" page, users can manage the homes which they posted, including editing and deleting. By clicking the "Edit" button on the top right corner of the gallery card can enter the edit page.
 
-![image of home detail page](docs/img/manage.png)
+![image of manage homes page](docs/img/manage.png)
 
 ### Trips
 
 In the "Trips" page, users can check the reservations which they booked.
 
-![image of home detail page](docs/img/trips.gif)
+<div style="text-align:center">
+<img src="docs/img/trips.gif" alt="image of trips page" style="width: 500px;"/>
+</div>
 
 ### Wishlist
 
 In the "Wishlist" page, users can check the homes which are saved in their favorite list.
 
-![image of home detail page](docs/img/wishlist.png)
+![image of wishlist page](docs/img/wishlist.png)
 
 ### Profile
 
 In the "Profile" page, users can edit their profile and upload their avatars.
 
-![image of home detail page](docs/img/profile.png)
+![image of profile page](docs/img/profile.png)
 
 ## Database
 
@@ -186,4 +199,84 @@ exports.up = function(knex, Promise) {
       .index();
   });
 };
+```
+
+## Homepage Design
+
+CSS on its own can be fun, but stylesheets are getting larger, more complex, and harder to maintain. This is where a preprocessor can help. Sass lets you use features that don't exist in CSS yet like variables, nesting, mixins, inheritance and other nifty goodies that make writing CSS fun again.
+
+<div style="text-align:center">
+<img src="./docs/img/logo-sass.svg" alt="Sass Logo" style="width: 300px;">
+</div>
+
+```css
+.home-page-base {
+  .welcome {
+    padding: 160px 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+
+    @media only screen and (max-width: 991px) {
+      padding: 0px 50px 20px 50px;
+    }
+
+    .background-wrapper {
+      position: absolute;
+      height: 800px;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background-image: url("http://res.cloudinary.com/dqace5qmb/image/upload/c_scale,w_2522/v1524230091/travel-background.png");
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+      opacity: 0.1;
+
+      background-size: cover;
+    }
+
+    .slogan {
+      align-items: center;
+      justify-content: center;
+      padding-right: 60px;
+
+      &.isAuthenticated {
+        padding-right: 15px;
+        height: 400px;
+      }
+
+      @media only screen and (max-width: 991px) {
+        padding-right: 0;
+        padding-left: 0;
+        margin-bottom: 50px;
+
+        &.isAuthenticated {
+          margin-bottom: 50px;
+          padding-right: 0;
+          height: auto;
+        }
+      }
+
+      h2 {
+        text-align: center;
+        color: var(--color-primary);
+        text-transform: uppercase;
+        margin-top: 80px;
+        margin-bottom: 50px;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 50px;
+        font-weight: 300;
+      }
+
+      p {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 300;
+      }
+    }
+    ...
 ```
