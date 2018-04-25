@@ -47,9 +47,7 @@ This page will show all the events from the database, supported with a search fu
 
 All the detail information of each home is shown on the individual home detail page. The information includes the home image, title, location, property type, host information, amenities, and so on.
 
-<div style="text-align:center">
-<img src="docs/img/home-detail.gif" alt="image of home detail page" width="500"/>
-</div>
+![image of home detail page](docs/img/home-detail.gif)
 
 User can book a place by chooing the check in date and check out date on the booking panel to the right. A "Auto Fill" button for demo is provided.
 
@@ -59,9 +57,7 @@ User can book a place by chooing the check in date and check out date on the boo
 
 User can also host their own place with all the required information, such as location, price, description, and so on. The uploaded pictures will be stored with a url from cloudinary, which can provided customized size of image, improving the image loading performance in different pages. User can enter this page by clicking "Host your place" button on the navigation bar.
 
-<div style="text-align:center">
-<img src="docs/img/home-new.gif" alt="image of hosting home page" width="500"/>
-</div>
+![image of hosting home page](docs/img/home-new.gif)
 
 ### Manage hosts
 
@@ -73,9 +69,7 @@ In the "Manage Hosts" page, users can manage the homes which they posted, includ
 
 In the "Trips" page, users can check the reservations which they booked.
 
-<div style="text-align:center">
-<img src="docs/img/trips.gif" alt="image of trips page" width="500"/>
-</div>
+![image of trips page](docs/img/trips.gif)
 
 ### Wishlist
 
