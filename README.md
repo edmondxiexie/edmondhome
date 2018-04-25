@@ -29,11 +29,11 @@ Sass is used to implement the style designing across the website.
 
 ## Features & Implementation
 
-On the homepage, from the navigation bar on the top, user can sign up or sign in account. A "Demo" account is provided. The logo on the top left can always redirect the user back to the homepage. The "Homes" button will lead users to browse all the homes which they can book. The "Host your place" button will lead users to the page where they can host their own homes.
+On the homepage, from the navigation bar on the top, user can sign up or sign in account. A **"Demo"** account is provided. The logo on the top left can always redirect the user back to the homepage. The **"Homes"** button will lead users to browse all the homes which they can book. The **"Host your place"** button will lead users to the page where they can host their own homes.
 
 ![image of homepage](docs/img/homepage-navbar-signup.png)
 
-After signed in, the "Sign Up" and "Login" buttons will change to a badge which is the avatar of the user. The badge has a dropdown list including "Manage Host", "My Trips", "Wishlist", "Edit User Profile", "Log Out" options with respective functions.
+After signed in, the **"Sign Up"** and **"Login"** buttons will change to a badge which is the avatar of the user. The badge has a dropdown list including **"Manage Host"**, **"My Trips"**, **"Wishlist"**, **"Edit User Profile"**, **"Log Out"** options with respective functions.
 
 The website takes username or email address as unique identifier. Either one can be accpected for login. The password verification is done in encryption, no password will be saved in the database.
 
@@ -41,7 +41,7 @@ The website takes username or email address as unique identifier. Either one can
 
 ### Homes
 
-This page will show all the events from the database, supported with a search function. User can easily find a specific home typing keywords, (e.g. New York City). the keyword is case insensitive. On the right top corner of the home gallery card, there is a "Favorite" button. By clicking it you can put any home into your wishlist.
+This page will show all the events from the database, supported with a search function. User can easily find a specific home typing keywords, (e.g. New York City). the keyword is case insensitive. On the right top corner of the home gallery card, there is a **"Favorite"** button. By clicking it you can put any home into your wishlist.
 
 ![image of homes page](docs/img/homes.png)
 
@@ -49,7 +49,7 @@ All the detail information of each home is shown on the individual home detail p
 
 ![image of home detail page](docs/img/home-detail.gif)
 
-User can book a place by chooing the check in date and check out date on the booking panel to the right. A "Auto Fill" button for demo is provided.
+User can book a place by chooing the check in date and check out date on the booking panel to the right. A **"Auto Fill"** button for demo is provided.
 
 <div style="text-align:center">
 <img src="docs/img/booking-panel.gif" alt="image of booking panel" width="300"/>
@@ -61,25 +61,25 @@ User can also host their own place with all the required information, such as lo
 
 ### Manage hosts
 
-In the "Manage Hosts" page, users can manage the homes which they posted, including editing and deleting. By clicking the "Edit" button on the top right corner of the gallery card can enter the edit page.
+In the **"Manage Hosts"** page, users can manage the homes which they posted, including editing and deleting. By clicking the "Edit" button on the top right corner of the gallery card can enter the edit page.
 
 ![image of manage homes page](docs/img/manage.png)
 
 ### Trips
 
-In the "Trips" page, users can check the reservations which they booked.
+In the **"Trips"** page, users can check the reservations which they booked.
 
 ![image of trips page](docs/img/trips.gif)
 
 ### Wishlist
 
-In the "Wishlist" page, users can check the homes which are saved in their favorite list.
+In the **"Wishlist"** page, users can check the homes which are saved in their favorite list.
 
 ![image of wishlist page](docs/img/wishlist.png)
 
 ### Profile
 
-In the "Profile" page, users can edit their profile and upload their avatars.
+In the **"Profile"** page, users can edit their profile and upload their avatars.
 
 ![image of profile page](docs/img/profile.png)
 
@@ -197,11 +197,13 @@ exports.up = function(knex, Promise) {
 
 ## Homepage Design
 
-CSS on its own can be fun, but stylesheets are getting larger, more complex, and harder to maintain. This is where a preprocessor can help. Sass lets you use features that don't exist in CSS yet like variables, nesting, mixins, inheritance and other nifty goodies that make writing CSS fun again.
+CSS on its own can be fun, but stylesheets are getting larger, more complex, and harder to maintain. This is where a preprocessor can help. **Sass** lets you use features that don't exist in CSS yet like variables, nesting, mixins, inheritance and other nifty goodies that make writing CSS fun again.
 
 <div style="text-align:center">
 <img src="./docs/img/logo-sass.svg" alt="Sass Logo" width="300">
 </div>
+
+### Sass Code Example
 
 ```css
 .home-page-base {
