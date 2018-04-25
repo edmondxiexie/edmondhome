@@ -274,3 +274,5 @@ CSS on its own can be fun, but stylesheets are getting larger, more complex, and
     }
     ...
 ```
+
+![image of homepage style](docs/img/homepage-gallery-demo.gif)
