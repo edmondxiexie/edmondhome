@@ -101,16 +101,18 @@ class IndexWishlistPage extends Component {
 
     const wishlist = this.props.wishlist || [];
     return (
-      <div className="container">
-        <div className="row">
-          <h1 className="page-title">Your wishlist</h1>
-          <ReactCSSTransitionGroup
-            transitionName="slide"
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={500}
-          >
-            {this.buildGallery(wishlist)}
-          </ReactCSSTransitionGroup>
+      <div className="wishlist-page-base">
+        <div className="container">
+          <div className="row">
+            <h1 className="page-title">Your wishlist</h1>
+            <ReactCSSTransitionGroup
+              transitionName="slide"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={500}
+            >
+              {this.buildGallery(wishlist)}
+            </ReactCSSTransitionGroup>
+          </div>
         </div>
       </div>
     );

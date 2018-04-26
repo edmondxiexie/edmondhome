@@ -3,8 +3,20 @@
 
   .panel {
     margin: 30px 15px 30px 15px;
+    border: none;
+    border-radius: 0;
 
     .panel-heading {
+      padding: 15px 15px;
+      border-radius: 0;
+      border: none;
+
+      background: linear-gradient(
+        0.35turn,
+        var(--color-primary),
+        var(--color-secondary-dark)
+      );
+
       .panel-title {
         text-transform: uppercase;
       }
@@ -12,6 +24,7 @@
 
     .panel-body {
       padding: 30px 30px;
+      background-color: var(--color-grey-light-2);
     }
   }
 

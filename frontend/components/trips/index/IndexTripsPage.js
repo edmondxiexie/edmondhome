@@ -84,10 +84,12 @@ class IndexTripsPage extends Component {
     const trips = this.props.trips || [];
 
     return (
-      <div className="container">
-        <div className="row">
-          <h1 className="page-title">Your trips</h1>
-          {this.buildGallery(trips)}
+      <div className="trips-index-page-base">
+        <div className="container">
+          <div className="row">
+            <h1 className="page-title">Your trips</h1>
+            {this.buildGallery(trips)}
+          </div>
         </div>
       </div>
     );
