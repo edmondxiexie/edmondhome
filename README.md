@@ -1,6 +1,7 @@
 # Edmondbook
 
-Live: [http://www.edmondbook.com](http://www.edmondbook.com)
+Live: [http://www.edmondbook.com](http://www.edmondbook.com)(Domain name expired)
+Live: [https://edmondhome.herokuapp.com/](https://edmondhome.herokuapp.com/)
 
 Edmondbook is a web application inspired by Airbnb.
 
